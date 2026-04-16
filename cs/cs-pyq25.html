@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Mock Countdown | PYQs Timer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none; /* subtle, keeps clean look */
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #f0f9ff 0%, #e6f2fa 100%);
+      font-family: 'Segoe UI', 'Poppins', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    /* main card – white & light blue theme */
+    .timer-card {
+      max-width: 760px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(0px);
+      border-radius: 3rem;
+      box-shadow: 0 20px 40px -12px rgba(0, 110, 150, 0.25), 0 8px 18px rgba(0, 80, 120, 0.08);
+      padding: 2.2rem 2rem 2.8rem;
+      text-align: center;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(180, 220, 255, 0.5);
+    }
+
+    /* header decorative */
+    .badge {
+      display: inline-block;
+      background: #eef6ff;
+      padding: 0.35rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: #1e6f9f;
+      margin-bottom: 1.6rem;
+      border: 1px solid #cae3fc;
+      backdrop-filter: blur(2px);
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #166c9c, #3c98cf);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.3px;
+    }
+
+    .sub {
+      color: #5086a1;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      border-bottom: 1px dashed #bddbff;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+      font-size: 1rem;
+    }
+
+    /* countdown grid */
+    .timer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      margin: 2rem 0 1.5rem;
+    }
+
+    .time-block {
+      background: white;
+      border-radius: 2rem;
+      padding: 0.9rem 1rem;
+      min-width: 100px;
+      box-shadow: 0 8px 14px -8px rgba(60, 120, 160, 0.2);
+      border: 1px solid #d9edff;
+      transition: transform 0.2s;
+    }
+
+    .time-number {
+      font-size: 3.4rem;
+      font-weight: 700;
+      color: #0b5e85;
+      line-height: 1;
+      font-feature-settings: "tnum";
+      letter-spacing: 2px;
+      background: linear-gradient(145deg, #1978a8, #1180b5);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    }
+
+    .time-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #528eb0;
+      letter-spacing: 1px;
+      margin-top: 8px;
+    }
+
+    /* message area */
+    .message-area {
+      margin: 1.8rem 0 1.2rem;
+      padding: 0.8rem 1rem;
+      border-radius: 2.5rem;
+      background: #ecf7ff;
+      display: inline-block;
+      width: auto;
+      backdrop-filter: blur(2px);
+    }
+
+    .primary-message {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #146b94;
+      background: #ffffffc9;
+      display: inline-block;
+      padding: 0.3rem 1.5rem;
+      border-radius: 60px;
+      letter-spacing: -0.2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .extra-note {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: #2c7aa5;
+      background: #eef4fa;
+      padding: 0.7rem 1.2rem;
+      border-radius: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+
+    .extra-note span {
+      font-weight: 700;
+      background: white;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      color: #0f6b93;
+      margin-left: 4px;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.7rem;
+      color: #8ab3cc;
+      border-top: 1px solid #d3e7fe;
+      padding-top: 1.2rem;
+    }
+
+    /* responsive */
+    @media (max-width: 520px) {
+      .timer-card {
+        padding: 1.5rem;
+      }
+      .time-number {
+        font-size: 2.5rem;
+      }
+      .time-block {
+        min-width: 70px;
+        padding: 0.6rem 0.8rem;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      .primary-message {
+        font-size: 1rem;
+      }
+    }
+
+    button {
+      background: none;
+      border: none;
+    }
+
+    /* subtle pulse for final hours? optional but fine */
+    @keyframes gentlePulse {
+      0% { opacity: 1; transform: scale(1);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+  </style>
+</head>
+<body>
+<div class="timer-card">
+  <div class="badge">📚 MOCK READINESS TRACKER</div>
+  <h1>⚡ Previous Year Questions ⚡</h1>
+  <div class="sub">official PYQs + Mock access</div>
+
+  <!-- dynamic countdown area -->
+  <div class="timer-grid" id="countdownContainer">
+    <div class="time-block">
+      <div class="time-number" id="days">00</div>
+      <div class="time-label">Days</div>
+    </div>
+    <div class="time-block">
+      <div class="time-number" id="hours">00</div>
+      <div class="time-label">Hours</div>
+    </div>
+    <div class="time-block">
+      <div class="time-number" id="minutes">00</div>
+      <div class="time-label">Minutes</div>
+    </div>
+    <div class="time-block">
+      <div class="time-number" id="seconds">00</div>
+      <div class="time-label">Seconds</div>
+    </div>
+  </div>
+
+  <!-- dynamic message area: shows promise and secondary info -->
+  <div class="message-area" id="messageBox">
+    <div class="primary-message" id="statusMessage">⏳ Countdown to PYQs release</div>
+  </div>
+  <div class="extra-note">
+    📢 <strong>Announcement:</strong> <span id="dynamicNote">PYQs Will Be Provided By 20/04/2026 until Give The Other Mock</span>
+  </div>
+  <footer>⏱️ live timer · based on your local clock · stay consistent</footer>
+</div>
+
+<script>
+  (function() {
+    // TARGET DATE: 20th April 2026, 00:00:00 local midnight (user's timezone)
+    // as per requirement: "PYQs Will Be Provide By 20/04/2026 until Give The Other Mock"
+    // Using 20 April 2026, 00:00:00 local time. That's the exact "by" date.
+    // Also until that moment, we display timer; after target, we show "PYQs & other mocks available"
+    const targetDate = new Date(2026, 3, 20, 0, 0, 0, 0); // month is 0-index -> April = 3
+    
+    // DOM elements
+    const daysSpan = document.getElementById('days');
+    const hoursSpan = document.getElementById('hours');
+    const minutesSpan = document.getElementById('minutes');
+    const secondsSpan = document.getElementById('seconds');
+    const statusMsgDiv = document.getElementById('statusMessage');
+    const dynamicNoteSpan = document.getElementById('dynamicNote');
+    
+    // helper: format with leading zero
+    function formatTwoDigits(num) {
+      return num < 10 ? '0' + num : '' + num;
+    }
+    
+    // main update function
+    function updateTimer() {
+      const now = new Date(); // current local time
+      const timeDiff = targetDate.getTime() - now.getTime();
+      
+      // CASE 1: timer has reached target or passed (PYQs available)
+      if (timeDiff <= 0) {
+        // target reached or passed
+        daysSpan.innerText = '00';
+        hoursSpan.innerText = '00';
+        minutesSpan.innerText = '00';
+        secondsSpan.innerText = '00';
+        
+        // update status message to joyful "available now"
+        statusMsgDiv.innerHTML = '🎯 PYQs & MOCK SETS ARE READY 🎯';
+        statusMsgDiv.style.background = "linear-gradient(145deg, #e0f0fa, #cde9ff)";
+        statusMsgDiv.style.color = "#0b5c7c";
+        statusMsgDiv.style.fontWeight = "bold";
+        statusMsgDiv.style.padding = "0.5rem 1rem";
+        
+        // update extra note to reflect that both PYQs and other mocks are provided
+        dynamicNoteSpan.innerText = '✅ PYQs Available Now + Other Mocks Unlocked ✅';
+        // optional: extra style
+        document.querySelector('.extra-note').style.background = "#e2f3e8";
+        document.querySelector('.extra-note').style.borderLeft = "3px solid #2f9b6e";
+        return;
+      }
+      
+      // CASE 2: countdown is active -> compute days, hours, minutes, seconds
+      const totalSecondsRemaining = Math.floor(timeDiff / 1000);
+      const days = Math.floor(totalSecondsRemaining / 86400);
+      const hours = Math.floor((totalSecondsRemaining % 86400) / 3600);
+      const minutes = Math.floor((totalSecondsRemaining % 3600) / 60);
+      const seconds = totalSecondsRemaining % 60;
+      
+      daysSpan.innerText = formatTwoDigits(days);
+      hoursSpan.innerText = formatTwoDigits(hours);
+      minutesSpan.innerText = formatTwoDigits(minutes);
+      secondsSpan.innerText = formatTwoDigits(seconds);
+      
+      // set dynamic status message depending on remaining days
+      if (days === 0 && hours < 24) {
+        statusMsgDiv.innerHTML = '🔥 Final countdown — PYQs arriving soon! 🔥';
+      } else if (days <= 3) {
+        statusMsgDiv.innerHTML = '📖 Almost there! PYQs release around the corner 📖';
+      } else if (days <= 14) {
+        statusMsgDiv.innerHTML = '⏰ Prep mode: PYQs will be provided by 20/04/2026';
+      } else {
+        statusMsgDiv.innerHTML = '📅 Keep tracking — PYQs & mocks coming 20 April 2026';
+      }
+      
+      // ensure extra note always displays the main promise (unchanged until deadline)
+      // but also add small suffix while counting down? we keep original but reinforce.
+      // requirement: "say - PYQs Will Be Provide By 20/04/2026 until Give The Other Mock"
+      // This note must be visible while countdown is active.
+      dynamicNoteSpan.innerText = 'PYQs Will Be Provided By 20/04/2026 until Give The Other Mock';
+    }
+    
+    // initial call
+    updateTimer();
+    
+    // set interval each second for smoothness
+    const interval = setInterval(() => {
+      updateTimer();
+    }, 1000);
+    
+    // optional: clean up on page unload (no strict need, but good practice)
+    window.addEventListener('beforeunload', () => {
+      if (interval) clearInterval(interval);
+    });
+    
+    // additional minor: handle edge-case where timer drift but it's fine
+    // For extra reliability, recalc on visibility change? but not mandatory.
+    // also ensure that if user changes system time drastically? Not required, but modern browsers handle.
+    
+    // Also ensure that after target date, the message remains clear and shows the new "until" part
+    // In the after state we already changed note to 'PYQs Available Now + Other Mocks Unlocked'
+    // but original requirement said: "PYQs Will Be Provide By 20/04/2026 until Give The Other Mock"
+    // This means before 20/04/2026 we display that announcement; after 20/04/2026 we can show that
+    // the promise is fulfilled AND other mocks are given. So we already show that.
+    // Let's polish after-state note: keep consistency with message.
+    // Also we might add a manual check after target for better wording.
+    
+    // Improve after-target note: mention both PYQs and additional mocks.
+    // Already done in the conditional block. Additionally, we can ensure the extra-note span reflects
+    // "PYQs & Other Mocks are now accessible" after deadline.
+    // Override extra note style after target as well (additional protection)
+    function finalSync() {
+      const nowTest = new Date();
+      if (nowTest >= targetDate) {
+        // ensure message remains correct even if setInterval didn't run exactly
+        if (dynamicNoteSpan.innerText !== '✅ PYQs Available Now + Other Mocks Unlocked ✅') {
+          dynamicNoteSpan.innerText = '✅ PYQs Available Now + Other Mocks Unlocked ✅';
+        }
+        if (statusMsgDiv.innerHTML !== '🎯 PYQs & MOCK SETS ARE READY 🎯') {
+          statusMsgDiv.innerHTML = '🎯 PYQs & MOCK SETS ARE READY 🎯';
+        }
+        // also update digits to zeros if somehow not zero
+        daysSpan.innerText = '00';
+        hoursSpan.innerText = '00';
+        minutesSpan.innerText = '00';
+        secondsSpan.innerText = '00';
+      } else {
+        // keep the main note as requested exactly: "PYQs Will Be Provide By 20/04/2026 until Give The Other Mock"
+        // However dynamicNoteSpan gets overwritten each second, but just in case we set it.
+        if (dynamicNoteSpan.innerText !== 'PYQs Will Be Provided By 20/04/2026 until Give The Other Mock') {
+          dynamicNoteSpan.innerText = 'PYQs Will Be Provided By 20/04/2026 until Give The Other Mock';
+        }
+      }
+    }
+    
+    // call finalSync after each update to make sure note persists exactly as requested before deadline
+    // but also we already manage inside updateTimer. we'll override to be super safe.
+    const originalUpdate = updateTimer;
+    window.updateTimer = function() {
+      originalUpdate();
+      const now = new Date();
+      if (now < targetDate) {
+        // ensure before deadline the exact phrase appears in the extra-note span (not the message area)
+        const noteSpan = document.getElementById('dynamicNote');
+        if (noteSpan && noteSpan.innerText !== 'PYQs Will Be Provided By 20/04/2026 until Give The Other Mock') {
+          noteSpan.innerText = 'PYQs Will Be Provided By 20/04/2026 until Give The Other Mock';
+        }
+        // also adjust any accidental override: background stays light
+        const extraDiv = document.querySelector('.extra-note');
+        if (extraDiv && !extraDiv.style.background.includes('#e2f3e8')) {
+          extraDiv.style.background = "#eef4fa";
+        }
+      } else {
+        const noteSpanAfter = document.getElementById('dynamicNote');
+        if (noteSpanAfter && noteSpanAfter.innerText !== '✅ PYQs Available Now + Other Mocks Unlocked ✅') {
+          noteSpanAfter.innerText = '✅ PYQs Available Now + Other Mocks Unlocked ✅';
+        }
+        const msgDiv = document.getElementById('statusMessage');
+        if (msgDiv && msgDiv.innerText !== '🎯 PYQs & MOCK SETS ARE READY 🎯') {
+          msgDiv.innerHTML = '🎯 PYQs & MOCK SETS ARE READY 🎯';
+        }
+      }
+    };
+    
+    // override the interval with new wrapper
+    clearInterval(interval);
+    const newInterval = setInterval(() => {
+      if (window.updateTimer) {
+        window.updateTimer();
+      } else {
+        originalUpdate();
+        // fallback sync for note
+        const nowCheck = new Date();
+        const noteSpanEl = document.getElementById('dynamicNote');
+        if (nowCheck < targetDate) {
+          if (noteSpanEl && noteSpanEl.innerText !== 'PYQs Will Be Provided By 20/04/2026 until Give The Other Mock') {
+            noteSpanEl.innerText = 'PYQs Will Be Provided By 20/04/2026 until Give The Other Mock';
+          }
+        } else {
+          if (noteSpanEl && noteSpanEl.innerText !== '✅ PYQs Available Now + Other Mocks Unlocked ✅') {
+            noteSpanEl.innerText = '✅ PYQs Available Now + Other Mocks Unlocked ✅';
+          }
+          const msgArea = document.getElementById('statusMessage');
+          if (msgArea && msgArea.innerText !== '🎯 PYQs & MOCK SETS ARE READY 🎯') {
+            msgArea.innerHTML = '🎯 PYQs & MOCK SETS ARE READY 🎯';
+          }
+          // digits set to zero
+          daysSpan.innerText = '00';
+          hoursSpan.innerText = '00';
+          minutesSpan.innerText = '00';
+          secondsSpan.innerText = '00';
+        }
+      }
+    }, 1000);
+    
+    // initial call to sync everything
+    if (window.updateTimer) window.updateTimer(); else originalUpdate();
+    
+    // Also ensure extra-note border / design remains in white/light blue scope
+    // final touch: for extremely old browsers not needed.
+  })();
+</script>
+</body>
+</html>
