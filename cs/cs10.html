@@ -1,0 +1,2705 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thunderstudy CBT</title>
+
+<script>
+/* ============================================================
+   ✏️  EDIT ONLY THESE TWO LINES FOR EACH CHAPTER
+   ============================================================ */
+const SUBJECT_ID  = "cs";        // e.g. "cs", "eco", "accounts"
+const CHAPTER_ID  = "cs10";       // e.g. "bst1", "bst2", "eco3"
+/* ============================================================ */
+</script>
+
+<style>
+        :root {
+    --primary-color: #f97316;
+    --secondary-color: #9CC9E6;
+    --correct-color: #90EE90;
+    --incorrect-color: #FF474D;
+    --neutral-color: #607d8b;
+    --light-bg: #f5f5f5;
+    --white: #ffffff;
+    --dark-text: #212121;
+    --light-text: #000000;
+    --dark-bg: #121212;
+    --dark-primary-color: #fdba74;
+    --dark-secondary-color: #03dac6;
+    --dark-correct-color: #388e3c;
+    --dark-incorrect-color: #cf6679;
+    --dark-neutral-color: #aaaaaa;
+    --dark-light-text: #e0e0e0;
+}
+
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-light-text);
+}
+
+body.dark-mode p,
+body.dark-mode span:not(.icon),
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode label,
+body.dark-mode li {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode a:not(.fancy-btn):not(.footer-btn):not(.button2):not(.join-btn) {
+    color: #fdba74 !important;
+    text-decoration: underline;
+}
+
+body.dark-mode .fancy-btn,
+body.dark-mode .footer-btn,
+body.dark-mode .join-btn,
+body.dark-mode .submit-fancy-btn,
+body.dark-mode .more-btn,
+body.dark-mode .back-btn,
+body.dark-mode .report-btn {
+    color: white !important;
+}
+
+body.dark-mode #prev-btn {
+    color: var(--dark-primary-color) !important;
+    border-color: var(--dark-primary-color) !important;
+}
+
+body.dark-mode #next-btn {
+    color: #000 !important;
+    background-color: var(--dark-primary-color) !important;
+}
+
+body.dark-mode #mark-btn {
+    color: var(--dark-secondary-color) !important;
+    border-color: var(--dark-secondary-color) !important;
+}
+
+body.dark-mode #mark-btn.marked {
+    background-color: var(--dark-secondary-color) !important;
+    color: #000 !important;
+}
+
+body.dark-mode #start-test-btn {
+    color: white !important;
+}
+
+body.dark-mode .close-btn {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .stat-card h3 {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .question-number {
+    color: var(--dark-primary-color) !important;
+}
+
+body.dark-mode .question-text {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .progress-text span {
+    color: #aaa !important;
+}
+
+body.dark-mode .palette-title span {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .test-info strong {
+    color: #fff !important;
+}
+
+body.dark-mode .test-info span {
+    color: #ccc !important;
+}
+
+body.dark-mode .sidebar {
+    background-color: #1f1f1f;
+    color: var(--dark-light-text);
+    box-shadow: 2px 0 5px rgba(255,255,255,0.1);
+}
+
+body.dark-mode .sidebar-header h2,
+body.dark-mode .test-header h2,
+body.dark-mode .modal-header h2 {
+    color: var(--dark-primary-color);
+}
+
+body.dark-mode .timer {
+    background-color: var(--dark-incorrect-color);
+    color: #fff;
+}
+
+body.dark-mode .question-container {
+    background-color: #242424;
+    box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+}
+
+.option:hover {
+    border-color: #378ADD;
+    background: #E6F1FB;
+}
+
+.option.selected {
+    border-color: #185FA5;
+    background: #B5D4F4;
+}
+
+.option.correct {
+    border-color: #388e3c !important;
+    background: rgba(76, 175, 80, 0.15) !important;
+}
+
+.option.incorrect {
+    border-color: #e53935 !important;
+    background: rgba(244, 67, 54, 0.12) !important;
+}
+
+.opt-letter {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+    background: #f5f5f5;
+    color: #555;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.option.selected .opt-letter {
+    background: #185FA5;
+    border-color: #185FA5;
+    color: #fff;
+}
+
+.option.correct .opt-letter {
+    background: #388e3c;
+    border-color: #388e3c;
+    color: #fff;
+}
+
+.option.incorrect .opt-letter {
+    background: #e53935;
+    border-color: #e53935;
+    color: #fff;
+}
+
+.opt-text {
+    font-size: 15px;
+    color: #212121;
+    flex: 1;
+    line-height: 1.5;
+}
+
+.option.selected .opt-text {
+    color: #0C447C;
+    font-weight: 500;
+}
+
+.option.correct .opt-text {
+    color: #1b5e20;
+    font-weight: 500;
+}
+
+.option.incorrect .opt-text {
+    color: #b71c1c;
+    font-weight: 500;
+}
+
+body.dark-mode .option {
+    background: #2a2a2a !important;
+    border-color: #444 !important;
+    color: #fff !important;
+}
+
+body.dark-mode .option:hover {
+    border-color: #378ADD !important;
+    background: #1a2a3a !important;
+}
+
+body.dark-mode .option.selected {
+    border-color: #64b5f6 !important;
+    background: #1a3050 !important;
+}
+
+body.dark-mode .opt-letter {
+    background: #333 !important;
+    border-color: #555 !important;
+    color: #ccc !important;
+}
+
+body.dark-mode .option.selected .opt-letter {
+    background: #185FA5 !important;
+    border-color: #185FA5 !important;
+    color: #fff !important;
+}
+
+body.dark-mode .opt-text {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .option.selected .opt-text {
+    color: #90caf9 !important;
+}
+
+body.dark-mode .option.correct {
+    border-color: #66bb6a !important;
+    background: rgba(56,142,60,0.2) !important;
+}
+
+body.dark-mode .option.incorrect {
+    border-color: #ef9a9a !important;
+    background: rgba(207, 102, 121, 0.2) !important;
+}
+
+.option input[type="radio"] {
+    display: none;
+}
+
+.correct-indicator {
+    margin-left: 8px;
+    font-weight: bold;
+    color: #388e3c;
+    font-size: 13px;
+}
+
+.incorrect-indicator {
+    margin-left: 8px;
+    font-weight: bold;
+    color: #e53935;
+    font-size: 13px;
+}
+
+.instruction-box {
+    max-width: 900px;
+    margin: auto;
+    background: linear-gradient(135deg, #fff7ed, #e0f2ff);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    line-height: 1.8;
+}
+
+.instruction-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #6a11cb;
+    margin-bottom: 15px;
+    border-left: 5px solid #6a11cb;
+    padding-left: 10px;
+}
+
+.instruction-list {
+    padding-left: 20px;
+}
+
+.instruction-list li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    background: white;
+    padding: 10px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: 0.2s;
+}
+
+.instruction-list li:hover {
+    transform: translateX(5px);
+    background: #f0f4ff;
+}
+
+.instruction-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.instruction-checkbox input {
+    width: 18px;
+    height: 18px;
+    accent-color: #6a11cb;
+}
+
+#start-test-btn {
+    margin-top: 20px;
+    width: 100%;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    box-shadow: 0 6px 15px rgba(101, 41, 255, 0.4);
+    transition: 0.3s;
+}
+
+#start-test-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(101, 41, 255, 0.6);
+}
+
+.sidebar {
+    width: 300px;
+    background-color: var(--white);
+    height: 100vh;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    position: fixed;
+    overflow-y: auto;
+    right: 0;
+    left: auto;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar-header h2 {
+    color: var(--primary-color);
+}
+
+.test-info {
+    margin-bottom: 20px;
+}
+
+.test-info p {
+    margin: 5px 0;
+    color: var(--light-text);
+}
+
+.question-palette {
+    margin-bottom: 20px;
+}
+
+.palette-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.palette-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.palette-btn {
+    width: 100%;
+    max-width: 40px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background-color: #FF474D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: auto;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.palette-btn:hover {
+    background-color: #EFBF04;
+}
+
+.palette-btn.answered {
+    background-color: #90ee90;
+    color: #000000;
+    border-color: #000000;
+}
+
+.palette-btn.marked {
+    background-color: #90D5FF;
+    color: #000000;
+    border-color: #000000;
+}
+
+.palette-btn.current {
+    background-color: #ffffff;
+    border: 2px solid var(--primary-color);
+}
+
+.palette-btn.review-correct {
+    background-color: #22c55e !important;
+    color: #fff !important;
+    border-color: #16a34a !important;
+}
+.palette-btn.review-wrong {
+    background-color: #ef4444 !important;
+    color: #fff !important;
+    border-color: #dc2626 !important;
+}
+.palette-btn.review-unanswered {
+    background-color: #3b82f6 !important;
+    color: #fff !important;
+    border-color: #2563eb !important;
+}
+
+.palette-btn.review-correct.current,
+.palette-btn.review-wrong.current,
+.palette-btn.review-unanswered.current {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 1px;
+}
+
+body.dark-mode .palette-btn.review-correct  { background-color: #16a34a !important; border-color: #15803d !important; }
+body.dark-mode .palette-btn.review-wrong    { background-color: #dc2626 !important; border-color: #b91c1c !important; }
+body.dark-mode .palette-btn.review-unanswered { background-color: #2563eb !important; border-color: #1d4ed8 !important; }
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.legend-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+body.dark-mode .palette-btn {
+    background-color: #FF474D !important;
+    color: var(--dark-primary-color);
+    border: 2px solid var(--dark-primary-color);
+}
+
+body.dark-mode .palette-btn.answered {
+    background-color: #388e3c !important;
+    color: white !important;
+    border-color: #388e3c !important;
+}
+
+body.dark-mode .palette-btn.marked {
+    background-color: #03dac6 !important;
+    color: black !important;
+    border-color: #03dac6 !important;
+}
+
+body.dark-mode .palette-btn.current {
+    background-color: white !important;
+    border: 2px solid var(--dark-primary-color) !important;
+    color: var(--dark-primary-color) !important;
+}
+
+body.dark-mode .btn-primary {
+    background-color: var(--dark-primary-color);
+    color: #000;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #f97316;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: var(--dark-secondary-color);
+    color: #000;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background-color: #00c4b4;
+}
+
+body.dark-mode .btn-outline {
+    border-color: var(--dark-primary-color);
+    color: var(--dark-primary-color);
+}
+
+body.dark-mode .mark-btn {
+    border-color: var(--dark-secondary-color);
+    color: var(--dark-secondary-color);
+}
+
+body.dark-mode .mark-btn.marked {
+    background-color: var(--dark-secondary-color);
+    color: #000;
+}
+
+body.dark-mode .submit-btn {
+    background-color: var(--dark-correct-color);
+    color: #000;
+}
+
+body.dark-mode .submit-btn:hover {
+    background-color: #2a6e2c;
+}
+
+body.dark-mode .modal-content {
+    background-color: #242424;
+    color: var(--dark-light-text);
+}
+
+body.dark-mode .stat-card {
+    background-color: #1e1e1e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 0;
+    margin-right: 300px;
+    padding: 20px;
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.timer {
+    background-color: #FF0000;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 18px;
+    min-width: 140px;
+    text-align: center;
+}
+
+.progress-container {
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #c6e977;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--light-text);
+}
+
+.question-container {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.question-number {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.question-text {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.options {
+    margin-left: 0;
+}
+
+.navigation-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #73e4e6;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #73e4e6;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: #ffffff;
+}
+
+.mark-btn {
+    margin-left: 10px;
+    background-color: transparent;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.mark-btn.marked {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.submit-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    background-color: var(--correct-color);
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.submit-btn:hover {
+    background-color: #388e3c;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+    color: var(--primary-color);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--light-text);
+}
+
+.result-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+}
+
+.stat-card h3 {
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.correct-stat { color: var(--correct-color); }
+.incorrect-stat { color: var(--incorrect-color); }
+.score-stat { color: var(--secondary-color); }
+
+.detailed-results {
+    margin-top: 20px;
+}
+
+.detailed-results h3 {
+    margin-bottom: 10px;
+}
+
+.review-btn {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.button2 {
+    background-color: #007ACC;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 122, 204, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.button2:hover {
+    background-color: #005a99;
+    box-shadow: 0 6px 12px rgba(0, 90, 153, 0.5);
+    color: #fff;
+}
+
+#dark-mode-toggle-bottom:hover {
+    background: linear-gradient(45deg, #fb923c, #6a11cb);
+    box-shadow: 0 6px 20px rgba(101, 41, 255, 0.9);
+}
+
+body.dark-mode #dark-mode-toggle-bottom {
+    background: linear-gradient(45deg, #f7971e, #ffd200);
+    color: #333;
+    box-shadow: 0 4px 15px rgba(255, 210, 0, 0.7);
+}
+
+#test-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    z-index: 9998;
+    display: none;
+    overflow: auto;
+}
+
+#user-name-display {
+    background: linear-gradient(135deg,#f97316,#ea580c);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 18px;
+    min-width: 140px;
+    text-align: center;
+}
+
+.instruction-checkbox input:checked + .custom-check {
+    background: rgba(234,88,12,0.1);
+    box-shadow: 0 0 10px rgba(234,88,12,0.4);
+}
+
+.instruction-checkbox input {
+    display: none;
+}
+
+.custom-check {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #6a11cb;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.instruction-checkbox input:checked + .custom-check::after {
+    content: "\2714";
+    position: absolute;
+    top: -2px;
+    left: 3px;
+    font-size: 16px;
+    color: #6a11cb;
+}
+
+.test-info {
+    text-align: left !important;
+    display: block !important;
+}
+
+.test-info p {
+    text-align: left !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 6px;
+    font-size: 16px !important;
+    margin: 6px 0 !important;
+}
+
+.test-info strong {
+    font-weight: 700 !important;
+    color: #000 !important;
+}
+
+.mobile-top-bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 10px;
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .mobile-timer-clone {
+        background-color: #FF0000;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 15px;
+        min-width: 100px;
+        text-align: center;
+    }
+
+    #mobile-name-display {
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        color: white;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    #user-name-display { display: none !important; }
+    .sidebar .timer { display: none !important; }
+    .sidebar .sidebar-header { display: none !important; }
+
+    body { display: flex; flex-direction: column; }
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        right: 0; left: 0;
+        box-shadow: none;
+        margin-bottom: 10px;
+    }
+    .question-palette { max-height: 200px; overflow-y: auto; }
+    .main-content { margin: 0 !important; width: 100%; padding: 10px; }
+
+    .navigation-btns {
+        flex-direction: row !important;
+        gap: 8px;
+        align-items: center;
+    }
+
+    #prev-btn {
+        padding: 8px 14px !important;
+        font-size: 13px !important;
+        border-radius: 6px !important;
+        flex-shrink: 0;
+    }
+
+    #next-btn {
+        padding: 14px 28px !important;
+        font-size: 17px !important;
+        border-radius: 8px !important;
+        flex: 1;
+    }
+
+    .navigation-btns > div {
+        display: flex;
+        flex: 1;
+        gap: 8px;
+        align-items: center;
+    }
+
+    #mark-btn {
+        font-size: 11px !important;
+        padding: 6px 8px !important;
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .palette-grid { grid-template-columns: repeat(4, 1fr); }
+    .result-stats { grid-template-columns: 1fr; }
+}
+
+.fancy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.4px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), box-shadow 0.18s ease;
+}
+
+.fancy-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+    border-radius: inherit;
+}
+
+.fancy-btn:hover::after { background: rgba(255,255,255,0.12); }
+.fancy-btn:active { transform: scale(0.96) !important; }
+.fancy-btn:hover { transform: translateY(-3px) scale(1.03); }
+
+.join-btn {
+    background: linear-gradient(135deg, #0088cc, #006699);
+    color: white;
+    box-shadow: 0 5px 18px rgba(0,136,204,0.45);
+}
+.join-btn:hover { box-shadow: 0 8px 24px rgba(0,136,204,0.65); color: white; }
+
+.submit-fancy-btn {
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    color: white;
+    box-shadow: 0 5px 18px rgba(34,197,94,0.45);
+    flex: 1;
+    max-width: 280px;
+}
+.submit-fancy-btn:hover { box-shadow: 0 8px 24px rgba(34,197,94,0.65); }
+
+.pdf-download-btn {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white !important;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 4px 14px rgba(249,115,22,0.4);
+}
+.pdf-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(249,115,22,0.6);
+    color: white !important;
+}
+.pdf-download-btn:active { transform: scale(0.97); }
+
+#pdf-print-area { display: none; }
+
+@media print {
+    body > * { display: none !important; }
+    #pdf-print-area {
+        display: block !important;
+        font-family: Arial, sans-serif;
+        color: #111;
+        padding: 20px;
+        margin: 0;
+    }
+}
+
+.footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    letter-spacing: 0.3px;
+    transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), box-shadow 0.18s ease, filter 0.18s;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-btn:hover {
+    transform: translateY(-3px) scale(1.06);
+    filter: brightness(1.1);
+    color: white;
+}
+
+.footer-btn:active { transform: scale(0.95); }
+
+.more-btn {
+    background: linear-gradient(135deg, #f97316, #c2410c);
+    box-shadow: 0 4px 14px rgba(249,115,22,0.4);
+}
+.more-btn:hover { box-shadow: 0 7px 20px rgba(249,115,22,0.65); }
+
+.back-btn {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 4px 14px rgba(34,197,94,0.4);
+}
+.back-btn:hover { box-shadow: 0 7px 20px rgba(34,197,94,0.65); }
+
+.report-btn {
+    background: linear-gradient(135deg, #f97316, #dc2626);
+    box-shadow: 0 4px 14px rgba(239,68,68,0.4);
+}
+.report-btn:hover { box-shadow: 0 7px 20px rgba(239,68,68,0.65); }
+
+body.dark-mode #dark-mode-toggle-bottom {
+    background: linear-gradient(45deg, #f7971e, #ffd200) !important;
+    box-shadow: 0 4px 15px rgba(255,210,0,0.6) !important;
+}
+body.dark-mode #dark-mode-toggle-bottom .icon { color: #333 !important; }
+body.dark-mode #dark-mode-toggle-bottom span:not(.icon) { color: #333 !important; }
+
+body.dark-mode #start-screen {
+    background-color: #1a1a2e !important;
+}
+body.dark-mode #start-screen h1 { color: #fdba74 !important; }
+body.dark-mode #start-screen > p { color: #e0e0e0 !important; }
+body.dark-mode #start-screen li { color: #e0e0e0 !important; }
+body.dark-mode #start-screen h2 { color: #e0e0e0 !important; }
+body.dark-mode #start-screen a[href*="t.me"] { color: #fdba74 !important; text-decoration: none !important; }
+body.dark-mode #start-screen strong { color: #fff !important; }
+body.dark-mode #start-screen input[type="text"] {
+    background: #2a2a2a !important;
+    color: #fff !important;
+    border-color: #555 !important;
+}
+
+body.dark-mode #instruction-screen { background: #1a1a2e !important; }
+body.dark-mode #instruction-screen h2 { color: #e0e0e0 !important; }
+body.dark-mode .instruction-box { background: linear-gradient(135deg, #431407, #431407) !important; }
+body.dark-mode .instruction-title { color: #fdba74 !important; border-left-color: #fdba74 !important; }
+body.dark-mode .instruction-list li { background: #242424 !important; color: #e0e0e0 !important; }
+body.dark-mode .instruction-list li:hover { background: #2e2e4e !important; }
+body.dark-mode .custom-check { border-color: #fdba74 !important; }
+body.dark-mode .instruction-checkbox input:checked + .custom-check::after { color: #fdba74 !important; }
+body.dark-mode .instruction-checkbox { color: #e0e0e0 !important; }
+
+body.dark-mode #test-screen { background: #121212 !important; }
+
+body.dark-mode .mobile-top-bar {
+    background: #1f1f1f !important;
+    border-color: #333 !important;
+}
+body.dark-mode .mobile-timer-clone {
+    background-color: var(--dark-incorrect-color) !important;
+}
+
+body.dark-mode .tooltip .tooltiptext { background-color: #333; color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen" style="
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: white; z-index: 9999; display: flex;
+    flex-direction: column; justify-content: flex-start; align-items: center;
+    text-align: center; padding: 40px 20px 40px;
+    overflow-y: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+<button id="dark-mode-toggle-bottom" aria-label="Toggle dark mode" title="Toggle dark mode"
+  style="position:absolute; top:18px; right:18px; font-size:22px; padding:8px 18px;
+  border-radius:40px; border:none; cursor:pointer;
+  background:linear-gradient(45deg,#6a11cb,#fb923c); color:white;
+  display:flex; align-items:center; gap:7px;
+  box-shadow:0 4px 15px rgba(234,88,12,0.5);
+  transition:background 0.4s ease, box-shadow 0.4s ease, transform 0.2s;">
+  <span class="icon" style="display:inline-block; transition:transform 0.6s ease;">🌙</span>
+  <span style="font-size:13px; font-weight:600; letter-spacing:0.5px;">Dark</span>
+</button>
+
+<h1 style="color: #f97316; font-size: 32px;" id="page-title">6: Understanding Data</h1>
+<p style="font-size: 18px; margin: 10px 0;">Provided by <strong>Thunderstudy</strong></p>
+
+<a href="https://t.me/thunderstudy_official" target="_blank"
+  style="display:inline-flex; align-items:center; gap:8px; margin: 8px 0 14px;
+  background:linear-gradient(135deg,#0088cc,#006699); color:white; text-decoration:none;
+  padding:10px 24px; border-radius:30px; font-size:15px; font-weight:700;
+  box-shadow:0 5px 16px rgba(0,136,204,0.45);
+  transition:transform 0.18s, box-shadow 0.18s;"
+  onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 8px 22px rgba(0,136,204,0.65)'"
+  onmouseout="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 5px 16px rgba(0,136,204,0.45)'"
+  onmousedown="this.style.transform='scale(0.97)'"
+  onmouseup="this.style.transform='translateY(-3px) scale(1.04)'">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="flex-shrink:0;">
+    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.607c-.148.666-.543.828-1.098.516l-3.04-2.24-1.467 1.413c-.162.162-.298.298-.611.298l.217-3.083 5.613-5.067c.244-.217-.054-.337-.378-.12L7.08 14.807 4.09 13.89c-.657-.205-.67-.657.137-.973l10.88-4.196c.548-.198 1.027.133.855.973z"/>
+  </svg>
+  @thunderstudy_official
+</a>
+
+<div style="max-width: 560px; text-align: left; margin: 10px auto 18px; background:#f8f4ff; border-radius:12px; padding:18px 22px; border-left:4px solid #f97316;">
+  <h2 style="margin-bottom:12px; color:#6a11cb; font-size:18px;">📋 Quick Overview</h2>
+  <ul style="text-align: left; line-height:2; font-size:15px; padding-left:18px;">
+    <li><strong>50 Questions</strong></li>
+    <li><strong>60 Minutes</strong> total time</li>
+    <li><strong>+5 marks</strong> for correct &nbsp;|&nbsp; <strong>−1 mark</strong> for wrong</li>
+    <li>No penalty for <strong>unanswered</strong> questions</li>
+    <li>Test <strong>auto-submits</strong> when time ends</li>
+    <li>Do <strong>not switch tabs</strong> or exit fullscreen during test</li>
+  </ul>
+</div>
+
+<div style="margin: 10px 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+    <input type="text" id="username-input" placeholder="Enter your name"
+        style="padding:10px; width:260px; border-radius:8px; border:1.5px solid #f97316; font-size:16px; text-align:center; outline:none;">
+    
+    <div id="sid-display-area" style="font-size: 13px; font-weight: 700; color: #4f6ef7; background: rgba(79,110,247,0.1); padding: 5px 15px; border-radius: 20px; display: none;">
+        🪪 ID: <span id="sid-value">---</span>
+    </div>
+</div>
+
+<div style="display:flex; flex-direction:column; align-items:center; gap:11px; margin-top:6px;">
+
+  <button onclick="startMock()" style="
+      width:260px; background: linear-gradient(135deg,#f97316,#ea580c);
+color:white; padding:6px 14px; border-radius:20px;
+      font-size: 18px; font-weight:700; border: none; border-radius: 30px; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(234,88,12,0.45);
+      transition: transform 0.18s, box-shadow 0.18s;"
+    onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 10px 28px rgba(234,88,12,0.6)'"
+    onmouseout="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 6px 20px rgba(234,88,12,0.45)'"
+    onmousedown="this.style.transform='scale(0.97)'"
+    onmouseup="this.style.transform='translateY(-3px) scale(1.04)'">
+    🚀 Start Mock
+  </button>
+
+  <button onclick="window.location.href='https://commercesehoga.github.io/dashboard/'" style="
+      width:260px; background: linear-gradient(135deg,#22c55e,#15803d); color: white; padding: 13px 36px;
+      font-size: 18px; font-weight:700; border: none; border-radius: 30px; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(34,197,94,0.4);
+      transition: transform 0.18s, box-shadow 0.18s;"
+    onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 10px 28px rgba(34,197,94,0.6)'"
+    onmouseout="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 6px 20px rgba(34,197,94,0.4)'"
+    onmousedown="this.style.transform='scale(0.97)'"
+    onmouseup="this.style.transform='translateY(-3px) scale(1.04)'">
+    📊 Previous Result
+  </button>
+
+  <button onclick="window.open('https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html','_blank')" style="
+      width:260px; background: linear-gradient(135deg,#f97316,#c2410c); color: white; padding: 13px 36px;
+      font-size: 18px; font-weight:700; border: none; border-radius: 30px; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(249,115,22,0.4);
+      transition: transform 0.18s, box-shadow 0.18s;"
+    onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 10px 28px rgba(249,115,22,0.6)'"
+    onmouseout="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 6px 20px rgba(249,115,22,0.4)'"
+    onmousedown="this.style.transform='scale(0.97)'"
+    onmouseup="this.style.transform='translateY(-3px) scale(1.04)'">
+    📚 More Mock Tests
+  </button>
+
+</div>
+</div>
+
+<!-- INSTRUCTION SCREEN -->
+<div id="instruction-screen" style="
+position: fixed; top:0; left:0; width:100%; height:100%;
+background:white; z-index:9999; display:none; overflow:auto; padding:30px;">
+
+<h2 style="text-align:center; margin-bottom:20px;">Please read the instructions carefully</h2>
+
+<div class="instruction-box">
+<h3 class="instruction-title">General Instructions</h3>
+<ol class="instruction-list">
+<li>Total duration of test is <strong>60 minutes</strong>. Timer shown in sidebar.</li>
+<li>Test <strong>auto-submits</strong> when the timer reaches zero.</li>
+<li>The test runs in <strong>fullscreen mode</strong>. Exiting fullscreen starts a <strong>5-second countdown</strong> to auto-submit.</li>
+<li><strong>Do not switch tabs</strong>. Switching tabs starts a <strong>2-second countdown</strong> to auto-submit.</li>
+<li>Return to fullscreen or the tab before the countdown ends to continue safely.</li>
+<li>Question palette on the right shows answered, marked, and current status.</li>
+<li>Each correct answer: <strong>+5 marks</strong>. Each wrong answer: <strong>−1 mark</strong>. Unanswered: <strong>0 marks</strong>.</li>
+</ol>
+
+<div style="margin-top:20px;">
+    <strong>Question Status Legend:</strong>
+    <div class="legend" style="margin-top:10px;">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #90ee90;"></div>
+            <span>Answered</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #90D5FF;"></div>
+            <span>Marked</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="border: 1px solid var(--primary-color); background-color: white;"></div>
+            <span>Current</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #FF474D; border: 1px solid #ddd;"></div>
+            <span>Unanswered</span>
+        </div>
+    </div>
+</div>
+
+<label class="instruction-checkbox">
+    <input type="checkbox" id="agree-checkbox">
+    <span class="custom-check"></span>
+    I have read and understood all instructions
+</label>
+
+<br><br>
+
+<button id="start-test-btn" disabled style="
+background:#3f51b5; color:white; padding:12px 24px; border:none;
+border-radius:5px; font-size:18px; cursor:not-allowed; opacity:0.6;">
+Start Test
+</button>
+</div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-header">
+    <div class="timer">01:00:00</div>
+    <div id="focus-laptop" style="font-size:12px; font-weight:bold; color:green; margin-top:5px;">● Focus On</div>
+</div>
+
+    <div class="test-info">
+      <p><strong>Name:</strong> <span id="display-user-name">Thunder</span></p>
+    <p><strong>Student ID:</strong> <span id="display-user-sid" style="color:var(--acc); font-family:monospace;">---</span></p>
+        <p><strong>Subject:</strong> <span id="subject-label">cs</span></p>
+        <p><strong>Questions:</strong> 50</p>
+        <p><strong>Duration:</strong> 60 minutes</p>
+        <p><strong>Marking:</strong> +5 / -1</p>
+        <p><strong>Chapter:</strong> <span id="current-section">-</span></p>
+    </div>
+
+    <div class="question-palette">
+        <div class="palette-title">
+            <span>Questions</span>
+            <span id="answered-count">0/50</span>
+        </div>
+        <div class="palette-grid" id="question-palette-grid"></div>
+
+        <div id="palette-legend" style="margin-top:12px; font-size:12px;"></div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+
+<div class="mobile-top-bar">
+    <div class="mobile-timer-clone">01:00:00</div>
+    <div id="focus-mobile" style="font-size:10px; font-weight:bold; color:green;">● Focus On</div>
+    <div id="mobile-name-display">👤 Thunder</div>
+</div>
+
+<div class="test-header">
+  <div id="user-name-display" style="
+    background: linear-gradient(135deg,#f97316,#ea580c);
+    color:white; padding:6px 14px; border-radius:20px;
+    font-weight:bold; font-size:14px;">
+👤 Thunder
+</div>
+<h2>Question <span id="current-q-number">1</span>/50</h2>
+<div class="progress-container">
+<div class="progress-bar">
+<div class="progress" id="test-progress"></div>
+</div>
+<div class="progress-text">
+<span>Progress &nbsp;</span>
+<span id="progress-percent">0%</span>
+</div>
+</div>
+</div>
+
+<div class="question-container">
+<div class="question-number">Question <span id="q-number">1</span></div>
+<div class="question-text" id="question-text"></div>
+<div class="options" id="options-container"></div>
+<div class="navigation-btns">
+<button class="btn btn-outline" id="prev-btn">&#8592; Previous</button>
+<div>
+<button class="mark-btn" id="mark-btn">Mark for Review</button>
+<button class="btn btn-primary" id="next-btn">Next &#8594;</button>
+</div>
+</div>
+</div>
+
+<div class="submit-section" style="
+    display: flex; justify-content: space-between; align-items: center;
+    width: 100%; max-width: 620px; margin: 24px auto; gap: 14px; flex-wrap: wrap;">
+
+    <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn join-btn">
+        ⚡ Join Thunder
+    </a>
+
+    <button class="fancy-btn submit-fancy-btn" id="submit-test-btn">
+        ✅ Submit Test
+    </button>
+</div>
+
+<footer style="background: linear-gradient(135deg,#1a1a2e,#16213e); color: #e0e0e0; text-align: center; padding: 22px 16px; margin-top: 10px;">
+   <p style="font-size:13px; color:#aaa; margin-bottom:14px;">© 2025 Thunder. All Rights Reserved.</p>
+
+<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:14px;">
+    <a href="https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html" target="_blank" class="footer-btn more-btn">
+        📚 More Mock
+    </a>
+    <a href="https://commercesehoga.blogspot.com/" target="_blank" class="footer-btn back-btn">
+        🌐 Back To Website
+    </a>
+    <a href="https://t.me/mindmaster_robot" target="_blank" class="footer-btn report-btn">
+        🚨 Report Error
+    </a>
+</div>
+</footer>
+
+<!-- Results Modal -->
+<div class="modal" id="results-modal">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Test Results</h2>
+<button class="close-btn" id="close-modal">×</button>
+</div>
+<div class="result-stats">
+<div class="stat-card">
+<h3>Correct Answers</h3>
+<p class="correct-stat" id="correct-answers">0</p>
+</div>
+<div class="stat-card">
+<h3>Incorrect Answers</h3>
+<p class="incorrect-stat" id="incorrect-answers">0</p>
+</div>
+<div class="stat-card">
+<h3>Unanswered</h3>
+<p class="neutral-stat" id="unanswered">50</p>
+</div>
+<div class="stat-card">
+<h3>Total Score</h3>
+<p class="score-stat" id="total-score">0</p>
+</div>
+</div>
+<div class="detailed-results">
+<h3>Detailed Analysis</h3>
+<p>Percentage: <span id="percentage">0</span>%</p>
+<p>Accuracy: <span id="accuracy">0</span>%</p>
+</div>
+<div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+<button class="btn btn-secondary review-btn" id="review-btn" style="flex:1; margin-top:0;">Review Answers</button>
+<button class="btn pdf-download-btn" id="download-pdf-btn" style="flex:1;">📄 Download PDF</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+  // Disable Right-Click, Copy, and Paste
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('copy', e => e.preventDefault());
+document.addEventListener('paste', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+    if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
+        e.preventDefault();
+    }
+});
+function detectDevTools() {
+    const threshold = 160;
+    if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+        alert("Security Breach: DevTools detected. Test will auto-submit.");
+        submitTest();
+    }
+}
+// Check every 1 second during the test
+setInterval(() => { if(testStarted && !testSubmitted) detectDevTools(); }, 1000);
+/* ============================================================
+   MOCK TEST DATA — Edit questions here
+   ============================================================ */
+const mockTest = {
+    title: "cs Mock",
+    questions:[
+{
+id: 1,
+section: "Data — Introduction",
+text: "Data refers to:",
+options: { a: "Meaningful information derived from processing", b: "Raw, unprocessed facts and figures", c: "Only numerical values", d: "Only textual information" },
+correctAnswer: "b",
+explanation: "Data is raw, unprocessed facts, figures, or values collected from observations or measurements before being processed into information.",
+marked: false,
+userAnswer: null
+},
+{
+id: 2,
+section: "Data — Types",
+text: "Which of the following is an example of qualitative data?",
+options: { a: "Height in centimeters", b: "Temperature in degrees", c: "Eye color (blue, brown, green)", d: "Weight in kilograms" },
+correctAnswer: "c",
+explanation: "Qualitative data (categorical) describes qualities or characteristics. Eye color is categorical, while height, temperature, and weight are quantitative.",
+marked: false,
+userAnswer: null
+},
+{
+id: 3,
+section: "Data — Purpose",
+text: "The primary purpose of collecting data is to:",
+options: { a: "Store as much information as possible", b: "Gain insights, make decisions, and solve problems", c: "Create complex visualizations", d: "Fill storage space" },
+correctAnswer: "b",
+explanation: "Data collection aims to gather evidence for analysis, decision-making, problem-solving, and generating insights.",
+marked: false,
+userAnswer: null
+},
+{
+id: 4,
+section: "Data Collection — Methods",
+text: "Which of the following is a primary data collection method?",
+options: { a: "Using census data from the government", b: "Conducting a survey", c: "Analyzing existing company records", d: "Using data from academic journals" },
+correctAnswer: "b",
+explanation: "Primary data is collected directly by the researcher through surveys, experiments, or observations. Secondary data uses existing sources.",
+marked: false,
+userAnswer: null
+},
+{
+id: 5,
+section: "Data Organization",
+text: "Organizing data in a tabular format with rows and columns is called:",
+options: { a: "Data visualization", b: "Data structure", c: "Tabular representation", d: "Data encryption" },
+correctAnswer: "c",
+explanation: "Tabular representation organizes data into rows (records) and columns (variables/attributes) for easy analysis.",
+marked: false,
+userAnswer: null
+},
+{
+id: 6,
+section: "Measures of Central Tendency — Mean",
+text: "The arithmetic mean is calculated as:",
+options: { a: "Sum of all values divided by the number of values", b: "The middle value when data is sorted", c: "The most frequently occurring value", d: "The difference between maximum and minimum" },
+correctAnswer: "a",
+explanation: "Mean = (Σx) / n, where Σx is the sum of all values and n is the number of values.",
+marked: false,
+userAnswer: null
+},
+{
+id: 7,
+section: "Mean — Properties",
+text: "Which of the following is TRUE about the mean?",
+options: { a: "It is affected by extreme values (outliers)", b: "It can be calculated for categorical data", c: "It always equals the median", d: "It is not affected by outliers" },
+correctAnswer: "a",
+explanation: "Mean is sensitive to outliers because it uses all values in its calculation, making it pulled toward extreme values.",
+marked: false,
+userAnswer: null
+},
+{
+id: 8,
+section: "Measures of Central Tendency — Median",
+text: "The median of a dataset is defined as:",
+options: { a: "The arithmetic average of all values", b: "The middle value when the data is arranged in order", c: "The most frequent value", d: "The sum of all values" },
+correctAnswer: "b",
+explanation: "Median is the middle value in an ordered dataset. For even n, it's the average of the two middle values.",
+marked: false,
+userAnswer: null
+},
+{
+id: 9,
+section: "Median — Properties",
+text: "Which of the following is an advantage of median over mean?",
+options: { a: "It is easier to calculate", b: "It is not affected by outliers", c: "It uses all data points", d: "It always gives a whole number" },
+correctAnswer: "b",
+explanation: "Median is robust to outliers because it depends only on the middle position, not the actual values of extreme points.",
+marked: false,
+userAnswer: null
+},
+{
+id: 10,
+section: "Measures of Central Tendency — Mode",
+text: "The mode of a dataset is:",
+options: { a: "The average of all values", b: "The middle value", c: "The value that appears most frequently", d: "The difference between max and min" },
+correctAnswer: "c",
+explanation: "Mode is the value that occurs with the highest frequency. A dataset can have no mode, one mode (unimodal), or multiple modes (bimodal, multimodal).",
+marked: false,
+userAnswer: null
+},
+{
+id: 11,
+section: "Mode — Applications",
+text: "The mode is the most appropriate measure of central tendency for:",
+options: { a: "Continuous numerical data", b: "Categorical (nominal) data", c: "Symmetrical distributions", d: "Data with outliers" },
+correctAnswer: "b",
+explanation: "Mode is the only measure of central tendency that can be used for categorical/nominal data (e.g., most popular color, most common product).",
+marked: false,
+userAnswer: null
+},
+{
+id: 12,
+section: "Measures of Variability — Range",
+text: "The range of a dataset is calculated as:",
+options: { a: "Maximum value - Minimum value", b: "Maximum value + Minimum value", c: "Average of max and min", d: "Standard deviation squared" },
+correctAnswer: "a",
+explanation: "Range = Max(x) - Min(x). It measures the spread of data but is highly sensitive to outliers.",
+marked: false,
+userAnswer: null
+},
+{
+id: 13,
+section: "Range — Limitation",
+text: "What is a major limitation of using range as a measure of variability?",
+options: { a: "It is difficult to calculate", b: "It is affected by outliers", c: "It cannot be calculated for large datasets", d: "It requires sorted data" },
+correctAnswer: "b",
+explanation: "Range uses only the extreme values, making it highly sensitive to outliers. Two datasets with same range can have very different distributions.",
+marked: false,
+userAnswer: null
+},
+{
+id: 14,
+section: "Measures of Variability — Variance",
+text: "Variance measures:",
+options: { a: "The average of the dataset", b: "The average squared deviation from the mean", c: "The middle value of the dataset", d: "The most frequent value" },
+correctAnswer: "b",
+explanation: "Variance (σ²) = Σ(xi - μ)² / n (population) or Σ(xi - x̄)² / (n-1) (sample), measuring spread around the mean.",
+marked: false,
+userAnswer: null
+},
+{
+id: 15,
+section: "Variance — Population vs Sample",
+text: "The difference between population variance and sample variance is:",
+options: { a: "Population variance uses n, sample variance uses n-1 (Bessel's correction)", b: "Population variance uses n-1, sample variance uses n", c: "Both use n", d: "Both use n-1" },
+correctAnswer: "a",
+explanation: "Sample variance uses n-1 (Bessel's correction) to provide an unbiased estimate of population variance.",
+marked: false,
+userAnswer: null
+},
+{
+id: 16,
+section: "Measures of Variability — Standard Deviation",
+text: "Standard deviation is the:",
+options: { a: "Square of the variance", b: "Square root of the variance", c: "Sum of squared deviations", d: "Average absolute deviation" },
+correctAnswer: "b",
+explanation: "Standard deviation (σ or s) = √Variance. It measures spread in the same units as the original data.",
+marked: false,
+userAnswer: null
+},
+{
+id: 17,
+section: "Standard Deviation — Properties",
+text: "A smaller standard deviation indicates:",
+options: { a: "Data points are spread far from the mean", b: "Data points are clustered closely around the mean", c: "The mean is zero", d: "The data has high variability" },
+correctAnswer: "b",
+explanation: "Small standard deviation means data points are close to the mean; large standard deviation indicates wide spread.",
+marked: false,
+userAnswer: null
+},
+{
+id: 18,
+section: "Empirical Rule",
+text: "For a normal distribution, approximately what percentage of data falls within 2 standard deviations of the mean?",
+options: { a: "68%", b: "95%", c: "99.7%", d: "50%" },
+correctAnswer: "b",
+explanation: "Empirical Rule: 68% within 1σ, 95% within 2σ, 99.7% within 3σ of the mean.",
+marked: false,
+userAnswer: null
+},
+{
+id: 19,
+section: "Data Interpretation",
+text: "Data interpretation involves:",
+options: { a: "Only collecting data", b: "Drawing conclusions and making decisions based on analyzed data", c: "Storing data in databases", d: "Deleting unnecessary data" },
+correctAnswer: "b",
+explanation: "Data interpretation is the process of making sense of analyzed data to draw meaningful conclusions and inform decisions.",
+marked: false,
+userAnswer: null
+},
+{
+id: 20,
+section: "Measures of Central Tendency — When to Use Median",
+text: "Median is preferred over mean when:",
+options: { a: "Data is normally distributed", b: "Data contains outliers or is skewed", c: "Data is categorical", d: "Data has no mode" },
+correctAnswer: "b",
+explanation: "Median is robust to outliers and better represents the center of skewed distributions (e.g., income data).",
+marked: false,
+userAnswer: null
+},
+{
+id: 21,
+section: "Skewness — Effect on Mean and Median",
+text: "In a positively skewed (right-skewed) distribution, the relationship between mean, median, and mode is:",
+options: { a: "Mean < Median < Mode", b: "Mode < Median < Mean", c: "Mean = Median = Mode", d: "Mode < Mean < Median" },
+correctAnswer: "b",
+explanation: "In right-skewed distribution: Mode < Median < Mean (tail pulls the mean to the right).",
+marked: false,
+userAnswer: null
+},
+{
+id: 22,
+section: "Data Types — Discrete vs Continuous",
+text: "Which of the following is an example of discrete data?",
+options: { a: "Height of students", b: "Temperature of a room", c: "Number of cars in a parking lot", d: "Weight of a person" },
+correctAnswer: "c",
+explanation: "Discrete data takes countable, integer values (number of cars). Continuous data can take any value within a range (height, temperature, weight).",
+marked: false,
+userAnswer: null
+},
+{
+id: 23,
+section: "Measures of Variability — Comparison",
+text: "Which measure of variability is expressed in the same units as the original data?",
+options: { a: "Variance", b: "Standard deviation", c: "Range", d: "Both B and C" },
+correctAnswer: "d",
+explanation: "Standard deviation and range are in original units; variance is in squared units, making interpretation less intuitive.",
+marked: false,
+userAnswer: null
+},
+{
+id: 24,
+section: "Data Collection — Sampling",
+text: "A sample is:",
+options: { a: "The entire group of interest", b: "A subset of the population selected for study", c: "All possible data points", d: "Only the extreme values" },
+correctAnswer: "b",
+explanation: "A sample is a subset of the population used to make inferences about the entire population when studying the whole population is impractical.",
+marked: false,
+userAnswer: null
+},
+{
+id: 25,
+section: "Data Visualization — Purpose",
+text: "The primary purpose of data visualization is:",
+options: { a: "To store large amounts of data", b: "To present data in a graphical format for easier understanding and pattern recognition", c: "To encrypt data", d: "To compress data" },
+correctAnswer: "b",
+explanation: "Data visualization uses charts, graphs, and plots to reveal patterns, trends, and outliers that may not be obvious in raw data.",
+marked: false,
+userAnswer: null
+},
+{
+id: 26,
+section: "Mean — Implementation",
+text: "Write Python code to calculate the mean of a list of numbers.",
+options: { a: "def mean(data):\n    return sum(data) / len(data)", b: "def calculate_mean(numbers):\n    total = 0\n    for num in numbers:\n        total += num\n    return total / len(numbers)", c: "def arithmetic_mean(lst):\n    return sum(lst)/len(lst) if lst else 0", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options correctly calculate the mean using sum() or manual accumulation.",
+marked: false,
+userAnswer: null
+},
+{
+id: 27,
+section: "Median — Implementation",
+text: "Write Python code to calculate the median of a list of numbers.",
+options: { a: "def median(data):\n    sorted_data = sorted(data)\n    n = len(sorted_data)\n    if n % 2 == 0:\n        return (sorted_data[n//2 - 1] + sorted_data[n//2]) / 2\n    else:\n        return sorted_data[n//2]", b: "def calculate_median(nums):\n    nums.sort()\n    n = len(nums)\n    mid = n // 2\n    if n % 2 == 0:\n        return (nums[mid-1] + nums[mid]) / 2\n    else:\n        return nums[mid]", c: "import statistics\ndef median(data):\n    return statistics.median(data)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options correctly compute the median using different approaches.",
+marked: false,
+userAnswer: null
+},
+{
+id: 28,
+section: "Mode — Implementation",
+text: "Write Python code to calculate the mode (most frequent value) of a list of numbers.",
+options: { a: "def mode(data):\n    freq = {}\n    for x in data:\n        freq[x] = freq.get(x, 0) + 1\n    max_freq = max(freq.values())\n    return [k for k, v in freq.items() if v == max_freq]", b: "from collections import Counter\ndef find_mode(arr):\n    counter = Counter(arr)\n    max_count = max(counter.values())\n    return [num for num, count in counter.items() if count == max_count]", c: "def calculate_mode(lst):\n    freq = {}\n    for num in lst:\n        freq[num] = freq.get(num, 0) + 1\n    max_val = max(freq.values())\n    return [key for key, val in freq.items() if val == max_val]", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute the mode (returns list for multimodal data).",
+marked: false,
+userAnswer: null
+},
+{
+id: 29,
+section: "Range — Implementation",
+text: "Write Python code to calculate the range of a list of numbers.",
+options: { a: "def range_calc(data):\n    return max(data) - min(data)", b: "def calculate_range(numbers):\n    if not numbers:\n        return 0\n    return max(numbers) - min(numbers)", c: "def data_range(lst):\n    return max(lst) - min(lst) if lst else 0", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options correctly compute the range (max - min).",
+marked: false,
+userAnswer: null
+},
+{
+id: 30,
+section: "Variance — Implementation",
+text: "Write Python code to calculate the variance of a list of numbers (sample variance with n-1).",
+options: { a: "def variance(data):\n    n = len(data)\n    if n < 2:\n        return 0\n    mean_val = sum(data) / n\n    squared_diff = [(x - mean_val) ** 2 for x in data]\n    return sum(squared_diff) / (n - 1)", b: "def sample_variance(numbers):\n    n = len(numbers)\n    if n < 2:\n        return 0\n    avg = sum(numbers) / n\n    total = 0\n    for x in numbers:\n        total += (x - avg) ** 2\n    return total / (n - 1)", c: "import statistics\ndef variance(data):\n    return statistics.variance(data)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute sample variance using n-1 (Bessel's correction).",
+marked: false,
+userAnswer: null
+},
+{
+id: 31,
+section: "Standard Deviation — Implementation",
+text: "Write Python code to calculate the standard deviation of a list of numbers.",
+options: { a: "import math\ndef std_dev(data):\n    n = len(data)\n    if n < 2:\n        return 0\n    mean_val = sum(data) / n\n    variance = sum((x - mean_val) ** 2 for x in data) / (n - 1)\n    return math.sqrt(variance)", b: "def standard_deviation(numbers):\n    return math.sqrt(variance(numbers))", c: "import statistics\ndef std(data):\n    return statistics.stdev(data)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute standard deviation as the square root of variance.",
+marked: false,
+userAnswer: null
+},
+{
+id: 32,
+section: "Statistical Summary Function",
+text: "Write Python code to create a function that returns mean, median, mode, range, variance, and standard deviation in a dictionary.",
+options: { a: "def statistical_summary(data):\n    n = len(data)\n    if n == 0:\n        return {}\n    mean_val = sum(data) / n\n    sorted_data = sorted(data)\n    if n % 2 == 0:\n        median_val = (sorted_data[n//2-1] + sorted_data[n//2]) / 2\n    else:\n        median_val = sorted_data[n//2]\n    from collections import Counter\n    freq = Counter(data)\n    max_freq = max(freq.values())\n    mode_val = [k for k, v in freq.items() if v == max_freq]\n    range_val = max(data) - min(data)\n    variance_val = sum((x - mean_val) ** 2 for x in data) / (n - 1)\n    import math\n    std_val = math.sqrt(variance_val)\n    return {'mean': mean_val, 'median': median_val, 'mode': mode_val, 'range': range_val, 'variance': variance_val, 'std': std_val}", b: "def describe_data(arr):\n    import statistics, math\n    from collections import Counter\n    n = len(arr)\n    mean_val = statistics.mean(arr)\n    median_val = statistics.median(arr)\n    counter = Counter(arr)\n    max_f = max(counter.values())\n    mode_val = [num for num, f in counter.items() if f == max_f]\n    range_val = max(arr) - min(arr)\n    var_val = statistics.variance(arr)\n    std_val = statistics.stdev(arr)\n    return {'mean': mean_val, 'median': median_val, 'mode': mode_val, 'range': range_val, 'variance': var_val, 'std': std_val}", c: "def full_summary(lst):\n    if not lst:\n        return {}\n    lst_sorted = sorted(lst)\n    n = len(lst)\n    mean_val = sum(lst)/n\n    median_val = lst_sorted[n//2] if n%2 else (lst_sorted[n//2-1]+lst_sorted[n//2])/2\n    freq = {}\n    for x in lst:\n        freq[x] = freq.get(x,0)+1\n    max_f = max(freq.values())\n    mode_val = [x for x,f in freq.items() if f==max_f]\n    range_val = max(lst)-min(lst)\n    var_val = sum((x-mean_val)**2 for x in lst)/(n-1)\n    std_val = var_val**0.5\n    return {'mean':mean_val, 'median':median_val, 'mode':mode_val, 'range':range_val, 'variance':var_val, 'std':std_val}", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options provide comprehensive statistical summaries.",
+marked: false,
+userAnswer: null
+},
+{
+id: 33,
+section: "Data — Create Dataset",
+text: "Write Python code to create a dataset of 100 random integers between 1 and 100 using the random module.",
+options: { a: "import random\ndata = [random.randint(1, 100) for _ in range(100)]", b: "import random\ndata = []\nfor i in range(100):\n    data.append(random.randint(1, 100))", c: "from random import randint\ndata = [randint(1, 100) for _ in range(100)]", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options generate a list of 100 random integers between 1 and 100.",
+marked: false,
+userAnswer: null
+},
+{
+id: 34,
+section: "Data — Frequency Table",
+text: "Write Python code to create a frequency table (dictionary) of values in a dataset.",
+options: { a: "def frequency_table(data):\n    freq = {}\n    for x in data:\n        freq[x] = freq.get(x, 0) + 1\n    return freq", b: "from collections import Counter\ndef get_frequencies(arr):\n    return dict(Counter(arr))", c: "def freq_dict(lst):\n    return {x: lst.count(x) for x in set(lst)}", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options create frequency dictionaries using different methods.",
+marked: false,
+userAnswer: null
+},
+{
+id: 35,
+section: "Data — Grouped Data Mean",
+text: "Write Python code to calculate the mean of grouped data given class intervals and frequencies.",
+options: { a: "def grouped_mean(intervals, frequencies):\n    midpoints = [(low + high) / 2 for low, high in intervals]\n    total_freq = sum(frequencies)\n    sum_fx = sum(m * f for m, f in zip(midpoints, frequencies))\n    return sum_fx / total_freq", b: "def mean_of_grouped_data(class_marks, freqs):\n    return sum(cm * f for cm, f in zip(class_marks, freqs)) / sum(freqs)", c: "def grouped_data_mean(midpoints, frequencies):\n    return sum(mid * freq for mid, freq in zip(midpoints, frequencies)) / sum(frequencies)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute the mean of grouped data using midpoints and frequencies.",
+marked: false,
+userAnswer: null
+},
+{
+id: 36,
+section: "Data — Quartiles",
+text: "Write Python code to calculate the first quartile (Q1) and third quartile (Q3) of a dataset.",
+options: { a: "def quartiles(data):\n    sorted_data = sorted(data)\n    n = len(sorted_data)\n    Q1 = sorted_data[n//4]\n    Q3 = sorted_data[3*n//4]\n    return Q1, Q3", b: "import statistics\ndef get_quartiles(data):\n    return statistics.quantiles(data, n=4)", c: "def quartile_values(arr):\n    arr_sorted = sorted(arr)\n    n = len(arr_sorted)\n    q1 = arr_sorted[n//4]\n    q3 = arr_sorted[3*n//4]\n    return q1, q3", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute quartiles (B uses statistics.quantiles).",
+marked: false,
+userAnswer: null
+},
+{
+id: 37,
+section: "Data — Interquartile Range (IQR)",
+text: "Write Python code to calculate the Interquartile Range (IQR = Q3 - Q1).",
+options: { a: "def iqr(data):\n    sorted_data = sorted(data)\n    n = len(sorted_data)\n    q1 = sorted_data[n//4]\n    q3 = sorted_data[3*n//4]\n    return q3 - q1", b: "import statistics\ndef interquartile_range(arr):\n    q1, q3 = statistics.quantiles(arr, n=4)\n    return q3 - q1", c: "def IQR(lst):\n    s = sorted(lst)\n    n = len(s)\n    return s[3*n//4] - s[n//4]", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute the interquartile range (Q3 - Q1).",
+marked: false,
+userAnswer: null
+},
+{
+id: 38,
+section: "Data — Outlier Detection using IQR",
+text: "Write Python code to detect outliers using the IQR method (values below Q1 - 1.5*IQR or above Q3 + 1.5*IQR).",
+options: { a: "def detect_outliers(data):\n    sorted_data = sorted(data)\n    n = len(sorted_data)\n    q1 = sorted_data[n//4]\n    q3 = sorted_data[3*n//4]\n    iqr_val = q3 - q1\n    lower_bound = q1 - 1.5 * iqr_val\n    upper_bound = q3 + 1.5 * iqr_val\n    outliers = [x for x in data if x < lower_bound or x > upper_bound]\n    return outliers, lower_bound, upper_bound", b: "def outliers_iqr(arr):\n    import statistics\n    q1, q3 = statistics.quantiles(arr, n=4)\n    iqr = q3 - q1\n    low = q1 - 1.5*iqr\n    high = q3 + 1.5*iqr\n    return [x for x in arr if x < low or x > high]", c: "def find_outliers(lst):\n    s = sorted(lst)\n    n = len(s)\n    q1 = s[n//4]\n    q3 = s[3*n//4]\n    iqr = q3 - q1\n    lb = q1 - 1.5*iqr\n    ub = q3 + 1.5*iqr\n    return [x for x in lst if x < lb or x > ub]", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options detect outliers using the 1.5*IQR rule.",
+marked: false,
+userAnswer: null
+},
+{
+id: 39,
+section: "Data — Coefficient of Variation",
+text: "Write Python code to calculate the coefficient of variation (CV = standard deviation / mean * 100).",
+options: { a: "def coefficient_of_variation(data):\n    mean_val = sum(data) / len(data)\n    import math\n    variance = sum((x - mean_val) ** 2 for x in data) / (len(data) - 1)\n    std = math.sqrt(variance)\n    return (std / mean_val) * 100", b: "def cv(data):\n    from statistics import mean, stdev\n    return (stdev(data) / mean(data)) * 100", c: "def coeff_var(lst):\n    m = sum(lst)/len(lst)\n    var = sum((x-m)**2 for x in lst)/(len(lst)-1)\n    std = var**0.5\n    return (std/m)*100", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute the coefficient of variation (relative standard deviation).",
+marked: false,
+userAnswer: null
+},
+{
+id: 40,
+section: "Data — Z-Score",
+text: "Write Python code to calculate z-scores (standardized scores) for each data point.",
+options: { a: "def z_scores(data):\n    mean_val = sum(data) / len(data)\n    variance = sum((x - mean_val) ** 2 for x in data) / (len(data) - 1)\n    import math\n    std = math.sqrt(variance)\n    return [(x - mean_val) / std for x in data]", b: "from statistics import mean, stdev\ndef standardize(arr):\n    m = mean(arr)\n    s = stdev(arr)\n    return [(x - m) / s for x in arr]", c: "def calculate_z_scores(lst):\n    m = sum(lst)/len(lst)\n    var = sum((x-m)**2 for x in lst)/(len(lst)-1)\n    s = var**0.5\n    return [(x-m)/s for x in lst]", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute z-scores (how many standard deviations a value is from the mean).",
+marked: false,
+userAnswer: null
+},
+{
+id: 41,
+section: "Data — Mean Deviation",
+text: "Write Python code to calculate the mean absolute deviation from the mean.",
+options: { a: "def mean_absolute_deviation(data):\n    mean_val = sum(data) / len(data)\n    return sum(abs(x - mean_val) for x in data) / len(data)", b: "def mad(data):\n    m = sum(data)/len(data)\n    return sum(abs(x-m) for x in data)/len(data)", c: "def mean_abs_dev(arr):\n    avg = sum(arr)/len(arr)\n    return sum(abs(val - avg) for val in arr)/len(arr)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute the mean absolute deviation (average absolute distance from the mean).",
+marked: false,
+userAnswer: null
+},
+{
+id: 42,
+section: "Data — Skewness",
+text: "Write Python code to calculate the skewness of a dataset (measure of asymmetry).",
+options: { a: "def skewness(data):\n    n = len(data)\n    mean_val = sum(data) / n\n    variance = sum((x - mean_val) ** 2 for x in data) / n\n    std = variance ** 0.5\n    skew = sum((x - mean_val) ** 3 for x in data) / (n * std ** 3)\n    return skew", b: "import scipy.stats as stats\ndef skew(arr):\n    return stats.skew(arr)", c: "def calculate_skewness(lst):\n    n = len(lst)\n    m = sum(lst)/n\n    var = sum((x-m)**2 for x in lst)/n\n    s = var**0.5\n    return sum((x-m)**3 for x in lst)/(n*s**3)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute skewness (positive = right-skewed, negative = left-skewed).",
+marked: false,
+userAnswer: null
+},
+{
+id: 43,
+section: "Data — Kurtosis",
+text: "Write Python code to calculate the kurtosis of a dataset (measure of tail heaviness).",
+options: { a: "def kurtosis(data):\n    n = len(data)\n    mean_val = sum(data) / n\n    variance = sum((x - mean_val) ** 2 for x in data) / n\n    std = variance ** 0.5\n    kurt = sum((x - mean_val) ** 4 for x in data) / (n * std ** 4) - 3\n    return kurt", b: "import scipy.stats as stats\ndef kurt(arr):\n    return stats.kurtosis(arr)", c: "def excess_kurtosis(lst):\n    n = len(lst)\n    m = sum(lst)/n\n    var = sum((x-m)**2 for x in lst)/n\n    s = var**0.5\n    return sum((x-m)**4 for x in lst)/(n*s**4)-3", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute excess kurtosis (normal distribution has kurtosis 0).",
+marked: false,
+userAnswer: null
+},
+{
+id: 44,
+section: "Data — Percentile",
+text: "Write Python code to calculate the nth percentile of a dataset.",
+options: { a: "def percentile(data, p):\n    sorted_data = sorted(data)\n    n = len(sorted_data)\n    index = (p / 100) * (n - 1)\n    if index.is_integer():\n        return sorted_data[int(index)]\n    else:\n        lower = sorted_data[int(index)]\n        upper = sorted_data[int(index) + 1]\n        return lower + (upper - lower) * (index - int(index))", b: "import statistics\ndef get_percentile(arr, p):\n    return statistics.quantiles(arr, n=100)[p-1] if 1 <= p <= 99 else None", c: "def find_percentile(lst, percent):\n    s = sorted(lst)\n    k = (len(s)-1) * percent / 100\n    f = int(k)\n    c = k - f\n    if f + 1 < len(s):\n        return s[f] + c * (s[f+1] - s[f])\n    return s[f]", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute percentiles using interpolation.",
+marked: false,
+userAnswer: null
+},
+{
+id: 45,
+section: "Data — Summary Statistics using NumPy",
+text: "Write Python code to calculate summary statistics using NumPy (mean, median, std, min, max, percentiles).",
+options: { a: "import numpy as np\ndef numpy_summary(data):\n    return {\n        'mean': np.mean(data),\n        'median': np.median(data),\n        'std': np.std(data, ddof=1),\n        'min': np.min(data),\n        'max': np.max(data),\n        '25th': np.percentile(data, 25),\n        '75th': np.percentile(data, 75)\n    }", b: "import numpy as np\ndef stats_numpy(arr):\n    return {'mean': np.mean(arr), 'std': np.std(arr), 'var': np.var(arr), 'q1': np.quantile(arr, 0.25), 'q3': np.quantile(arr, 0.75)}", c: "import numpy as np\ndef describe_numpy(lst):\n    return np.array(lst).describe() if hasattr(np.array(lst), 'describe') else {'mean': np.mean(lst), 'median': np.median(lst), 'std': np.std(lst)}", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options use NumPy for efficient statistical calculations.",
+marked: false,
+userAnswer: null
+},
+{
+id: 46,
+section: "Data — Covariance",
+text: "Write Python code to calculate the covariance between two datasets.",
+options: { a: "def covariance(x, y):\n    if len(x) != len(y):\n        raise ValueError('Lists must have same length')\n    n = len(x)\n    mean_x = sum(x) / n\n    mean_y = sum(y) / n\n    return sum((x[i] - mean_x) * (y[i] - mean_y) for i in range(n)) / (n - 1)", b: "import numpy as np\ndef cov(x, y):\n    return np.cov(x, y)[0][1]", c: "def calculate_covariance(list1, list2):\n    n = len(list1)\n    mx = sum(list1)/n\n    my = sum(list2)/n\n    return sum((list1[i]-mx)*(list2[i]-my) for i in range(n))/(n-1)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute covariance (measure of how two variables change together).",
+marked: false,
+userAnswer: null
+},
+{
+id: 47,
+section: "Data — Correlation Coefficient",
+text: "Write Python code to calculate the Pearson correlation coefficient between two datasets.",
+options: { a: "def correlation(x, y):\n    cov_xy = covariance(x, y)\n    std_x = standard_deviation(x)\n    std_y = standard_deviation(y)\n    return cov_xy / (std_x * std_y)", b: "import numpy as np\ndef corr(x, y):\n    return np.corrcoef(x, y)[0][1]", c: "def pearson_correlation(list1, list2):\n    n = len(list1)\n    sum_x = sum(list1)\n    sum_y = sum(list2)\n    sum_xy = sum(list1[i] * list2[i] for i in range(n))\n    sum_x2 = sum(x ** 2 for x in list1)\n    sum_y2 = sum(y ** 2 for y in list2)\n    numerator = n * sum_xy - sum_x * sum_y\n    denominator = ((n * sum_x2 - sum_x ** 2) * (n * sum_y2 - sum_y ** 2)) ** 0.5\n    return numerator / denominator if denominator != 0 else 0", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute Pearson correlation coefficient (ranging from -1 to 1).",
+marked: false,
+userAnswer: null
+},
+{
+id: 48,
+section: "Data — Central Limit Theorem Demonstration",
+text: "Write Python code to demonstrate the Central Limit Theorem by taking multiple samples and plotting their means.",
+options: { a: "import random\ndef clt_demo(population, sample_size, num_samples):\n    sample_means = []\n    for _ in range(num_samples):\n        sample = random.sample(population, sample_size)\n        sample_means.append(sum(sample) / sample_size)\n    return sample_means", b: "import numpy as np\ndef central_limit_theorem(pop, n_samples, sample_size):\n    means = [np.mean(np.random.choice(pop, sample_size)) for _ in range(n_samples)]\n    return means", c: "import random\ndef demonstrate_clt(data, k, m):\n    means = []\n    for _ in range(m):\n        s = random.choices(data, k=k)\n        means.append(sum(s)/k)\n    return means", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options demonstrate CLT by sampling means from a population.",
+marked: false,
+userAnswer: null
+},
+{
+id: 49,
+section: "Data — Confidence Interval",
+text: "Write Python code to calculate a 95% confidence interval for the mean of a dataset.",
+options: { a: "import math\ndef confidence_interval_95(data):\n    n = len(data)\n    mean_val = sum(data) / n\n    variance = sum((x - mean_val) ** 2 for x in data) / (n - 1)\n    std = math.sqrt(variance)\n    margin = 1.96 * (std / math.sqrt(n))\n    return (mean_val - margin, mean_val + margin)", b: "import scipy.stats as stats\ndef ci_95(arr):\n    return stats.t.interval(0.95, len(arr)-1, loc=np.mean(arr), scale=stats.sem(arr))", c: "def confidence_interval(data):\n    import statistics, math\n    n = len(data)\n    m = statistics.mean(data)\n    s = statistics.stdev(data)\n    se = s / math.sqrt(n)\n    return (m - 1.96*se, m + 1.96*se)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options compute 95% confidence intervals (using z=1.96 for large samples or t-distribution).",
+marked: false,
+userAnswer: null
+},
+{
+id: 50,
+section: "Data — Comprehensive Data Analysis",
+text: "Write a comprehensive Python program that loads a dataset, cleans it (removes missing values), and calculates all descriptive statistics (mean, median, mode, range, variance, standard deviation, quartiles, IQR, skewness).",
+options: { a: "def full_data_analysis(data):\n    # Remove missing values\n    clean_data = [x for x in data if x is not None and not math.isnan(x) if isinstance(x, (int, float))]\n    n = len(clean_data)\n    if n == 0:\n        return {}\n    mean_val = sum(clean_data) / n\n    sorted_data = sorted(clean_data)\n    median_val = sorted_data[n//2] if n%2 else (sorted_data[n//2-1]+sorted_data[n//2])/2\n    from collections import Counter\n    freq = Counter(clean_data)\n    max_f = max(freq.values())\n    mode_val = [k for k,v in freq.items() if v==max_f]\n    range_val = max(clean_data)-min(clean_data)\n    var_val = sum((x-mean_val)**2 for x in clean_data)/(n-1)\n    std_val = var_val**0.5\n    q1 = sorted_data[n//4]\n    q3 = sorted_data[3*n//4]\n    iqr_val = q3 - q1\n    skew = sum((x-mean_val)**3 for x in clean_data)/(n*std_val**3)\n    return {'mean': mean_val, 'median': median_val, 'mode': mode_val, 'range': range_val, 'variance': var_val, 'std': std_val, 'Q1': q1, 'Q3': q3, 'IQR': iqr_val, 'skewness': skew}", b: "import pandas as pd\ndef analyze_data(series):\n    s = pd.Series(series).dropna()\n    return {'mean': s.mean(), 'median': s.median(), 'mode': s.mode().tolist(), 'range': s.max() - s.min(), 'variance': s.var(), 'std': s.std(), 'Q1': s.quantile(0.25), 'Q3': s.quantile(0.75), 'IQR': s.quantile(0.75) - s.quantile(0.25), 'skewness': s.skew()}", c: "import numpy as np\ndef comprehensive_stats(arr):\n    arr_clean = arr[~np.isnan(arr)]\n    if len(arr_clean) == 0:\n        return {}\n    return {'mean': np.mean(arr_clean), 'median': np.median(arr_clean), 'range': np.max(arr_clean)-np.min(arr_clean), 'var': np.var(arr_clean, ddof=1), 'std': np.std(arr_clean, ddof=1), 'q1': np.percentile(arr_clean, 25), 'q3': np.percentile(arr_clean, 75), 'iqr': np.percentile(arr_clean, 75) - np.percentile(arr_clean, 25)}", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options provide comprehensive data analysis with descriptive statistics.",
+marked: false,
+userAnswer: null
+}
+],
+    duration: 60 * 60,
+    markingScheme: { correct: 5, incorrect: -1 }
+};
+
+/* ============================================================
+   CORE TEST ENGINE
+   ============================================================ */
+const timerElement = document.querySelector('.timer');
+const questionTextElement = document.getElementById('question-text');
+const optionsContainer = document.getElementById('options-container');
+const questionNumberElement = document.getElementById('q-number');
+const currentQNumberElement = document.getElementById('current-q-number');
+const progressBar = document.getElementById('test-progress');
+const progressPercent = document.getElementById('progress-percent');
+const questionPaletteGrid = document.getElementById('question-palette-grid');
+const answeredCountElement = document.getElementById('answered-count');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const markBtn = document.getElementById('mark-btn');
+const submitTestBtn = document.getElementById('submit-test-btn');
+const resultsModal = document.getElementById('results-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const correctAnswersElement = document.getElementById('correct-answers');
+const incorrectAnswersElement = document.getElementById('incorrect-answers');
+const unansweredElement = document.getElementById('unanswered');
+const totalScoreElement = document.getElementById('total-score');
+const percentageElement = document.getElementById('percentage');
+const accuracyElement = document.getElementById('accuracy');
+const reviewBtn = document.getElementById('review-btn');
+
+let currentQuestionIndex = 0;
+let timeLeft = mockTest.duration;
+let timer;
+let testSubmitted = false;
+let testStarted = false;
+
+function initTest() {
+    // 1. SHUFFLE OPTIONS ONLY (Questions stay 1 to 50)
+    mockTest.questions.forEach(q => {
+        let optionsArray = Object.entries(q.options); 
+        // Randomize the order of the options array
+        optionsArray.sort(() => Math.random() - 0.5); 
+        
+        let newOptions = {};
+        let newCorrectKey = "";
+        
+        optionsArray.forEach(([oldKey, text], index) => {
+            let newKey = String.fromCharCode(97 + index); // assigns new keys: a, b, c, d
+            newOptions[newKey] = text;
+            // Ensure the grade still works by tracking where the correct answer moved
+            if (oldKey === q.correctAnswer) newCorrectKey = newKey;
+        });
+        
+        q.options = newOptions;
+        q.correctAnswer = newCorrectKey;
+    });
+
+    // 2. RENDER TEST
+    renderQuestionPalette();
+    renderQuestion();
+    startTimer();
+    updateProgress();
+    renderLegend(false);
+    
+    prevBtn.addEventListener('click', goToPreviousQuestion);
+    nextBtn.addEventListener('click', goToNextQuestion);
+    markBtn.addEventListener('click', toggleMarkForReview);
+    submitTestBtn.addEventListener('click', confirmSubmit);
+    closeModalBtn.addEventListener('click', closeResultsModal);
+    reviewBtn.addEventListener('click', reviewAnswers);
+    document.getElementById('download-pdf-btn').addEventListener('click', generatePDF);
+}
+
+function renderLegend(reviewMode) {
+    const leg = document.getElementById('palette-legend');
+    if (!leg) return;
+    if (reviewMode) {
+        leg.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#22c55e;"></div><span>Correct</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#ef4444;"></div><span>Wrong</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#3b82f6;"></div><span>Not Answered</span></div>
+        </div>`;
+    } else {
+        leg.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#90ee90;"></div><span>Answered</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#90D5FF;"></div><span>Marked</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#FF474D;"></div><span>Unanswered</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #f97316;"></div><span>Current</span></div>
+        </div>`;
+    }
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) { clearInterval(timer); submitTest(); }
+        if (timeLeft === 300) { alert('Only 5 minutes remaining!'); }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const hours = Math.floor(timeLeft / 3600);
+    const minutes = Math.floor((timeLeft % 3600) / 60);
+    const seconds = timeLeft % 60;
+    const timeStr = `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+    timerElement.textContent = timeStr;
+    const mobileTimer = document.querySelector('.mobile-timer-clone');
+    if (mobileTimer) mobileTimer.textContent = timeStr;
+}
+
+function renderQuestion() {
+    const question = mockTest.questions[currentQuestionIndex];
+    document.getElementById('current-section').textContent = question.section;
+    questionTextElement.innerHTML = `
+        <div style="display:inline-block;background:linear-gradient(135deg,#f97316,#ea580c);color:white;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:8px;">
+            📘 ${question.section || "General"}
+        </div>
+        ${question.image ? `<div style="margin:10px 0;"><img src="${question.image}" style="max-width:100%;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);"></div>` : ""}
+        <div style="margin-top:8px;">${question.text}</div>
+    `;
+    questionNumberElement.textContent = question.id;
+    currentQNumberElement.textContent = question.id;
+    optionsContainer.innerHTML = '';
+
+    for (const [key, value] of Object.entries(question.options)) {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'option';
+        if (testSubmitted) {
+            if (key === question.correctAnswer) optionDiv.classList.add('correct');
+            else if (key === question.userAnswer && key !== question.correctAnswer) optionDiv.classList.add('incorrect');
+        } else {
+            if (key === question.userAnswer) optionDiv.classList.add('selected');
+        }
+        if (!testSubmitted) {
+            optionDiv.addEventListener('click', () => {
+                optionsContainer.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                optionDiv.classList.add('selected');
+                selectAnswer(key);
+            });
+        }
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'question-option';
+        input.value = key;
+        input.checked = question.userAnswer === key;
+        input.disabled = testSubmitted;
+        const letterDiv = document.createElement('div');
+        letterDiv.className = 'opt-letter';
+        letterDiv.textContent = key.toUpperCase();
+        const textSpan = document.createElement('span');
+        textSpan.className = 'opt-text';
+        textSpan.textContent = value;
+        if (testSubmitted) {
+            if (key === question.correctAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'correct-indicator';
+                ind.textContent = ' ✓ Correct Answer';
+                textSpan.appendChild(ind);
+            } else if (key === question.userAnswer && key !== question.correctAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'incorrect-indicator';
+                ind.textContent = ' ✗ Your Answer';
+                textSpan.appendChild(ind);
+            }
+        }
+        optionDiv.appendChild(input);
+        optionDiv.appendChild(letterDiv);
+        optionDiv.appendChild(textSpan);
+        optionsContainer.appendChild(optionDiv);
+    }
+
+    if (testSubmitted) {
+        const explanationDiv = document.createElement('div');
+        explanationDiv.style.cssText = "margin-top:15px;padding:12px;border-radius:8px;background:linear-gradient(135deg,#eef2ff,#e0f2ff);border-left:4px solid #6a11cb;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,0.1);";
+        explanationDiv.innerHTML = `<strong>Explanation:</strong><br>${question.explanation || "No explanation available."}`;
+        optionsContainer.appendChild(explanationDiv);
+    }
+
+    markBtn.classList.toggle('marked', question.marked);
+    markBtn.textContent = question.marked ? 'Unmark' : 'Mark for Review';
+    prevBtn.style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+    nextBtn.style.visibility = currentQuestionIndex === mockTest.questions.length - 1 ? 'hidden' : 'visible';
+    prevBtn.disabled = currentQuestionIndex === 0;
+    nextBtn.disabled = currentQuestionIndex === mockTest.questions.length - 1;
+    updateQuestionPalette();
+}
+
+function selectAnswer(answer) {
+    mockTest.questions[currentQuestionIndex].userAnswer = answer;
+    updateQuestionPalette();
+    updateProgress();
+}
+
+function toggleMarkForReview() {
+    const question = mockTest.questions[currentQuestionIndex];
+    question.marked = !question.marked;
+    markBtn.classList.toggle('marked', question.marked);
+    markBtn.textContent = question.marked ? 'Unmark' : 'Mark for Review';
+    updateQuestionPalette();
+}
+
+function goToPreviousQuestion() {
+    if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); }
+}
+
+function goToNextQuestion() {
+    if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); }
+}
+
+function renderQuestionPalette() {
+    questionPaletteGrid.innerHTML = '';
+    mockTest.questions.forEach((question, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn';
+        btn.textContent = question.id;
+        btn.addEventListener('click', () => navigateToQuestion(index));
+        questionPaletteGrid.appendChild(btn);
+    });
+    updateQuestionPalette();
+}
+
+function updateQuestionPalette() {
+    const paletteButtons = questionPaletteGrid.querySelectorAll('.palette-btn');
+    paletteButtons.forEach(btn => { btn.className = 'palette-btn'; });
+    mockTest.questions.forEach((question, index) => {
+        const btn = paletteButtons[index];
+        if (testSubmitted) {
+            if (!question.userAnswer) btn.classList.add('review-unanswered');
+            else if (question.userAnswer === question.correctAnswer) btn.classList.add('review-correct');
+            else btn.classList.add('review-wrong');
+        } else {
+            if (question.userAnswer) btn.classList.add('answered');
+            if (question.marked) btn.classList.add('marked');
+        }
+        if (index === currentQuestionIndex) btn.classList.add('current');
+    });
+    const answeredCount = mockTest.questions.filter(q => q.userAnswer).length;
+    answeredCountElement.textContent = `${answeredCount}/${mockTest.questions.length}`;
+}
+
+function navigateToQuestion(index) {
+    currentQuestionIndex = index;
+    renderQuestion();
+}
+
+function updateProgress() {
+    const answeredCount = mockTest.questions.filter(q => q.userAnswer).length;
+    const progress = (answeredCount / mockTest.questions.length) * 100;
+    progressBar.style.width = `${progress}%`;
+    progressPercent.textContent = `${Math.round(progress)}%`;
+}
+
+function confirmSubmit() {
+    if (confirm('Are you sure you want to submit the test?')) { submitTest(); }
+}
+
+function submitTest() {
+    if (testSubmitted) return;
+    testSubmitted = true;
+    clearInterval(timer);
+
+    let correct = 0, incorrect = 0, unanswered = 0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+
+    const totalQuestions = mockTest.questions.length;
+    const maxScore = totalQuestions * mockTest.markingScheme.correct;
+    const totalScore = (correct * mockTest.markingScheme.correct) + (incorrect * mockTest.markingScheme.incorrect);
+    const percentage = ((totalScore / maxScore) * 100).toFixed(2);
+    const accuracy = correct + incorrect > 0 ? (correct / (correct + incorrect) * 100).toFixed(2) : '0';
+
+    const resultData = {
+    studentId: localStorage.getItem('ts_student_id') || '',
+    name: localStorage.getItem('cbtUserName') || 'Unknown', // Changed from userName
+    subject: SUBJECT_ID,                                   // Changed from subjectId
+    chapter: CHAPTER_ID,                                   // Changed from chapterId
+    date: new Date().toISOString(),
+    score: totalScore,
+    maxScore: maxScore,
+    correct: correct,
+    wrong: incorrect,
+    skipped: unanswered,
+    totalQ: totalQuestions,
+    percentage: parseFloat(percentage),
+    accuracy: parseFloat(accuracy),
+    timeTaken: mockTest.duration - timeLeft
+};
+
+    const storageKey = `thunderstudy_result_${SUBJECT_ID}_${CHAPTER_ID}`;
+    localStorage.setItem(storageKey, JSON.stringify(resultData));
+
+    const GS_URL = "https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec";
+    fetch(GS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(resultData)
+    }).then(() => {
+        localStorage.setItem(`synced_${SUBJECT_ID}_${CHAPTER_ID}`, "true");
+    }).catch(err => console.error("Sync failed", err));
+
+    correctAnswersElement.textContent = correct;
+    incorrectAnswersElement.textContent = incorrect;
+    unansweredElement.textContent = unanswered;
+    totalScoreElement.textContent = totalScore;
+    percentageElement.textContent = percentage;
+    accuracyElement.textContent = accuracy;
+    resultsModal.style.display = 'flex';
+    renderQuestion();
+
+    const submitBtn = document.getElementById('submit-test-btn');
+    submitBtn.textContent = '📄 Download PDF';
+    submitBtn.classList.remove('submit-fancy-btn');
+    submitBtn.classList.add('pdf-download-btn');
+    submitBtn.onclick = generatePDF;
+
+    renderLegend(true);
+}
+
+function closeResultsModal() { resultsModal.style.display = 'none'; }
+
+function reviewAnswers() {
+    resultsModal.style.display = 'none';
+    currentQuestionIndex = 0;
+    renderQuestion();
+}
+
+/* Tab switch guard */
+document.addEventListener("visibilitychange", function() {
+    if (!testStarted || testSubmitted) return;
+    updateFocusMode();
+    if (document.hidden) startCountdown('tab');
+    else cancelCountdown();
+});
+
+/* Arrow key navigation */
+document.addEventListener('keydown', function(e) {
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); }
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); }
+    }
+});
+</script>
+
+<script>
+// Function to start the Mock
+function startMock() {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+    
+    const inputName = document.getElementById('username-input').value.trim();
+
+    // 1. Validate Name
+    if (!savedName && !inputName) {
+        alert("⚠️ Please enter your name to continue!");
+        document.getElementById('username-input').focus();
+        return;
+    }
+    
+    // Save name if typed manually
+    if (!savedName && inputName) {
+        localStorage.setItem("cbtUserName", inputName);
+    }
+
+    // 2. Validate Student ID (The specific check you asked for)
+    if (!savedSID) {
+        const goToDash = confirm("⚠️ Student ID not found!\n\nYou must have a Student ID to start the mock.\n\nClick OK to open Dashboard to generate one, or Cancel to stay here.");
+        if (goToDash) {
+            window.open('https://commercesehoga.github.io/dashboard/', '_blank');
+        }
+        return;
+    }
+
+    // 3. If everything is OK, proceed
+    enterFullscreen();
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('instruction-screen').style.display = 'block';
+}
+
+// Update displays when the test actually starts
+document.getElementById('start-test-btn').addEventListener('click', () => {
+    if (!document.getElementById('agree-checkbox').checked) return;
+    
+    const name = localStorage.getItem("cbtUserName") || "Thunder";
+    const sid = localStorage.getItem("ts_student_id") || "N/A";
+    
+    // Update Desktop Displays
+    document.getElementById('user-name-display').innerText = "👤 " + name;
+    if(document.getElementById('display-user-name')) document.getElementById('display-user-name').innerText = name;
+    if(document.getElementById('display-user-sid')) document.getElementById('display-user-sid').innerText = sid;
+    
+    // Update Mobile Displays
+    const mobileNameEl = document.getElementById('mobile-name-display');
+    if (mobileNameEl) mobileNameEl.innerText = "👤 " + name + " | " + sid;
+});
+
+// Auto-fill and Fetch on Page Load
+window.addEventListener('DOMContentLoaded', () => {
+    // Fetch Name and Student ID from local storage
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+
+    // Set and Lock Name Input
+    if (savedName) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = savedName;
+            // Apply locked styling
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.style.color = '#4f6ef7';
+            inp.style.fontWeight = 'bold';
+            
+            // Force Read-Only (Removes ability to change)
+            inp.setAttribute('readonly', true);
+            
+            // Add a simple verification label (No "Change" link)
+            inp.insertAdjacentHTML('afterend', 
+                `<div style="font-size:11px; color:#4f6ef7; font-weight:700; margin-top:5px;">
+                    ✅ Verified Dashboard Profile
+                </div>`
+            );
+        }
+    }
+
+    // Set and Show Student ID
+    if (savedSID) {
+        const sidArea = document.getElementById('sid-display-area');
+        const sidVal = document.getElementById('sid-value');
+        if (sidArea && sidVal) {
+            sidArea.style.display = 'block';
+            sidVal.textContent = savedSID;
+            // Optional: Match the theme color
+            sidArea.style.color = '#4f6ef7';
+        }
+    }
+});
+
+const darkModeToggles = document.querySelectorAll('#dark-mode-toggle, #dark-mode-toggle-bottom, #dark-mode-toggle-top');
+darkModeToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        darkModeToggles.forEach(btn => {
+            const iconSpan = btn.querySelector('.icon');
+            if (iconSpan) iconSpan.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+    });
+});
+</script>
+
+<script>
+const checkbox = document.getElementById('agree-checkbox');
+const startBtn = document.getElementById('start-test-btn');
+
+checkbox.addEventListener('change', () => {
+    startBtn.disabled = !checkbox.checked;
+    startBtn.style.opacity = checkbox.checked ? "1" : "0.6";
+    startBtn.style.cursor = checkbox.checked ? "pointer" : "not-allowed";
+});
+
+startBtn.addEventListener('click', () => {
+    if (!checkbox.checked) { alert("Please accept instructions first!"); return; }
+    document.getElementById('instruction-screen').style.display = 'none';
+    document.getElementById('test-screen').style.display = 'block';
+    const name = localStorage.getItem("cbtUserName") || "Thunder";
+    document.getElementById('user-name-display').innerText = "👤 " + name;
+    const mobileNameEl = document.getElementById('mobile-name-display');
+    if (mobileNameEl) mobileNameEl.innerText = "👤 " + name;
+    testStarted = true;
+    enterFullscreen();
+    initTest();
+});
+
+function enterFullscreen() {
+    const el = document.documentElement;
+    try {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+        else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    } catch(e) {}
+}
+
+document.addEventListener('fullscreenchange', onFSChange);
+document.addEventListener('webkitfullscreenchange', onFSChange);
+document.addEventListener('mozfullscreenchange', onFSChange);
+document.addEventListener('MSFullscreenChange', onFSChange);
+
+function isInFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement ||
+              document.mozFullScreenElement || document.msFullscreenElement);
+}
+
+function onFSChange() {
+    if (!testStarted || testSubmitted) return;
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    updateFocusMode();
+    if (!isInFullscreen()) startCountdown('fullscreen');
+    else cancelCountdown();
+}
+
+let countdownTimer = null;
+let countdownSeconds = 0;
+
+function updateFocusMode() {
+    const color = (document.hidden || !isInFullscreen()) ? "#FF474D" : "#90EE90";
+    const text = (document.hidden || !isInFullscreen()) ? "● Disturbed" : "● Focus On";
+    const els = [document.getElementById('focus-laptop'), document.getElementById('focus-mobile')];
+    els.forEach(el => { if(el) { el.style.color = color; el.innerText = text; }});
+}
+
+function startCountdown(reason) {
+    if (!testStarted || testSubmitted) return;
+    if (countdownTimer) return;
+    countdownSeconds = (reason === 'tab') ? 2 : 5;
+    const msg  = (reason === 'tab') ? '⚠️ You switched tabs!' : '⚠️ You exited fullscreen!';
+    const hint = (reason === 'tab') ? 'Switch back to this tab to cancel.' : 'Click the button below to return to fullscreen.';
+    showOverlay(msg, hint, countdownSeconds, reason === 'fullscreen');
+    countdownTimer = setInterval(() => {
+        countdownSeconds--;
+        updateOverlayCount(countdownSeconds);
+        if (countdownSeconds <= 0) { cancelCountdown(); submitTest(); }
+    }, 1000);
+}
+
+function cancelCountdown() {
+    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+    hideOverlay();
+}
+
+function showOverlay(msg, hint, secs, showBtn) {
+    let ov = document.getElementById('security-overlay');
+    if (!ov) {
+        ov = document.createElement('div');
+        ov.id = 'security-overlay';
+        ov.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:'Segoe UI',sans-serif;color:#fff;text-align:center;padding:24px;`;
+        document.body.appendChild(ov);
+    }
+    ov.innerHTML = `
+        <div style="font-size:60px;margin-bottom:14px;">🚨</div>
+        <div style="font-size:22px;font-weight:800;margin-bottom:8px;">${msg}</div>
+        <div style="font-size:15px;color:#fbbf24;margin-bottom:20px;">${hint}</div>
+        <div style="font-size:16px;color:#e0e0e0;margin-bottom:6px;">Auto-submitting in</div>
+        <div id="overlay-count" style="font-size:72px;font-weight:900;color:#f87171;line-height:1;">${secs}</div>
+        <div style="font-size:14px;color:#9ca3af;margin-top:4px;">seconds</div>
+        ${showBtn ? `<button onclick="enterFullscreen()" style="margin-top:24px;padding:13px 34px;border-radius:30px;border:none;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(34,197,94,0.5);">🔲 Return to Fullscreen</button>` : ''}`;
+    ov.style.display = 'flex';
+}
+
+function updateOverlayCount(n) {
+    const el = document.getElementById('overlay-count');
+    if (el) el.textContent = n;
+}
+
+function hideOverlay() {
+    const ov = document.getElementById('security-overlay');
+    if (ov) ov.style.display = 'none';
+}
+</script>
+
+<div id="pdf-print-area"></div>
+
+<script>
+function generatePDF() {
+    const name = localStorage.getItem('cbtUserName') || 'Thunder';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+    const timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+
+    let correct = 0, incorrect = 0, unanswered = 0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+    const totalScore = (correct * mockTest.markingScheme.correct) + (incorrect * mockTest.markingScheme.incorrect);
+    const maxScore = mockTest.questions.length * mockTest.markingScheme.correct;
+    const pct = ((totalScore / maxScore) * 100).toFixed(1);
+    const optionLabel = { a:'A', b:'B', c:'C', d:'D' };
+
+    let questionsHTML = '';
+    mockTest.questions.forEach((q, i) => {
+        const isCorrect = q.userAnswer === q.correctAnswer;
+        const isWrong   = q.userAnswer && !isCorrect;
+        const isSkipped = !q.userAnswer;
+        const statusColor = isCorrect ? '#16a34a' : isWrong ? '#dc2626' : '#9ca3af';
+        const statusLabel = isCorrect ? '✓ Correct' : isWrong ? '✗ Wrong' : '— Skipped';
+        const rowBg = isCorrect ? '#f0fdf4' : isWrong ? '#fef2f2' : '#fafafa';
+        let optionsHTML = '';
+        for (const [key, val] of Object.entries(q.options)) {
+            const isRight = key === q.correctAnswer;
+            const isUser  = key === q.userAnswer;
+            let bg = 'transparent', fw = 'normal', prefix = '';
+            if (isRight) { bg = '#dcfce7'; fw = 'bold'; prefix = '✓ '; }
+            if (isUser && !isRight) { bg = '#fee2e2'; fw = 'bold'; prefix = '✗ '; }
+            optionsHTML += `<div style="display:flex;gap:8px;padding:4px 8px;margin:2px 0;border-radius:4px;background:${bg};font-weight:${fw};font-size:12px;"><span style="min-width:18px;font-weight:700;">${optionLabel[key]}.</span><span>${prefix}${val}</span></div>`;
+        }
+        let yourAnswer = isSkipped
+            ? '<span style="color:#9ca3af;">Not Attempted</span>'
+            : `<span style="color:${isCorrect?'#16a34a':'#dc2626'};font-weight:bold;">${optionLabel[q.userAnswer]}. ${q.options[q.userAnswer]}</span>`;
+        questionsHTML += `
+        <div style="margin-bottom:18px;padding:14px 16px;border-radius:8px;background:${rowBg};border:1px solid #e5e7eb;page-break-inside:avoid;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div style="font-weight:700;font-size:13px;color:#374151;">Q${i+1}. ${q.text}</div>
+                <div style="font-weight:700;font-size:12px;color:${statusColor};white-space:nowrap;margin-left:12px;">${statusLabel}</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:8px;">${optionsHTML}</div>
+            <div style="font-size:12px;border-top:1px solid #e5e7eb;padding-top:6px;margin-top:4px;">
+                <span style="color:#6b7280;">Your answer: </span>${yourAnswer}&nbsp;&nbsp;
+                <span style="color:#6b7280;">Correct answer: </span>
+                <span style="color:#16a34a;font-weight:bold;">${optionLabel[q.correctAnswer]}. ${q.options[q.correctAnswer]}</span>
+            </div>
+        </div>`;
+    });
+
+    const scoreColor = pct >= 60 ? '#16a34a' : pct >= 35 ? '#d97706' : '#dc2626';
+    const html = `<div style="max-width:780px;margin:0 auto;font-family:Arial,sans-serif;color:#111;">
+        <div style="background:linear-gradient(135deg,#f97316,#ea580c);color:white;padding:20px 24px;border-radius:10px 10px 0 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <div><div style="font-size:22px;font-weight:800;">⚡ Thunderstudy CBT</div><div style="font-size:13px;opacity:0.85;margin-top:3px;">Result Report — ${CHAPTER_ID.toUpperCase()}</div></div>
+                <div style="text-align:right;font-size:12px;opacity:0.85;"><div>📅 ${dateStr} &nbsp; 🕐 ${timeStr}</div><div style="margin-top:2px;">👤 ${name}</div></div>
+            </div>
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-top:none;padding:16px 24px;border-radius:0 0 10px 10px;margin-bottom:20px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;">
+                <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                    <div style="background:white;border:1px solid #e2e8f0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SCORE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${totalScore}<span style="font-size:14px;color:#6b7280;">/${maxScore}</span></div></div>
+                    <div style="background:white;border:1px solid #e2e8f0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">PERCENTAGE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${pct}%</div></div>
+                    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#16a34a;">CORRECT</div><div style="font-size:24px;font-weight:800;color:#16a34a;">${correct}</div></div>
+                    <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#dc2626;">WRONG</div><div style="font-size:24px;font-weight:800;color:#dc2626;">${incorrect}</div></div>
+                    <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SKIPPED</div><div style="font-size:24px;font-weight:800;color:#6b7280;">${unanswered}</div></div>
+                </div>
+            </div>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#374151;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #6a11cb;">📋 Question-wise Answer Key</div>
+        ${questionsHTML}
+        <div style="text-align:center;margin-top:24px;padding:14px;background:#f1f5f9;border-radius:8px;font-size:12px;color:#6b7280;">Generated by <b>Thunderstudy CBT</b> &nbsp;|&nbsp; t.me/thunderstudy_official &nbsp;|&nbsp; ${dateStr}</div>
+    </div>`;
+
+    const printWin = window.open('', '_blank', 'width=950,height=700,scrollbars=yes');
+    if (!printWin) { alert('Popup blocked! Please allow popups for this site and try again.'); return; }
+    printWin.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Thunderstudy_Result_${name}_${dateStr.replace(/ /g,'-')}</title>
+    <style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;padding:20px;}@media print{body{padding:0;}.no-print{display:none !important;}}.print-btn{display:block;margin:0 auto 20px;padding:12px 36px;background:linear-gradient(135deg,#f97316,#ea580c);color:white;font-size:16px;font-weight:700;border:none;border-radius:30px;cursor:pointer;}</style>
+    </head><body><button class="print-btn no-print" onclick="window.print()">🖨️ Print / Save as PDF</button>${html}</body></html>`);
+    printWin.document.close();
+    printWin.focus();
+}
+
+   // Auto-fill name from dashboard on page load
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('cbtUserName') || 
+                  (() => { try { return JSON.parse(localStorage.getItem('ts_profile')||'{}').name || ''; } catch(e){ return ''; } })();
+    if (saved) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = saved;
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.setAttribute('readonly', true);
+            inp.title = 'Name loaded from Dashboard';
+            // Add a small label below
+            inp.insertAdjacentHTML('afterend', 
+                
+            );
+        }
+    }
+});
+</script>
+
+</body>
+</html>
