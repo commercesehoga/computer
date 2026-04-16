@@ -1,0 +1,2705 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thunderstudy CBT</title>
+
+<script>
+/* ============================================================
+   ✏️  EDIT ONLY THESE TWO LINES FOR EACH CHAPTER
+   ============================================================ */
+const SUBJECT_ID  = "cs";        // e.g. "cs", "eco", "accounts"
+const CHAPTER_ID  = "cs9";       // e.g. "bst1", "bst2", "eco3"
+/* ============================================================ */
+</script>
+
+<style>
+        :root {
+    --primary-color: #f97316;
+    --secondary-color: #9CC9E6;
+    --correct-color: #90EE90;
+    --incorrect-color: #FF474D;
+    --neutral-color: #607d8b;
+    --light-bg: #f5f5f5;
+    --white: #ffffff;
+    --dark-text: #212121;
+    --light-text: #000000;
+    --dark-bg: #121212;
+    --dark-primary-color: #fdba74;
+    --dark-secondary-color: #03dac6;
+    --dark-correct-color: #388e3c;
+    --dark-incorrect-color: #cf6679;
+    --dark-neutral-color: #aaaaaa;
+    --dark-light-text: #e0e0e0;
+}
+
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-light-text);
+}
+
+body.dark-mode p,
+body.dark-mode span:not(.icon),
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode label,
+body.dark-mode li {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode a:not(.fancy-btn):not(.footer-btn):not(.button2):not(.join-btn) {
+    color: #fdba74 !important;
+    text-decoration: underline;
+}
+
+body.dark-mode .fancy-btn,
+body.dark-mode .footer-btn,
+body.dark-mode .join-btn,
+body.dark-mode .submit-fancy-btn,
+body.dark-mode .more-btn,
+body.dark-mode .back-btn,
+body.dark-mode .report-btn {
+    color: white !important;
+}
+
+body.dark-mode #prev-btn {
+    color: var(--dark-primary-color) !important;
+    border-color: var(--dark-primary-color) !important;
+}
+
+body.dark-mode #next-btn {
+    color: #000 !important;
+    background-color: var(--dark-primary-color) !important;
+}
+
+body.dark-mode #mark-btn {
+    color: var(--dark-secondary-color) !important;
+    border-color: var(--dark-secondary-color) !important;
+}
+
+body.dark-mode #mark-btn.marked {
+    background-color: var(--dark-secondary-color) !important;
+    color: #000 !important;
+}
+
+body.dark-mode #start-test-btn {
+    color: white !important;
+}
+
+body.dark-mode .close-btn {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .stat-card h3 {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .question-number {
+    color: var(--dark-primary-color) !important;
+}
+
+body.dark-mode .question-text {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .progress-text span {
+    color: #aaa !important;
+}
+
+body.dark-mode .palette-title span {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .test-info strong {
+    color: #fff !important;
+}
+
+body.dark-mode .test-info span {
+    color: #ccc !important;
+}
+
+body.dark-mode .sidebar {
+    background-color: #1f1f1f;
+    color: var(--dark-light-text);
+    box-shadow: 2px 0 5px rgba(255,255,255,0.1);
+}
+
+body.dark-mode .sidebar-header h2,
+body.dark-mode .test-header h2,
+body.dark-mode .modal-header h2 {
+    color: var(--dark-primary-color);
+}
+
+body.dark-mode .timer {
+    background-color: var(--dark-incorrect-color);
+    color: #fff;
+}
+
+body.dark-mode .question-container {
+    background-color: #242424;
+    box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+}
+
+.option:hover {
+    border-color: #378ADD;
+    background: #E6F1FB;
+}
+
+.option.selected {
+    border-color: #185FA5;
+    background: #B5D4F4;
+}
+
+.option.correct {
+    border-color: #388e3c !important;
+    background: rgba(76, 175, 80, 0.15) !important;
+}
+
+.option.incorrect {
+    border-color: #e53935 !important;
+    background: rgba(244, 67, 54, 0.12) !important;
+}
+
+.opt-letter {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+    background: #f5f5f5;
+    color: #555;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.option.selected .opt-letter {
+    background: #185FA5;
+    border-color: #185FA5;
+    color: #fff;
+}
+
+.option.correct .opt-letter {
+    background: #388e3c;
+    border-color: #388e3c;
+    color: #fff;
+}
+
+.option.incorrect .opt-letter {
+    background: #e53935;
+    border-color: #e53935;
+    color: #fff;
+}
+
+.opt-text {
+    font-size: 15px;
+    color: #212121;
+    flex: 1;
+    line-height: 1.5;
+}
+
+.option.selected .opt-text {
+    color: #0C447C;
+    font-weight: 500;
+}
+
+.option.correct .opt-text {
+    color: #1b5e20;
+    font-weight: 500;
+}
+
+.option.incorrect .opt-text {
+    color: #b71c1c;
+    font-weight: 500;
+}
+
+body.dark-mode .option {
+    background: #2a2a2a !important;
+    border-color: #444 !important;
+    color: #fff !important;
+}
+
+body.dark-mode .option:hover {
+    border-color: #378ADD !important;
+    background: #1a2a3a !important;
+}
+
+body.dark-mode .option.selected {
+    border-color: #64b5f6 !important;
+    background: #1a3050 !important;
+}
+
+body.dark-mode .opt-letter {
+    background: #333 !important;
+    border-color: #555 !important;
+    color: #ccc !important;
+}
+
+body.dark-mode .option.selected .opt-letter {
+    background: #185FA5 !important;
+    border-color: #185FA5 !important;
+    color: #fff !important;
+}
+
+body.dark-mode .opt-text {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .option.selected .opt-text {
+    color: #90caf9 !important;
+}
+
+body.dark-mode .option.correct {
+    border-color: #66bb6a !important;
+    background: rgba(56,142,60,0.2) !important;
+}
+
+body.dark-mode .option.incorrect {
+    border-color: #ef9a9a !important;
+    background: rgba(207, 102, 121, 0.2) !important;
+}
+
+.option input[type="radio"] {
+    display: none;
+}
+
+.correct-indicator {
+    margin-left: 8px;
+    font-weight: bold;
+    color: #388e3c;
+    font-size: 13px;
+}
+
+.incorrect-indicator {
+    margin-left: 8px;
+    font-weight: bold;
+    color: #e53935;
+    font-size: 13px;
+}
+
+.instruction-box {
+    max-width: 900px;
+    margin: auto;
+    background: linear-gradient(135deg, #fff7ed, #e0f2ff);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    line-height: 1.8;
+}
+
+.instruction-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #6a11cb;
+    margin-bottom: 15px;
+    border-left: 5px solid #6a11cb;
+    padding-left: 10px;
+}
+
+.instruction-list {
+    padding-left: 20px;
+}
+
+.instruction-list li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    background: white;
+    padding: 10px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: 0.2s;
+}
+
+.instruction-list li:hover {
+    transform: translateX(5px);
+    background: #f0f4ff;
+}
+
+.instruction-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.instruction-checkbox input {
+    width: 18px;
+    height: 18px;
+    accent-color: #6a11cb;
+}
+
+#start-test-btn {
+    margin-top: 20px;
+    width: 100%;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    box-shadow: 0 6px 15px rgba(101, 41, 255, 0.4);
+    transition: 0.3s;
+}
+
+#start-test-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(101, 41, 255, 0.6);
+}
+
+.sidebar {
+    width: 300px;
+    background-color: var(--white);
+    height: 100vh;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    position: fixed;
+    overflow-y: auto;
+    right: 0;
+    left: auto;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar-header h2 {
+    color: var(--primary-color);
+}
+
+.test-info {
+    margin-bottom: 20px;
+}
+
+.test-info p {
+    margin: 5px 0;
+    color: var(--light-text);
+}
+
+.question-palette {
+    margin-bottom: 20px;
+}
+
+.palette-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.palette-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.palette-btn {
+    width: 100%;
+    max-width: 40px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background-color: #FF474D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: auto;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.palette-btn:hover {
+    background-color: #EFBF04;
+}
+
+.palette-btn.answered {
+    background-color: #90ee90;
+    color: #000000;
+    border-color: #000000;
+}
+
+.palette-btn.marked {
+    background-color: #90D5FF;
+    color: #000000;
+    border-color: #000000;
+}
+
+.palette-btn.current {
+    background-color: #ffffff;
+    border: 2px solid var(--primary-color);
+}
+
+.palette-btn.review-correct {
+    background-color: #22c55e !important;
+    color: #fff !important;
+    border-color: #16a34a !important;
+}
+.palette-btn.review-wrong {
+    background-color: #ef4444 !important;
+    color: #fff !important;
+    border-color: #dc2626 !important;
+}
+.palette-btn.review-unanswered {
+    background-color: #3b82f6 !important;
+    color: #fff !important;
+    border-color: #2563eb !important;
+}
+
+.palette-btn.review-correct.current,
+.palette-btn.review-wrong.current,
+.palette-btn.review-unanswered.current {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 1px;
+}
+
+body.dark-mode .palette-btn.review-correct  { background-color: #16a34a !important; border-color: #15803d !important; }
+body.dark-mode .palette-btn.review-wrong    { background-color: #dc2626 !important; border-color: #b91c1c !important; }
+body.dark-mode .palette-btn.review-unanswered { background-color: #2563eb !important; border-color: #1d4ed8 !important; }
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.legend-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+body.dark-mode .palette-btn {
+    background-color: #FF474D !important;
+    color: var(--dark-primary-color);
+    border: 2px solid var(--dark-primary-color);
+}
+
+body.dark-mode .palette-btn.answered {
+    background-color: #388e3c !important;
+    color: white !important;
+    border-color: #388e3c !important;
+}
+
+body.dark-mode .palette-btn.marked {
+    background-color: #03dac6 !important;
+    color: black !important;
+    border-color: #03dac6 !important;
+}
+
+body.dark-mode .palette-btn.current {
+    background-color: white !important;
+    border: 2px solid var(--dark-primary-color) !important;
+    color: var(--dark-primary-color) !important;
+}
+
+body.dark-mode .btn-primary {
+    background-color: var(--dark-primary-color);
+    color: #000;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #f97316;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: var(--dark-secondary-color);
+    color: #000;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background-color: #00c4b4;
+}
+
+body.dark-mode .btn-outline {
+    border-color: var(--dark-primary-color);
+    color: var(--dark-primary-color);
+}
+
+body.dark-mode .mark-btn {
+    border-color: var(--dark-secondary-color);
+    color: var(--dark-secondary-color);
+}
+
+body.dark-mode .mark-btn.marked {
+    background-color: var(--dark-secondary-color);
+    color: #000;
+}
+
+body.dark-mode .submit-btn {
+    background-color: var(--dark-correct-color);
+    color: #000;
+}
+
+body.dark-mode .submit-btn:hover {
+    background-color: #2a6e2c;
+}
+
+body.dark-mode .modal-content {
+    background-color: #242424;
+    color: var(--dark-light-text);
+}
+
+body.dark-mode .stat-card {
+    background-color: #1e1e1e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 0;
+    margin-right: 300px;
+    padding: 20px;
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.timer {
+    background-color: #FF0000;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 18px;
+    min-width: 140px;
+    text-align: center;
+}
+
+.progress-container {
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #c6e977;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--light-text);
+}
+
+.question-container {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.question-number {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.question-text {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.options {
+    margin-left: 0;
+}
+
+.navigation-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #73e4e6;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #73e4e6;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: #ffffff;
+}
+
+.mark-btn {
+    margin-left: 10px;
+    background-color: transparent;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.mark-btn.marked {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.submit-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    background-color: var(--correct-color);
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.submit-btn:hover {
+    background-color: #388e3c;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+    color: var(--primary-color);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--light-text);
+}
+
+.result-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+}
+
+.stat-card h3 {
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.correct-stat { color: var(--correct-color); }
+.incorrect-stat { color: var(--incorrect-color); }
+.score-stat { color: var(--secondary-color); }
+
+.detailed-results {
+    margin-top: 20px;
+}
+
+.detailed-results h3 {
+    margin-bottom: 10px;
+}
+
+.review-btn {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.button2 {
+    background-color: #007ACC;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 122, 204, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.button2:hover {
+    background-color: #005a99;
+    box-shadow: 0 6px 12px rgba(0, 90, 153, 0.5);
+    color: #fff;
+}
+
+#dark-mode-toggle-bottom:hover {
+    background: linear-gradient(45deg, #fb923c, #6a11cb);
+    box-shadow: 0 6px 20px rgba(101, 41, 255, 0.9);
+}
+
+body.dark-mode #dark-mode-toggle-bottom {
+    background: linear-gradient(45deg, #f7971e, #ffd200);
+    color: #333;
+    box-shadow: 0 4px 15px rgba(255, 210, 0, 0.7);
+}
+
+#test-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    z-index: 9998;
+    display: none;
+    overflow: auto;
+}
+
+#user-name-display {
+    background: linear-gradient(135deg,#f97316,#ea580c);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 18px;
+    min-width: 140px;
+    text-align: center;
+}
+
+.instruction-checkbox input:checked + .custom-check {
+    background: rgba(234,88,12,0.1);
+    box-shadow: 0 0 10px rgba(234,88,12,0.4);
+}
+
+.instruction-checkbox input {
+    display: none;
+}
+
+.custom-check {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #6a11cb;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.instruction-checkbox input:checked + .custom-check::after {
+    content: "\2714";
+    position: absolute;
+    top: -2px;
+    left: 3px;
+    font-size: 16px;
+    color: #6a11cb;
+}
+
+.test-info {
+    text-align: left !important;
+    display: block !important;
+}
+
+.test-info p {
+    text-align: left !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 6px;
+    font-size: 16px !important;
+    margin: 6px 0 !important;
+}
+
+.test-info strong {
+    font-weight: 700 !important;
+    color: #000 !important;
+}
+
+.mobile-top-bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 10px;
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .mobile-timer-clone {
+        background-color: #FF0000;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 15px;
+        min-width: 100px;
+        text-align: center;
+    }
+
+    #mobile-name-display {
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        color: white;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    #user-name-display { display: none !important; }
+    .sidebar .timer { display: none !important; }
+    .sidebar .sidebar-header { display: none !important; }
+
+    body { display: flex; flex-direction: column; }
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        right: 0; left: 0;
+        box-shadow: none;
+        margin-bottom: 10px;
+    }
+    .question-palette { max-height: 200px; overflow-y: auto; }
+    .main-content { margin: 0 !important; width: 100%; padding: 10px; }
+
+    .navigation-btns {
+        flex-direction: row !important;
+        gap: 8px;
+        align-items: center;
+    }
+
+    #prev-btn {
+        padding: 8px 14px !important;
+        font-size: 13px !important;
+        border-radius: 6px !important;
+        flex-shrink: 0;
+    }
+
+    #next-btn {
+        padding: 14px 28px !important;
+        font-size: 17px !important;
+        border-radius: 8px !important;
+        flex: 1;
+    }
+
+    .navigation-btns > div {
+        display: flex;
+        flex: 1;
+        gap: 8px;
+        align-items: center;
+    }
+
+    #mark-btn {
+        font-size: 11px !important;
+        padding: 6px 8px !important;
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .palette-grid { grid-template-columns: repeat(4, 1fr); }
+    .result-stats { grid-template-columns: 1fr; }
+}
+
+.fancy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.4px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), box-shadow 0.18s ease;
+}
+
+.fancy-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+    border-radius: inherit;
+}
+
+.fancy-btn:hover::after { background: rgba(255,255,255,0.12); }
+.fancy-btn:active { transform: scale(0.96) !important; }
+.fancy-btn:hover { transform: translateY(-3px) scale(1.03); }
+
+.join-btn {
+    background: linear-gradient(135deg, #0088cc, #006699);
+    color: white;
+    box-shadow: 0 5px 18px rgba(0,136,204,0.45);
+}
+.join-btn:hover { box-shadow: 0 8px 24px rgba(0,136,204,0.65); color: white; }
+
+.submit-fancy-btn {
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    color: white;
+    box-shadow: 0 5px 18px rgba(34,197,94,0.45);
+    flex: 1;
+    max-width: 280px;
+}
+.submit-fancy-btn:hover { box-shadow: 0 8px 24px rgba(34,197,94,0.65); }
+
+.pdf-download-btn {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white !important;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 4px 14px rgba(249,115,22,0.4);
+}
+.pdf-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(249,115,22,0.6);
+    color: white !important;
+}
+.pdf-download-btn:active { transform: scale(0.97); }
+
+#pdf-print-area { display: none; }
+
+@media print {
+    body > * { display: none !important; }
+    #pdf-print-area {
+        display: block !important;
+        font-family: Arial, sans-serif;
+        color: #111;
+        padding: 20px;
+        margin: 0;
+    }
+}
+
+.footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    letter-spacing: 0.3px;
+    transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), box-shadow 0.18s ease, filter 0.18s;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-btn:hover {
+    transform: translateY(-3px) scale(1.06);
+    filter: brightness(1.1);
+    color: white;
+}
+
+.footer-btn:active { transform: scale(0.95); }
+
+.more-btn {
+    background: linear-gradient(135deg, #f97316, #c2410c);
+    box-shadow: 0 4px 14px rgba(249,115,22,0.4);
+}
+.more-btn:hover { box-shadow: 0 7px 20px rgba(249,115,22,0.65); }
+
+.back-btn {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 4px 14px rgba(34,197,94,0.4);
+}
+.back-btn:hover { box-shadow: 0 7px 20px rgba(34,197,94,0.65); }
+
+.report-btn {
+    background: linear-gradient(135deg, #f97316, #dc2626);
+    box-shadow: 0 4px 14px rgba(239,68,68,0.4);
+}
+.report-btn:hover { box-shadow: 0 7px 20px rgba(239,68,68,0.65); }
+
+body.dark-mode #dark-mode-toggle-bottom {
+    background: linear-gradient(45deg, #f7971e, #ffd200) !important;
+    box-shadow: 0 4px 15px rgba(255,210,0,0.6) !important;
+}
+body.dark-mode #dark-mode-toggle-bottom .icon { color: #333 !important; }
+body.dark-mode #dark-mode-toggle-bottom span:not(.icon) { color: #333 !important; }
+
+body.dark-mode #start-screen {
+    background-color: #1a1a2e !important;
+}
+body.dark-mode #start-screen h1 { color: #fdba74 !important; }
+body.dark-mode #start-screen > p { color: #e0e0e0 !important; }
+body.dark-mode #start-screen li { color: #e0e0e0 !important; }
+body.dark-mode #start-screen h2 { color: #e0e0e0 !important; }
+body.dark-mode #start-screen a[href*="t.me"] { color: #fdba74 !important; text-decoration: none !important; }
+body.dark-mode #start-screen strong { color: #fff !important; }
+body.dark-mode #start-screen input[type="text"] {
+    background: #2a2a2a !important;
+    color: #fff !important;
+    border-color: #555 !important;
+}
+
+body.dark-mode #instruction-screen { background: #1a1a2e !important; }
+body.dark-mode #instruction-screen h2 { color: #e0e0e0 !important; }
+body.dark-mode .instruction-box { background: linear-gradient(135deg, #431407, #431407) !important; }
+body.dark-mode .instruction-title { color: #fdba74 !important; border-left-color: #fdba74 !important; }
+body.dark-mode .instruction-list li { background: #242424 !important; color: #e0e0e0 !important; }
+body.dark-mode .instruction-list li:hover { background: #2e2e4e !important; }
+body.dark-mode .custom-check { border-color: #fdba74 !important; }
+body.dark-mode .instruction-checkbox input:checked + .custom-check::after { color: #fdba74 !important; }
+body.dark-mode .instruction-checkbox { color: #e0e0e0 !important; }
+
+body.dark-mode #test-screen { background: #121212 !important; }
+
+body.dark-mode .mobile-top-bar {
+    background: #1f1f1f !important;
+    border-color: #333 !important;
+}
+body.dark-mode .mobile-timer-clone {
+    background-color: var(--dark-incorrect-color) !important;
+}
+
+body.dark-mode .tooltip .tooltiptext { background-color: #333; color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen" style="
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: white; z-index: 9999; display: flex;
+    flex-direction: column; justify-content: flex-start; align-items: center;
+    text-align: center; padding: 40px 20px 40px;
+    overflow-y: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+<button id="dark-mode-toggle-bottom" aria-label="Toggle dark mode" title="Toggle dark mode"
+  style="position:absolute; top:18px; right:18px; font-size:22px; padding:8px 18px;
+  border-radius:40px; border:none; cursor:pointer;
+  background:linear-gradient(45deg,#6a11cb,#fb923c); color:white;
+  display:flex; align-items:center; gap:7px;
+  box-shadow:0 4px 15px rgba(234,88,12,0.5);
+  transition:background 0.4s ease, box-shadow 0.4s ease, transform 0.2s;">
+  <span class="icon" style="display:inline-block; transition:transform 0.6s ease;">🌙</span>
+  <span style="font-size:13px; font-weight:600; letter-spacing:0.5px;">Dark</span>
+</button>
+
+<h1 style="color: #f97316; font-size: 32px;" id="page-title">5: Sorting</h1>
+<p style="font-size: 18px; margin: 10px 0;">Provided by <strong>Thunderstudy</strong></p>
+
+<a href="https://t.me/thunderstudy_official" target="_blank"
+  style="display:inline-flex; align-items:center; gap:8px; margin: 8px 0 14px;
+  background:linear-gradient(135deg,#0088cc,#006699); color:white; text-decoration:none;
+  padding:10px 24px; border-radius:30px; font-size:15px; font-weight:700;
+  box-shadow:0 5px 16px rgba(0,136,204,0.45);
+  transition:transform 0.18s, box-shadow 0.18s;"
+  onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 8px 22px rgba(0,136,204,0.65)'"
+  onmouseout="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 5px 16px rgba(0,136,204,0.45)'"
+  onmousedown="this.style.transform='scale(0.97)'"
+  onmouseup="this.style.transform='translateY(-3px) scale(1.04)'">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="flex-shrink:0;">
+    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.607c-.148.666-.543.828-1.098.516l-3.04-2.24-1.467 1.413c-.162.162-.298.298-.611.298l.217-3.083 5.613-5.067c.244-.217-.054-.337-.378-.12L7.08 14.807 4.09 13.89c-.657-.205-.67-.657.137-.973l10.88-4.196c.548-.198 1.027.133.855.973z"/>
+  </svg>
+  @thunderstudy_official
+</a>
+
+<div style="max-width: 560px; text-align: left; margin: 10px auto 18px; background:#f8f4ff; border-radius:12px; padding:18px 22px; border-left:4px solid #f97316;">
+  <h2 style="margin-bottom:12px; color:#6a11cb; font-size:18px;">📋 Quick Overview</h2>
+  <ul style="text-align: left; line-height:2; font-size:15px; padding-left:18px;">
+    <li><strong>50 Questions</strong></li>
+    <li><strong>60 Minutes</strong> total time</li>
+    <li><strong>+5 marks</strong> for correct &nbsp;|&nbsp; <strong>−1 mark</strong> for wrong</li>
+    <li>No penalty for <strong>unanswered</strong> questions</li>
+    <li>Test <strong>auto-submits</strong> when time ends</li>
+    <li>Do <strong>not switch tabs</strong> or exit fullscreen during test</li>
+  </ul>
+</div>
+
+<div style="margin: 10px 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+    <input type="text" id="username-input" placeholder="Enter your name"
+        style="padding:10px; width:260px; border-radius:8px; border:1.5px solid #f97316; font-size:16px; text-align:center; outline:none;">
+    
+    <div id="sid-display-area" style="font-size: 13px; font-weight: 700; color: #4f6ef7; background: rgba(79,110,247,0.1); padding: 5px 15px; border-radius: 20px; display: none;">
+        🪪 ID: <span id="sid-value">---</span>
+    </div>
+</div>
+
+<div style="display:flex; flex-direction:column; align-items:center; gap:11px; margin-top:6px;">
+
+  <button onclick="startMock()" style="
+      width:260px; background: linear-gradient(135deg,#f97316,#ea580c);
+color:white; padding:6px 14px; border-radius:20px;
+      font-size: 18px; font-weight:700; border: none; border-radius: 30px; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(234,88,12,0.45);
+      transition: transform 0.18s, box-shadow 0.18s;"
+    onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 10px 28px rgba(234,88,12,0.6)'"
+    onmouseout="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 6px 20px rgba(234,88,12,0.45)'"
+    onmousedown="this.style.transform='scale(0.97)'"
+    onmouseup="this.style.transform='translateY(-3px) scale(1.04)'">
+    🚀 Start Mock
+  </button>
+
+  <button onclick="window.location.href='https://commercesehoga.github.io/dashboard/'" style="
+      width:260px; background: linear-gradient(135deg,#22c55e,#15803d); color: white; padding: 13px 36px;
+      font-size: 18px; font-weight:700; border: none; border-radius: 30px; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(34,197,94,0.4);
+      transition: transform 0.18s, box-shadow 0.18s;"
+    onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 10px 28px rgba(34,197,94,0.6)'"
+    onmouseout="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 6px 20px rgba(34,197,94,0.4)'"
+    onmousedown="this.style.transform='scale(0.97)'"
+    onmouseup="this.style.transform='translateY(-3px) scale(1.04)'">
+    📊 Previous Result
+  </button>
+
+  <button onclick="window.open('https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html','_blank')" style="
+      width:260px; background: linear-gradient(135deg,#f97316,#c2410c); color: white; padding: 13px 36px;
+      font-size: 18px; font-weight:700; border: none; border-radius: 30px; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(249,115,22,0.4);
+      transition: transform 0.18s, box-shadow 0.18s;"
+    onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 10px 28px rgba(249,115,22,0.6)'"
+    onmouseout="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 6px 20px rgba(249,115,22,0.4)'"
+    onmousedown="this.style.transform='scale(0.97)'"
+    onmouseup="this.style.transform='translateY(-3px) scale(1.04)'">
+    📚 More Mock Tests
+  </button>
+
+</div>
+</div>
+
+<!-- INSTRUCTION SCREEN -->
+<div id="instruction-screen" style="
+position: fixed; top:0; left:0; width:100%; height:100%;
+background:white; z-index:9999; display:none; overflow:auto; padding:30px;">
+
+<h2 style="text-align:center; margin-bottom:20px;">Please read the instructions carefully</h2>
+
+<div class="instruction-box">
+<h3 class="instruction-title">General Instructions</h3>
+<ol class="instruction-list">
+<li>Total duration of test is <strong>60 minutes</strong>. Timer shown in sidebar.</li>
+<li>Test <strong>auto-submits</strong> when the timer reaches zero.</li>
+<li>The test runs in <strong>fullscreen mode</strong>. Exiting fullscreen starts a <strong>5-second countdown</strong> to auto-submit.</li>
+<li><strong>Do not switch tabs</strong>. Switching tabs starts a <strong>2-second countdown</strong> to auto-submit.</li>
+<li>Return to fullscreen or the tab before the countdown ends to continue safely.</li>
+<li>Question palette on the right shows answered, marked, and current status.</li>
+<li>Each correct answer: <strong>+5 marks</strong>. Each wrong answer: <strong>−1 mark</strong>. Unanswered: <strong>0 marks</strong>.</li>
+</ol>
+
+<div style="margin-top:20px;">
+    <strong>Question Status Legend:</strong>
+    <div class="legend" style="margin-top:10px;">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #90ee90;"></div>
+            <span>Answered</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #90D5FF;"></div>
+            <span>Marked</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="border: 1px solid var(--primary-color); background-color: white;"></div>
+            <span>Current</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #FF474D; border: 1px solid #ddd;"></div>
+            <span>Unanswered</span>
+        </div>
+    </div>
+</div>
+
+<label class="instruction-checkbox">
+    <input type="checkbox" id="agree-checkbox">
+    <span class="custom-check"></span>
+    I have read and understood all instructions
+</label>
+
+<br><br>
+
+<button id="start-test-btn" disabled style="
+background:#3f51b5; color:white; padding:12px 24px; border:none;
+border-radius:5px; font-size:18px; cursor:not-allowed; opacity:0.6;">
+Start Test
+</button>
+</div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-header">
+    <div class="timer">01:00:00</div>
+    <div id="focus-laptop" style="font-size:12px; font-weight:bold; color:green; margin-top:5px;">● Focus On</div>
+</div>
+
+    <div class="test-info">
+      <p><strong>Name:</strong> <span id="display-user-name">Thunder</span></p>
+    <p><strong>Student ID:</strong> <span id="display-user-sid" style="color:var(--acc); font-family:monospace;">---</span></p>
+        <p><strong>Subject:</strong> <span id="subject-label">cs</span></p>
+        <p><strong>Questions:</strong> 50</p>
+        <p><strong>Duration:</strong> 60 minutes</p>
+        <p><strong>Marking:</strong> +5 / -1</p>
+        <p><strong>Chapter:</strong> <span id="current-section">-</span></p>
+    </div>
+
+    <div class="question-palette">
+        <div class="palette-title">
+            <span>Questions</span>
+            <span id="answered-count">0/50</span>
+        </div>
+        <div class="palette-grid" id="question-palette-grid"></div>
+
+        <div id="palette-legend" style="margin-top:12px; font-size:12px;"></div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+
+<div class="mobile-top-bar">
+    <div class="mobile-timer-clone">01:00:00</div>
+    <div id="focus-mobile" style="font-size:10px; font-weight:bold; color:green;">● Focus On</div>
+    <div id="mobile-name-display">👤 Thunder</div>
+</div>
+
+<div class="test-header">
+  <div id="user-name-display" style="
+    background: linear-gradient(135deg,#f97316,#ea580c);
+    color:white; padding:6px 14px; border-radius:20px;
+    font-weight:bold; font-size:14px;">
+👤 Thunder
+</div>
+<h2>Question <span id="current-q-number">1</span>/50</h2>
+<div class="progress-container">
+<div class="progress-bar">
+<div class="progress" id="test-progress"></div>
+</div>
+<div class="progress-text">
+<span>Progress &nbsp;</span>
+<span id="progress-percent">0%</span>
+</div>
+</div>
+</div>
+
+<div class="question-container">
+<div class="question-number">Question <span id="q-number">1</span></div>
+<div class="question-text" id="question-text"></div>
+<div class="options" id="options-container"></div>
+<div class="navigation-btns">
+<button class="btn btn-outline" id="prev-btn">&#8592; Previous</button>
+<div>
+<button class="mark-btn" id="mark-btn">Mark for Review</button>
+<button class="btn btn-primary" id="next-btn">Next &#8594;</button>
+</div>
+</div>
+</div>
+
+<div class="submit-section" style="
+    display: flex; justify-content: space-between; align-items: center;
+    width: 100%; max-width: 620px; margin: 24px auto; gap: 14px; flex-wrap: wrap;">
+
+    <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn join-btn">
+        ⚡ Join Thunder
+    </a>
+
+    <button class="fancy-btn submit-fancy-btn" id="submit-test-btn">
+        ✅ Submit Test
+    </button>
+</div>
+
+<footer style="background: linear-gradient(135deg,#1a1a2e,#16213e); color: #e0e0e0; text-align: center; padding: 22px 16px; margin-top: 10px;">
+   <p style="font-size:13px; color:#aaa; margin-bottom:14px;">© 2025 Thunder. All Rights Reserved.</p>
+
+<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:14px;">
+    <a href="https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html" target="_blank" class="footer-btn more-btn">
+        📚 More Mock
+    </a>
+    <a href="https://commercesehoga.blogspot.com/" target="_blank" class="footer-btn back-btn">
+        🌐 Back To Website
+    </a>
+    <a href="https://t.me/mindmaster_robot" target="_blank" class="footer-btn report-btn">
+        🚨 Report Error
+    </a>
+</div>
+</footer>
+
+<!-- Results Modal -->
+<div class="modal" id="results-modal">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Test Results</h2>
+<button class="close-btn" id="close-modal">×</button>
+</div>
+<div class="result-stats">
+<div class="stat-card">
+<h3>Correct Answers</h3>
+<p class="correct-stat" id="correct-answers">0</p>
+</div>
+<div class="stat-card">
+<h3>Incorrect Answers</h3>
+<p class="incorrect-stat" id="incorrect-answers">0</p>
+</div>
+<div class="stat-card">
+<h3>Unanswered</h3>
+<p class="neutral-stat" id="unanswered">50</p>
+</div>
+<div class="stat-card">
+<h3>Total Score</h3>
+<p class="score-stat" id="total-score">0</p>
+</div>
+</div>
+<div class="detailed-results">
+<h3>Detailed Analysis</h3>
+<p>Percentage: <span id="percentage">0</span>%</p>
+<p>Accuracy: <span id="accuracy">0</span>%</p>
+</div>
+<div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+<button class="btn btn-secondary review-btn" id="review-btn" style="flex:1; margin-top:0;">Review Answers</button>
+<button class="btn pdf-download-btn" id="download-pdf-btn" style="flex:1;">📄 Download PDF</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+  // Disable Right-Click, Copy, and Paste
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('copy', e => e.preventDefault());
+document.addEventListener('paste', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+    if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
+        e.preventDefault();
+    }
+});
+function detectDevTools() {
+    const threshold = 160;
+    if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+        alert("Security Breach: DevTools detected. Test will auto-submit.");
+        submitTest();
+    }
+}
+// Check every 1 second during the test
+setInterval(() => { if(testStarted && !testSubmitted) detectDevTools(); }, 1000);
+/* ============================================================
+   MOCK TEST DATA — Edit questions here
+   ============================================================ */
+const mockTest = {
+    title: "cs Mock",
+    questions:[
+{
+id: 1,
+section: "Sorting — Introduction",
+text: "Sorting refers to:",
+options: { a: "Searching for an element in an array", b: "Arranging elements in a specific order (ascending or descending)", c: "Deleting duplicate elements", d: "Inserting new elements into an array" },
+correctAnswer: "b",
+explanation: "Sorting is the process of arranging data in a specific sequence (ascending or descending) to make searching and processing more efficient.",
+marked: false,
+userAnswer: null
+},
+{
+id: 2,
+section: "Sorting — Stability",
+text: "A sorting algorithm is said to be stable if:",
+options: { a: "It does not change the relative order of equal elements", b: "It uses O(1) extra memory", c: "It always runs in O(n log n) time", d: "It works only on integers" },
+correctAnswer: "a",
+explanation: "Stable sorting preserves the original order of equal elements. Bubble Sort and Insertion Sort are stable; Selection Sort is not.",
+marked: false,
+userAnswer: null
+},
+{
+id: 3,
+section: "Sorting — In-place",
+text: "An in-place sorting algorithm is one that:",
+options: { a: "Uses O(n) extra memory", b: "Uses O(1) or O(log n) extra memory (negligible)", c: "Cannot sort large arrays", d: "Requires a temporary array" },
+correctAnswer: "b",
+explanation: "In-place algorithms sort the array within the original memory using only a constant amount of extra space.",
+marked: false,
+userAnswer: null
+},
+{
+id: 4,
+section: "Bubble Sort — Working",
+text: "Bubble Sort works by:",
+options: { a: "Repeatedly swapping adjacent elements if they are in the wrong order", b: "Selecting the minimum element and placing it at the beginning", c: "Inserting each element into its correct position", d: "Dividing the array into two halves" },
+correctAnswer: "a",
+explanation: "Bubble Sort repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.",
+marked: false,
+userAnswer: null
+},
+{
+id: 5,
+section: "Bubble Sort — Time Complexity",
+text: "The worst-case and average-case time complexity of Bubble Sort is:",
+options: { a: "O(n)", b: "O(n log n)", c: "O(n²)", d: "O(log n)" },
+correctAnswer: "c",
+explanation: "Bubble Sort has O(n²) time complexity in worst and average cases due to nested loops.",
+marked: false,
+userAnswer: null
+},
+{
+id: 6,
+section: "Bubble Sort — Best Case",
+text: "The best-case time complexity of Bubble Sort (with optimization) occurs when:",
+options: { a: "The array is sorted in reverse order", b: "The array is already sorted", c: "The array has all equal elements", d: "The array is empty" },
+correctAnswer: "b",
+explanation: "With a flag optimization, Bubble Sort can detect that the array is already sorted and stop after O(n) comparisons.",
+marked: false,
+userAnswer: null
+},
+{
+id: 7,
+section: "Bubble Sort — Passes",
+text: "In Bubble Sort, after k passes, the largest k elements are:",
+options: { a: "At the beginning of the array", b: "At the end of the array in sorted order", c: "Randomly distributed", d: "Removed from the array" },
+correctAnswer: "b",
+explanation: "Each pass of Bubble Sort moves the largest unsorted element to its correct position at the end.",
+marked: false,
+userAnswer: null
+},
+{
+id: 8,
+section: "Selection Sort — Working",
+text: "Selection Sort works by:",
+options: { a: "Swapping adjacent elements", b: "Repeatedly selecting the minimum element and swapping it with the first unsorted position", c: "Inserting each element into a sorted subarray", d: "Dividing the array into halves" },
+correctAnswer: "b",
+explanation: "Selection Sort finds the minimum element in the unsorted portion and swaps it with the first unsorted element.",
+marked: false,
+userAnswer: null
+},
+{
+id: 9,
+section: "Selection Sort — Time Complexity",
+text: "The time complexity of Selection Sort in all cases (best, average, worst) is:",
+options: { a: "O(n)", b: "O(n log n)", c: "O(n²)", d: "O(log n)" },
+correctAnswer: "c",
+explanation: "Selection Sort always makes n²/2 comparisons regardless of input, making it Θ(n²) in all cases.",
+marked: false,
+userAnswer: null
+},
+{
+id: 10,
+section: "Selection Sort — Swaps",
+text: "Selection Sort performs at most how many swaps?",
+options: { a: "n swaps", b: "n/2 swaps", c: "n² swaps", d: "n-1 swaps" },
+correctAnswer: "d",
+explanation: "Selection Sort performs at most n-1 swaps (one per iteration), making it efficient in terms of writes.",
+marked: false,
+userAnswer: null
+},
+{
+id: 11,
+section: "Selection Sort — Stability",
+text: "Selection Sort is generally considered:",
+options: { a: "Stable", b: "Unstable", c: "Both stable and unstable depending on implementation", d: "Neither" },
+correctAnswer: "b",
+explanation: "Selection Sort is unstable because swapping non-adjacent elements can change the relative order of equal elements.",
+marked: false,
+userAnswer: null
+},
+{
+id: 12,
+section: "Insertion Sort — Working",
+text: "Insertion Sort works by:",
+options: { a: "Repeatedly swapping adjacent elements", b: "Selecting the minimum element", c: "Building a sorted subarray by inserting each element into its correct position", d: "Dividing and conquering" },
+correctAnswer: "c",
+explanation: "Insertion Sort takes each element and inserts it into the correct position in the already sorted portion.",
+marked: false,
+userAnswer: null
+},
+{
+id: 13,
+section: "Insertion Sort — Time Complexity",
+text: "The worst-case time complexity of Insertion Sort is:",
+options: { a: "O(n)", b: "O(n log n)", c: "O(n²)", d: "O(log n)" },
+correctAnswer: "c",
+explanation: "Worst case (array sorted in reverse) requires shifting each element, resulting in O(n²) operations.",
+marked: false,
+userAnswer: null
+},
+{
+id: 14,
+section: "Insertion Sort — Best Case",
+text: "The best-case time complexity of Insertion Sort occurs when:",
+options: { a: "The array is sorted in reverse order", b: "The array is already sorted", c: "The array has all equal elements", d: "The array is empty" },
+correctAnswer: "b",
+explanation: "When the array is already sorted, Insertion Sort makes only n-1 comparisons and O(n) time.",
+marked: false,
+userAnswer: null
+},
+{
+id: 15,
+section: "Insertion Sort — Advantage",
+text: "Insertion Sort is efficient for:",
+options: { a: "Large unsorted arrays", b: "Small arrays or nearly sorted arrays", c: "Arrays with duplicate elements only", d: "Reverse sorted arrays" },
+correctAnswer: "b",
+explanation: "Insertion Sort performs well on small datasets and nearly sorted arrays (O(n) best case).",
+marked: false,
+userAnswer: null
+},
+{
+id: 16,
+section: "Sorting — Comparison",
+text: "Which of the following sorting algorithms is adaptive?",
+options: { a: "Bubble Sort (optimized)", b: "Insertion Sort", c: "Selection Sort", d: "Both A and B" },
+correctAnswer: "d",
+explanation: "Adaptive algorithms take advantage of existing order. Optimized Bubble Sort and Insertion Sort are adaptive.",
+marked: false,
+userAnswer: null
+},
+{
+id: 17,
+section: "Bubble Sort — Optimization",
+text: "The optimization in Bubble Sort using a 'swapped' flag helps to:",
+options: { a: "Reduce the number of passes when array becomes sorted early", b: "Increase the number of comparisons", c: "Make it unstable", d: "Increase memory usage" },
+correctAnswer: "a",
+explanation: "The flag detects if any swaps were made in a pass; if not, the array is sorted and we can break early.",
+marked: false,
+userAnswer: null
+},
+{
+id: 18,
+section: "Sorting — Inversions",
+text: "An inversion in an array is:",
+options: { a: "A pair of elements in the wrong order (i < j but arr[i] > arr[j])", b: "A duplicate element", c: "An element that is out of bounds", d: "A negative number" },
+correctAnswer: "a",
+explanation: "Inversions measure how far an array is from being sorted. Bubble and Insertion Sort's performance relates to inversion count.",
+marked: false,
+userAnswer: null
+},
+{
+id: 19,
+section: "Bubble Sort — Number of Comparisons",
+text: "In standard Bubble Sort (without optimization), the number of comparisons is:",
+options: { a: "n-1", b: "n(n-1)/2", c: "n²", d: "n log n" },
+correctAnswer: "b",
+explanation: "Standard Bubble Sort performs n-1 + n-2 + ... + 1 = n(n-1)/2 comparisons regardless of input.",
+marked: false,
+userAnswer: null
+},
+{
+id: 20,
+section: "Selection Sort — Number of Comparisons",
+text: "Selection Sort always makes exactly how many comparisons?",
+options: { a: "n-1 comparisons", b: "n(n-1)/2 comparisons", c: "n log n comparisons", d: "n² comparisons" },
+correctAnswer: "b",
+explanation: "Selection Sort always makes n(n-1)/2 comparisons to find the minimum in each pass.",
+marked: false,
+userAnswer: null
+},
+{
+id: 21,
+section: "Insertion Sort — Number of Comparisons",
+text: "In the worst case (reverse sorted), Insertion Sort makes approximately:",
+options: { a: "n-1 comparisons", b: "n(n-1)/2 comparisons", c: "n log n comparisons", d: "n comparisons" },
+correctAnswer: "b",
+explanation: "In worst case, each element must be compared with all elements in the sorted portion, giving n(n-1)/2 comparisons.",
+marked: false,
+userAnswer: null
+},
+{
+id: 22,
+section: "Sorting — Memory Comparison",
+text: "Which of these sorting algorithms is NOT in-place?",
+options: { a: "Bubble Sort", b: "Selection Sort", c: "Insertion Sort", d: "None of the above (all are in-place)" },
+correctAnswer: "d",
+explanation: "Bubble Sort, Selection Sort, and Insertion Sort all use O(1) extra space, making them in-place algorithms.",
+marked: false,
+userAnswer: null
+},
+{
+id: 23,
+section: "Sorting — Online Algorithm",
+text: "Which sorting algorithm can be called an 'online' algorithm?",
+options: { a: "Bubble Sort", b: "Selection Sort", c: "Insertion Sort", d: "None" },
+correctAnswer: "c",
+explanation: "Insertion Sort can sort elements as they arrive (online), as it maintains a sorted prefix.",
+marked: false,
+userAnswer: null
+},
+{
+id: 24,
+section: "Sorting — Recursive vs Iterative",
+text: "Bubble Sort, Selection Sort, and Insertion Sort are typically implemented:",
+options: { a: "Recursively", b: "Iteratively", c: "Both recursively and iteratively", d: "Using divide and conquer" },
+correctAnswer: "b",
+explanation: "These elementary sorting algorithms are usually implemented iteratively using loops.",
+marked: false,
+userAnswer: null
+},
+{
+id: 25,
+section: "Sorting — Application Choice",
+text: "For sorting an array that is almost sorted (few elements out of place), which algorithm is most efficient?",
+options: { a: "Bubble Sort (optimized)", b: "Selection Sort", c: "Insertion Sort", d: "Both A and C" },
+correctAnswer: "d",
+explanation: "Both optimized Bubble Sort and Insertion Sort perform well (O(n)) on nearly sorted arrays.",
+marked: false,
+userAnswer: null
+},
+{
+id: 26,
+section: "Bubble Sort — Basic Implementation",
+text: "Write Python code to implement Bubble Sort.",
+options: { a: "def bubble_sort(arr):\n    n = len(arr)\n    for i in range(n):\n        for j in range(0, n-i-1):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr", b: "def bubble_sort(arr):\n    for i in range(len(arr)):\n        for j in range(len(arr)-1):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr", c: "def bubble_sort(arr):\n    for i in range(len(arr)-1, 0, -1):\n        for j in range(i):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options correctly implement Bubble Sort with different loop variations.",
+marked: false,
+userAnswer: null
+},
+{
+id: 27,
+section: "Bubble Sort — Optimized with Flag",
+text: "Write Python code to implement optimized Bubble Sort that stops early if the array becomes sorted.",
+options: { a: "def optimized_bubble_sort(arr):\n    n = len(arr)\n    for i in range(n):\n        swapped = False\n        for j in range(0, n-i-1):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n                swapped = True\n        if not swapped:\n            break\n    return arr", b: "def bubble_sort_optimized(arr):\n    for i in range(len(arr)-1, 0, -1):\n        swapped = False\n        for j in range(i):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n                swapped = True\n        if not swapped:\n            break\n    return arr", c: "def bubble_sort_early_stop(lst):\n    n = len(lst)\n    for i in range(n):\n        swap = False\n        for j in range(n-1-i):\n            if lst[j] > lst[j+1]:\n                lst[j], lst[j+1] = lst[j+1], lst[j]\n                swap = True\n        if not swap:\n            return lst\n    return lst", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options use a swapped flag to detect when the array is sorted and break early.",
+marked: false,
+userAnswer: null
+},
+{
+id: 28,
+section: "Selection Sort — Implementation",
+text: "Write Python code to implement Selection Sort.",
+options: { a: "def selection_sort(arr):\n    n = len(arr)\n    for i in range(n):\n        min_idx = i\n        for j in range(i+1, n):\n            if arr[j] < arr[min_idx]:\n                min_idx = j\n        arr[i], arr[min_idx] = arr[min_idx], arr[i]\n    return arr", b: "def selection_sort(arr):\n    for i in range(len(arr)):\n        min_pos = i\n        for j in range(i+1, len(arr)):\n            if arr[j] < arr[min_pos]:\n                min_pos = j\n        arr[i], arr[min_pos] = arr[min_pos], arr[i]\n    return arr", c: "def selection_sort(lst):\n    for i in range(len(lst)-1):\n        m = i\n        for j in range(i+1, len(lst)):\n            if lst[j] < lst[m]:\n                m = j\n        lst[i], lst[m] = lst[m], lst[i]\n    return lst", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options correctly implement Selection Sort by finding the minimum in the unsorted portion.",
+marked: false,
+userAnswer: null
+},
+{
+id: 29,
+section: "Insertion Sort — Implementation",
+text: "Write Python code to implement Insertion Sort.",
+options: { a: "def insertion_sort(arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and arr[j] > key:\n            arr[j+1] = arr[j]\n            j -= 1\n        arr[j+1] = key\n    return arr", b: "def insertion_sort(arr):\n    for i in range(1, len(arr)):\n        current = arr[i]\n        pos = i\n        while pos > 0 and arr[pos-1] > current:\n            arr[pos] = arr[pos-1]\n            pos -= 1\n        arr[pos] = current\n    return arr", c: "def insertion_sort(lst):\n    for i in range(1, len(lst)):\n        temp = lst[i]\n        j = i - 1\n        while j >= 0 and lst[j] > temp:\n            lst[j+1] = lst[j]\n            j -= 1\n        lst[j+1] = temp\n    return lst", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options correctly implement Insertion Sort by shifting elements to insert each element into its correct position.",
+marked: false,
+userAnswer: null
+},
+{
+id: 30,
+section: "Bubble Sort — Dry Run",
+text: "Perform a dry run of Bubble Sort on the array [5, 1, 4, 2, 8]. What is the array after the first pass?",
+options: { a: "[1, 4, 2, 5, 8]", b: "[1, 4, 2, 5, 8]", c: "[1, 4, 2, 5, 8]", d: "[1, 4, 2, 5, 8]" },
+correctAnswer: "d",
+explanation: "First pass: compare 5>1 swap → [1,5,4,2,8]; 5>4 swap → [1,4,5,2,8]; 5>2 swap → [1,4,2,5,8]; 5<8 no swap. Result: [1,4,2,5,8]",
+marked: false,
+userAnswer: null
+},
+{
+id: 31,
+section: "Selection Sort — Dry Run",
+text: "Perform a dry run of Selection Sort on the array [64, 25, 12, 22, 11]. What is the array after the first pass?",
+options: { a: "[11, 25, 12, 22, 64]", b: "[64, 25, 12, 22, 11]", c: "[11, 64, 12, 22, 25]", d: "[64, 25, 12, 22, 11]" },
+correctAnswer: "a",
+explanation: "Find minimum (11) at index 4, swap with index 0: [11, 25, 12, 22, 64].",
+marked: false,
+userAnswer: null
+},
+{
+id: 32,
+section: "Insertion Sort — Dry Run",
+text: "Perform a dry run of Insertion Sort on the array [12, 11, 13, 5, 6]. What is the array after the third pass (i=3)?",
+options: { a: "[5, 6, 11, 12, 13]", b: "[11, 12, 13, 5, 6]", c: "[11, 12, 5, 13, 6]", d: "[11, 12, 5, 6, 13]" },
+correctAnswer: "c",
+explanation: "Pass1(i=1): [11,12,13,5,6]; Pass2(i=2): [11,12,13,5,6]; Pass3(i=3): insert 5 → [11,12,5,13,6]",
+marked: false,
+userAnswer: null
+},
+{
+id: 33,
+section: "Bubble Sort — Reverse Order",
+text: "Write Python code to sort an array in descending order using Bubble Sort.",
+options: { a: "def bubble_sort_desc(arr):\n    n = len(arr)\n    for i in range(n):\n        for j in range(0, n-i-1):\n            if arr[j] < arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr", b: "def bubble_sort_descending(arr):\n    for i in range(len(arr)-1):\n        for j in range(len(arr)-1-i):\n            if arr[j] < arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr", c: "def bubble_sort_reverse(lst):\n    for i in range(len(lst)):\n        for j in range(len(lst)-1-i):\n            if lst[j] < lst[j+1]:\n                lst[j], lst[j+1] = lst[j+1], lst[j]\n    return lst", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options sort in descending order by swapping when the left element is smaller than the right element.",
+marked: false,
+userAnswer: null
+},
+{
+id: 34,
+section: "Sorting — Count Comparisons",
+text: "Write Python code to count the number of comparisons performed by Bubble Sort.",
+options: { a: "def bubble_sort_with_count(arr):\n    n = len(arr)\n    comparisons = 0\n    for i in range(n):\n        for j in range(0, n-i-1):\n            comparisons += 1\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr, comparisons", b: "def count_comparisons_bubble(arr):\n    comp = 0\n    for i in range(len(arr)-1):\n        for j in range(len(arr)-1-i):\n            comp += 1\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr, comp", c: "def bubble_sort_count(arr):\n    count = 0\n    for i in range(len(arr)-1, 0, -1):\n        for j in range(i):\n            count += 1\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr, count", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options count comparisons by incrementing a counter each time a comparison is made.",
+marked: false,
+userAnswer: null
+},
+{
+id: 35,
+section: "Sorting — Sort Strings",
+text: "Write Python code to sort a list of strings alphabetically using Insertion Sort.",
+options: { a: "def insertion_sort_strings(arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and arr[j] > key:\n            arr[j+1] = arr[j]\n            j -= 1\n        arr[j+1] = key\n    return arr", b: "def sort_strings_insertion(lst):\n    for i in range(1, len(lst)):\n        temp = lst[i]\n        j = i - 1\n        while j >= 0 and lst[j] > temp:\n            lst[j+1] = lst[j]\n            j -= 1\n        lst[j+1] = temp\n    return lst", c: "def string_sort_insertion(words):\n    for i in range(1, len(words)):\n        current = words[i]\n        pos = i\n        while pos > 0 and words[pos-1] > current:\n            words[pos] = words[pos-1]\n            pos -= 1\n        words[pos] = current\n    return words", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options correctly sort strings alphabetically using Insertion Sort (string comparison uses lexicographic order).",
+marked: false,
+userAnswer: null
+},
+{
+id: 36,
+section: "Sorting — Sort Tuples by Second Element",
+text: "Write Python code to sort a list of tuples by the second element using Selection Sort.",
+options: { a: "def selection_sort_by_second(arr):\n    n = len(arr)\n    for i in range(n):\n        min_idx = i\n        for j in range(i+1, n):\n            if arr[j][1] < arr[min_idx][1]:\n                min_idx = j\n        arr[i], arr[min_idx] = arr[min_idx], arr[i]\n    return arr", b: "def sort_tuples_by_second(tuples_list):\n    for i in range(len(tuples_list)):\n        min_pos = i\n        for j in range(i+1, len(tuples_list)):\n            if tuples_list[j][1] < tuples_list[min_pos][1]:\n                min_pos = j\n        tuples_list[i], tuples_list[min_pos] = tuples_list[min_pos], tuples_list[i]\n    return tuples_list", c: "def selection_sort_tuples(lst, key_index=1):\n    for i in range(len(lst)):\n        m = i\n        for j in range(i+1, len(lst)):\n            if lst[j][key_index] < lst[m][key_index]:\n                m = j\n        lst[i], lst[m] = lst[m], lst[i]\n    return lst", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options sort tuples by the second element using Selection Sort with custom key access.",
+marked: false,
+userAnswer: null
+},
+{
+id: 37,
+section: "Bubble Sort — Recursive Implementation",
+text: "Write Python code to implement Bubble Sort recursively.",
+options: { a: "def bubble_sort_recursive(arr, n):\n    if n == 1:\n        return arr\n    for i in range(n-1):\n        if arr[i] > arr[i+1]:\n            arr[i], arr[i+1] = arr[i+1], arr[i]\n    return bubble_sort_recursive(arr, n-1)", b: "def recursive_bubble_sort(lst, end):\n    if end <= 1:\n        return lst\n    for i in range(end-1):\n        if lst[i] > lst[i+1]:\n            lst[i], lst[i+1] = lst[i+1], lst[i]\n    return recursive_bubble_sort(lst, end-1)", c: "def bubble_sort_rec(arr, length):\n    if length == 1:\n        return arr\n    for i in range(length-1):\n        if arr[i] > arr[i+1]:\n            arr[i], arr[i+1] = arr[i+1], arr[i]\n    bubble_sort_rec(arr, length-1)\n    return arr", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options implement recursive Bubble Sort where each call processes one pass and reduces the problem size.",
+marked: false,
+userAnswer: null
+},
+{
+id: 38,
+section: "Insertion Sort — Recursive Implementation",
+text: "Write Python code to implement Insertion Sort recursively.",
+options: { a: "def insertion_sort_recursive(arr, n):\n    if n <= 1:\n        return arr\n    insertion_sort_recursive(arr, n-1)\n    key = arr[n-1]\n    j = n-2\n    while j >= 0 and arr[j] > key:\n        arr[j+1] = arr[j]\n        j -= 1\n    arr[j+1] = key\n    return arr", b: "def recursive_insertion_sort(lst, i):\n    if i <= 0:\n        return lst\n    recursive_insertion_sort(lst, i-1)\n    temp = lst[i]\n    j = i-1\n    while j >= 0 and lst[j] > temp:\n        lst[j+1] = lst[j]\n        j -= 1\n    lst[j+1] = temp\n    return lst", c: "def insertion_sort_rec(arr, index):\n    if index >= len(arr):\n        return arr\n    temp = arr[index]\n    j = index - 1\n    while j >= 0 and arr[j] > temp:\n        arr[j+1] = arr[j]\n        j -= 1\n    arr[j+1] = temp\n    return insertion_sort_rec(arr, index+1)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options implement recursive Insertion Sort by recursively sorting the prefix and then inserting the next element.",
+marked: false,
+userAnswer: null
+},
+{
+id: 39,
+section: "Selection Sort — Recursive Implementation",
+text: "Write Python code to implement Selection Sort recursively.",
+options: { a: "def selection_sort_recursive(arr, start):\n    if start >= len(arr) - 1:\n        return arr\n    min_idx = start\n    for i in range(start+1, len(arr)):\n        if arr[i] < arr[min_idx]:\n            min_idx = i\n    arr[start], arr[min_idx] = arr[min_idx], arr[start]\n    return selection_sort_recursive(arr, start+1)", b: "def recursive_selection_sort(lst, i):\n    if i >= len(lst)-1:\n        return lst\n    m = i\n    for j in range(i+1, len(lst)):\n        if lst[j] < lst[m]:\n            m = j\n    lst[i], lst[m] = lst[m], lst[i]\n    return recursive_selection_sort(lst, i+1)", c: "def selection_sort_rec(arr, idx):\n    if idx == len(arr)-1:\n        return arr\n    min_pos = idx\n    for k in range(idx+1, len(arr)):\n        if arr[k] < arr[min_pos]:\n            min_pos = k\n    arr[idx], arr[min_pos] = arr[min_pos], arr[idx]\n    return selection_sort_rec(arr, idx+1)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options implement recursive Selection Sort by finding the minimum and swapping it to the current position.",
+marked: false,
+userAnswer: null
+},
+{
+id: 40,
+section: "Sorting — Visualize Passes",
+text: "Write Python code to visualize each pass of Bubble Sort (print array after each pass).",
+options: { a: "def bubble_sort_visual(arr):\n    n = len(arr)\n    for i in range(n):\n        for j in range(0, n-i-1):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n        print(f'Pass {i+1}: {arr}')\n    return arr", b: "def bubble_sort_print(arr):\n    for i in range(len(arr)-1, 0, -1):\n        for j in range(i):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n        print(f'After pass {len(arr)-i}: {arr}')\n    return arr", c: "def bubble_sort_trace(arr):\n    for i in range(len(arr)):\n        swapped = False\n        for j in range(len(arr)-1-i):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n                swapped = True\n        print(f'Pass {i+1}: {arr}')\n        if not swapped:\n            break\n    return arr", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options print the array after each pass to visualize the sorting process.",
+marked: false,
+userAnswer: null
+},
+{
+id: 41,
+section: "Sorting — Measure Execution Time",
+text: "Write Python code to measure and compare execution time of Bubble Sort, Selection Sort, and Insertion Sort on the same array.",
+options: { a: "import time\ndef compare_sorts(arr):\n    arr1, arr2, arr3 = arr.copy(), arr.copy(), arr.copy()\n    \n    start = time.time()\n    bubble_sort(arr1)\n    bubble_time = time.time() - start\n    \n    start = time.time()\n    selection_sort(arr2)\n    selection_time = time.time() - start\n    \n    start = time.time()\n    insertion_sort(arr3)\n    insertion_time = time.time() - start\n    \n    print(f'Bubble: {bubble_time:.6f}s, Selection: {selection_time:.6f}s, Insertion: {insertion_time:.6f}s')", b: "from time import perf_counter\ndef time_sorting_algorithms(data):\n    import copy\n    \n    t1 = perf_counter()\n    bubble_sort(copy.deepcopy(data))\n    t_bubble = perf_counter() - t1\n    \n    t1 = perf_counter()\n    selection_sort(copy.deepcopy(data))\n    t_selection = perf_counter() - t1\n    \n    t1 = perf_counter()\n    insertion_sort(copy.deepcopy(data))\n    t_insertion = perf_counter() - t1\n    \n    return {'bubble': t_bubble, 'selection': t_selection, 'insertion': t_insertion}", c: "import timeit\ndef compare_sort_performance(arr):\n    bubble_time = timeit.timeit(lambda: bubble_sort(arr.copy()), number=1)\n    selection_time = timeit.timeit(lambda: selection_sort(arr.copy()), number=1)\n    insertion_time = timeit.timeit(lambda: insertion_sort(arr.copy()), number=1)\n    print(f'Bubble: {bubble_time:.6f}s, Selection: {selection_time:.6f}s, Insertion: {insertion_time:.6f}s')", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options measure and compare execution times of the three sorting algorithms.",
+marked: false,
+userAnswer: null
+},
+{
+id: 42,
+section: "Sorting — Sort Custom Objects",
+text: "Write Python code to sort a list of custom objects (e.g., Student with name and age) by age using Insertion Sort.",
+options: { a: "class Student:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\ndef insertion_sort_by_age(students):\n    for i in range(1, len(students)):\n        key = students[i]\n        j = i - 1\n        while j >= 0 and students[j].age > key.age:\n            students[j+1] = students[j]\n            j -= 1\n        students[j+1] = key\n    return students", b: "def sort_students_by_age(students):\n    for i in range(1, len(students)):\n        temp = students[i]\n        j = i - 1\n        while j >= 0 and students[j].age > temp.age:\n            students[j+1] = students[j]\n            j -= 1\n        students[j+1] = temp\n    return students", c: "def insertion_sort_objects(arr, key_func):\n    for i in range(1, len(arr)):\n        current = arr[i]\n        j = i - 1\n        while j >= 0 and key_func(arr[j]) > key_func(current):\n            arr[j+1] = arr[j]\n            j -= 1\n        arr[j+1] = current\n    return arr\n\n# Usage: insertion_sort_objects(students, lambda s: s.age)", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options sort custom objects by age using Insertion Sort with attribute access.",
+marked: false,
+userAnswer: null
+},
+{
+id: 43,
+section: "Sorting — Find Number of Swaps",
+text: "Write Python code to count the number of swaps performed by Selection Sort.",
+options: { a: "def selection_sort_swap_count(arr):\n    n = len(arr)\n    swaps = 0\n    for i in range(n):\n        min_idx = i\n        for j in range(i+1, n):\n            if arr[j] < arr[min_idx]:\n                min_idx = j\n        if i != min_idx:\n            arr[i], arr[min_idx] = arr[min_idx], arr[i]\n            swaps += 1\n    return arr, swaps", b: "def count_swaps_selection(lst):\n    swap_count = 0\n    for i in range(len(lst)):\n        m = i\n        for j in range(i+1, len(lst)):\n            if lst[j] < lst[m]:\n                m = j\n        if i != m:\n            lst[i], lst[m] = lst[m], lst[i]\n            swap_count += 1\n    return lst, swap_count", c: "def selection_sort_swaps(arr):\n    swaps = 0\n    for i in range(len(arr)-1):\n        min_pos = i\n        for j in range(i+1, len(arr)):\n            if arr[j] < arr[min_pos]:\n                min_pos = j\n        if i != min_pos:\n            arr[i], arr[min_pos] = arr[min_pos], arr[i]\n            swaps += 1\n    return arr, swaps", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options count swaps performed during Selection Sort (at most n-1 swaps).",
+marked: false,
+userAnswer: null
+},
+{
+id: 44,
+section: "Sorting — Find Number of Shifts",
+text: "Write Python code to count the number of shifts performed by Insertion Sort.",
+options: { a: "def insertion_sort_shift_count(arr):\n    shifts = 0\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and arr[j] > key:\n            arr[j+1] = arr[j]\n            j -= 1\n            shifts += 1\n        arr[j+1] = key\n    return arr, shifts", b: "def count_shifts_insertion(lst):\n    shift_count = 0\n    for i in range(1, len(lst)):\n        temp = lst[i]\n        j = i - 1\n        while j >= 0 and lst[j] > temp:\n            lst[j+1] = lst[j]\n            j -= 1\n            shift_count += 1\n        lst[j+1] = temp\n    return lst, shift_count", c: "def insertion_sort_shifts(arr):\n    shifts = 0\n    for i in range(1, len(arr)):\n        current = arr[i]\n        pos = i\n        while pos > 0 and arr[pos-1] > current:\n            arr[pos] = arr[pos-1]\n            pos -= 1\n            shifts += 1\n        arr[pos] = current\n    return arr, shifts", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options count shifts (elements moved) during Insertion Sort.",
+marked: false,
+userAnswer: null
+},
+{
+id: 45,
+section: "Sorting — Sort with Key Function",
+text: "Write Python code to implement Selection Sort that accepts a key function for custom comparison (like Python's sort key).",
+options: { a: "def selection_sort_key(arr, key=lambda x: x):\n    n = len(arr)\n    for i in range(n):\n        min_idx = i\n        for j in range(i+1, n):\n            if key(arr[j]) < key(arr[min_idx]):\n                min_idx = j\n        arr[i], arr[min_idx] = arr[min_idx], arr[i]\n    return arr", b: "def selection_sort_with_key(lst, key_func):\n    for i in range(len(lst)):\n        m = i\n        for j in range(i+1, len(lst)):\n            if key_func(lst[j]) < key_func(lst[m]):\n                m = j\n        lst[i], lst[m] = lst[m], lst[i]\n    return lst", c: "def selection_sort_custom(arr, key_func=lambda x: x):\n    for i in range(len(arr)):\n        min_pos = i\n        for j in range(i+1, len(arr)):\n            if key_func(arr[j]) < key_func(arr[min_pos]):\n                min_pos = j\n        arr[i], arr[min_pos] = arr[min_pos], arr[i]\n    return arr", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options implement Selection Sort with a custom key function for flexible comparison.",
+marked: false,
+userAnswer: null
+},
+{
+id: 46,
+section: "Sorting — Stable vs Unstable Demonstration",
+text: "Write Python code to demonstrate that Selection Sort is unstable using a list of tuples with duplicate keys.",
+options: { a: "def selection_sort_unstable_demo(data):\n    print(f'Original: {data}')\n    n = len(data)\n    for i in range(n):\n        min_idx = i\n        for j in range(i+1, n):\n            if data[j][0] < data[min_idx][0]:\n                min_idx = j\n        data[i], data[min_idx] = data[min_idx], data[i]\n        print(f'After swap {i}: {data}')\n    return data\n\n# Test: [(2,'A'), (1,'B'), (2,'C')] - order of (2,'A') and (2,'C') changes", b: "def demonstrate_instability():\n    items = [(2, 'first'), (1, 'second'), (2, 'third')]\n    print(f'Before: {items}')\n    selection_sort_by_key(items, lambda x: x[0])\n    print(f'After: {items}')\n    print('Note: The two (2,x) elements may have swapped order!')", c: "def unstable_demo():\n    arr = [(3, 'a'), (2, 'b'), (3, 'c'), (1, 'd')]\n    print(f'Original order of (3,a) and (3,c): {(3,\"a\")} then {(3,\"c\")}')\n    selection_sort(arr)\n    print(f'After sorting: {arr}')\n    print('If (3,c) appears before (3,a), selection sort is unstable')", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options demonstrate that Selection Sort can change the relative order of equal elements (unstable).",
+marked: false,
+userAnswer: null
+},
+{
+id: 47,
+section: "Sorting — Sort List of Dictionaries",
+text: "Write Python code to sort a list of dictionaries by a specific key using Insertion Sort.",
+options: { a: "def insertion_sort_dicts(arr, key_name):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and arr[j][key_name] > key[key_name]:\n            arr[j+1] = arr[j]\n            j -= 1\n        arr[j+1] = key\n    return arr", b: "def sort_dicts_by_key(dict_list, key):\n    for i in range(1, len(dict_list)):\n        current = dict_list[i]\n        j = i - 1\n        while j >= 0 and dict_list[j][key] > current[key]:\n            dict_list[j+1] = dict_list[j]\n            j -= 1\n        dict_list[j+1] = current\n    return dict_list", c: "def insertion_sort_dict(lst, field):\n    for i in range(1, len(lst)):\n        temp = lst[i]\n        j = i - 1\n        while j >= 0 and lst[j][field] > temp[field]:\n            lst[j+1] = lst[j]\n            j -= 1\n        lst[j+1] = temp\n    return lst", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options sort a list of dictionaries by a specified key using Insertion Sort.",
+marked: false,
+userAnswer: null
+},
+{
+id: 48,
+section: "Sorting — Partial Sort",
+text: "Write Python code to find the k smallest elements using Selection Sort (partial sort).",
+options: { a: "def k_smallest_selection(arr, k):\n    n = len(arr)\n    for i in range(min(k, n)):\n        min_idx = i\n        for j in range(i+1, n):\n            if arr[j] < arr[min_idx]:\n                min_idx = j\n        arr[i], arr[min_idx] = arr[min_idx], arr[i]\n    return arr[:k]", b: "def find_k_smallest(arr, k):\n    result = arr.copy()\n    for i in range(k):\n        min_pos = i\n        for j in range(i+1, len(result)):\n            if result[j] < result[min_pos]:\n                min_pos = j\n        result[i], result[min_pos] = result[min_pos], result[i]\n    return result[:k]", c: "def k_smallest_selection_sort(lst, k):\n    lst_copy = lst[:]\n    for i in range(k):\n        m = i\n        for j in range(i+1, len(lst_copy)):\n            if lst_copy[j] < lst_copy[m]:\n                m = j\n        lst_copy[i], lst_copy[m] = lst_copy[m], lst_copy[i]\n    return lst_copy[:k]", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options find k smallest elements by performing only k passes of Selection Sort.",
+marked: false,
+userAnswer: null
+},
+{
+id: 49,
+section: "Sorting — Check if Sorted",
+text: "Write Python code to check if an array is sorted in ascending order.",
+options: { a: "def is_sorted(arr):\n    for i in range(len(arr)-1):\n        if arr[i] > arr[i+1]:\n            return False\n    return True", b: "def check_sorted(lst):\n    return all(lst[i] <= lst[i+1] for i in range(len(lst)-1))", c: "def is_sorted_ascending(arr):\n    return all(arr[i] <= arr[i+1] for i in range(len(arr)-1))", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options check if an array is sorted by comparing adjacent elements.",
+marked: false,
+userAnswer: null
+},
+{
+id: 50,
+section: "Sorting — Comprehensive Test Suite",
+text: "Write a comprehensive Python test suite that tests Bubble Sort, Selection Sort, and Insertion Sort on various inputs (empty, single element, sorted, reverse sorted, duplicates, random).",
+options: { a: "def test_sorting_algorithms():\n    test_cases = [\n        [],\n        [1],\n        [1,2,3,4,5],\n        [5,4,3,2,1],\n        [3,1,4,1,5,9,2,6],\n        [1,1,1,1,1]\n    ]\n    sorts = [bubble_sort, selection_sort, insertion_sort]\n    for sort in sorts:\n        for test in test_cases:\n            arr = test.copy()\n            sort(arr)\n            assert is_sorted(arr), f'{sort.__name__} failed on {test}'\n    print('All tests passed!')", b: "import random\ndef test_all_sorts():\n    algorithms = [bubble_sort, selection_sort, insertion_sort]\n    for _ in range(100):\n        test_arr = [random.randint(1, 100) for _ in range(random.randint(0, 50))]\n        expected = sorted(test_arr)\n        for algo in algorithms:\n            result = test_arr.copy()\n            algo(result)\n            assert result == expected, f'Failed: {algo.__name__} on {test_arr}'\n    print('All algorithms passed 100 random tests!')", c: "def test_sorting_suite():\n    def run_test(sort_func, name):\n        test_data = [[], [5], [3,1,2], [1,2,3], [3,2,1], [2,2,1,1,3,3]]\n        for data in test_data:\n            original = data.copy()\n            expected = sorted(original)\n            sort_func(data)\n            assert data == expected, f'{name} failed on {original}'\n        print(f'{name} passed all tests')\n    \n    run_test(bubble_sort, 'Bubble Sort')\n    run_test(selection_sort, 'Selection Sort')\n    run_test(insertion_sort, 'Insertion Sort')", d: "All of the above" },
+correctAnswer: "d",
+explanation: "All options provide comprehensive test suites to verify sorting algorithm correctness.",
+marked: false,
+userAnswer: null
+}
+],
+    duration: 60 * 60,
+    markingScheme: { correct: 5, incorrect: -1 }
+};
+
+/* ============================================================
+   CORE TEST ENGINE
+   ============================================================ */
+const timerElement = document.querySelector('.timer');
+const questionTextElement = document.getElementById('question-text');
+const optionsContainer = document.getElementById('options-container');
+const questionNumberElement = document.getElementById('q-number');
+const currentQNumberElement = document.getElementById('current-q-number');
+const progressBar = document.getElementById('test-progress');
+const progressPercent = document.getElementById('progress-percent');
+const questionPaletteGrid = document.getElementById('question-palette-grid');
+const answeredCountElement = document.getElementById('answered-count');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const markBtn = document.getElementById('mark-btn');
+const submitTestBtn = document.getElementById('submit-test-btn');
+const resultsModal = document.getElementById('results-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const correctAnswersElement = document.getElementById('correct-answers');
+const incorrectAnswersElement = document.getElementById('incorrect-answers');
+const unansweredElement = document.getElementById('unanswered');
+const totalScoreElement = document.getElementById('total-score');
+const percentageElement = document.getElementById('percentage');
+const accuracyElement = document.getElementById('accuracy');
+const reviewBtn = document.getElementById('review-btn');
+
+let currentQuestionIndex = 0;
+let timeLeft = mockTest.duration;
+let timer;
+let testSubmitted = false;
+let testStarted = false;
+
+function initTest() {
+    // 1. SHUFFLE OPTIONS ONLY (Questions stay 1 to 50)
+    mockTest.questions.forEach(q => {
+        let optionsArray = Object.entries(q.options); 
+        // Randomize the order of the options array
+        optionsArray.sort(() => Math.random() - 0.5); 
+        
+        let newOptions = {};
+        let newCorrectKey = "";
+        
+        optionsArray.forEach(([oldKey, text], index) => {
+            let newKey = String.fromCharCode(97 + index); // assigns new keys: a, b, c, d
+            newOptions[newKey] = text;
+            // Ensure the grade still works by tracking where the correct answer moved
+            if (oldKey === q.correctAnswer) newCorrectKey = newKey;
+        });
+        
+        q.options = newOptions;
+        q.correctAnswer = newCorrectKey;
+    });
+
+    // 2. RENDER TEST
+    renderQuestionPalette();
+    renderQuestion();
+    startTimer();
+    updateProgress();
+    renderLegend(false);
+    
+    prevBtn.addEventListener('click', goToPreviousQuestion);
+    nextBtn.addEventListener('click', goToNextQuestion);
+    markBtn.addEventListener('click', toggleMarkForReview);
+    submitTestBtn.addEventListener('click', confirmSubmit);
+    closeModalBtn.addEventListener('click', closeResultsModal);
+    reviewBtn.addEventListener('click', reviewAnswers);
+    document.getElementById('download-pdf-btn').addEventListener('click', generatePDF);
+}
+
+function renderLegend(reviewMode) {
+    const leg = document.getElementById('palette-legend');
+    if (!leg) return;
+    if (reviewMode) {
+        leg.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#22c55e;"></div><span>Correct</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#ef4444;"></div><span>Wrong</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#3b82f6;"></div><span>Not Answered</span></div>
+        </div>`;
+    } else {
+        leg.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#90ee90;"></div><span>Answered</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#90D5FF;"></div><span>Marked</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#FF474D;"></div><span>Unanswered</span></div>
+            <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #f97316;"></div><span>Current</span></div>
+        </div>`;
+    }
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) { clearInterval(timer); submitTest(); }
+        if (timeLeft === 300) { alert('Only 5 minutes remaining!'); }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const hours = Math.floor(timeLeft / 3600);
+    const minutes = Math.floor((timeLeft % 3600) / 60);
+    const seconds = timeLeft % 60;
+    const timeStr = `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+    timerElement.textContent = timeStr;
+    const mobileTimer = document.querySelector('.mobile-timer-clone');
+    if (mobileTimer) mobileTimer.textContent = timeStr;
+}
+
+function renderQuestion() {
+    const question = mockTest.questions[currentQuestionIndex];
+    document.getElementById('current-section').textContent = question.section;
+    questionTextElement.innerHTML = `
+        <div style="display:inline-block;background:linear-gradient(135deg,#f97316,#ea580c);color:white;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:8px;">
+            📘 ${question.section || "General"}
+        </div>
+        ${question.image ? `<div style="margin:10px 0;"><img src="${question.image}" style="max-width:100%;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);"></div>` : ""}
+        <div style="margin-top:8px;">${question.text}</div>
+    `;
+    questionNumberElement.textContent = question.id;
+    currentQNumberElement.textContent = question.id;
+    optionsContainer.innerHTML = '';
+
+    for (const [key, value] of Object.entries(question.options)) {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'option';
+        if (testSubmitted) {
+            if (key === question.correctAnswer) optionDiv.classList.add('correct');
+            else if (key === question.userAnswer && key !== question.correctAnswer) optionDiv.classList.add('incorrect');
+        } else {
+            if (key === question.userAnswer) optionDiv.classList.add('selected');
+        }
+        if (!testSubmitted) {
+            optionDiv.addEventListener('click', () => {
+                optionsContainer.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                optionDiv.classList.add('selected');
+                selectAnswer(key);
+            });
+        }
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'question-option';
+        input.value = key;
+        input.checked = question.userAnswer === key;
+        input.disabled = testSubmitted;
+        const letterDiv = document.createElement('div');
+        letterDiv.className = 'opt-letter';
+        letterDiv.textContent = key.toUpperCase();
+        const textSpan = document.createElement('span');
+        textSpan.className = 'opt-text';
+        textSpan.textContent = value;
+        if (testSubmitted) {
+            if (key === question.correctAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'correct-indicator';
+                ind.textContent = ' ✓ Correct Answer';
+                textSpan.appendChild(ind);
+            } else if (key === question.userAnswer && key !== question.correctAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'incorrect-indicator';
+                ind.textContent = ' ✗ Your Answer';
+                textSpan.appendChild(ind);
+            }
+        }
+        optionDiv.appendChild(input);
+        optionDiv.appendChild(letterDiv);
+        optionDiv.appendChild(textSpan);
+        optionsContainer.appendChild(optionDiv);
+    }
+
+    if (testSubmitted) {
+        const explanationDiv = document.createElement('div');
+        explanationDiv.style.cssText = "margin-top:15px;padding:12px;border-radius:8px;background:linear-gradient(135deg,#eef2ff,#e0f2ff);border-left:4px solid #6a11cb;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,0.1);";
+        explanationDiv.innerHTML = `<strong>Explanation:</strong><br>${question.explanation || "No explanation available."}`;
+        optionsContainer.appendChild(explanationDiv);
+    }
+
+    markBtn.classList.toggle('marked', question.marked);
+    markBtn.textContent = question.marked ? 'Unmark' : 'Mark for Review';
+    prevBtn.style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+    nextBtn.style.visibility = currentQuestionIndex === mockTest.questions.length - 1 ? 'hidden' : 'visible';
+    prevBtn.disabled = currentQuestionIndex === 0;
+    nextBtn.disabled = currentQuestionIndex === mockTest.questions.length - 1;
+    updateQuestionPalette();
+}
+
+function selectAnswer(answer) {
+    mockTest.questions[currentQuestionIndex].userAnswer = answer;
+    updateQuestionPalette();
+    updateProgress();
+}
+
+function toggleMarkForReview() {
+    const question = mockTest.questions[currentQuestionIndex];
+    question.marked = !question.marked;
+    markBtn.classList.toggle('marked', question.marked);
+    markBtn.textContent = question.marked ? 'Unmark' : 'Mark for Review';
+    updateQuestionPalette();
+}
+
+function goToPreviousQuestion() {
+    if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); }
+}
+
+function goToNextQuestion() {
+    if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); }
+}
+
+function renderQuestionPalette() {
+    questionPaletteGrid.innerHTML = '';
+    mockTest.questions.forEach((question, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn';
+        btn.textContent = question.id;
+        btn.addEventListener('click', () => navigateToQuestion(index));
+        questionPaletteGrid.appendChild(btn);
+    });
+    updateQuestionPalette();
+}
+
+function updateQuestionPalette() {
+    const paletteButtons = questionPaletteGrid.querySelectorAll('.palette-btn');
+    paletteButtons.forEach(btn => { btn.className = 'palette-btn'; });
+    mockTest.questions.forEach((question, index) => {
+        const btn = paletteButtons[index];
+        if (testSubmitted) {
+            if (!question.userAnswer) btn.classList.add('review-unanswered');
+            else if (question.userAnswer === question.correctAnswer) btn.classList.add('review-correct');
+            else btn.classList.add('review-wrong');
+        } else {
+            if (question.userAnswer) btn.classList.add('answered');
+            if (question.marked) btn.classList.add('marked');
+        }
+        if (index === currentQuestionIndex) btn.classList.add('current');
+    });
+    const answeredCount = mockTest.questions.filter(q => q.userAnswer).length;
+    answeredCountElement.textContent = `${answeredCount}/${mockTest.questions.length}`;
+}
+
+function navigateToQuestion(index) {
+    currentQuestionIndex = index;
+    renderQuestion();
+}
+
+function updateProgress() {
+    const answeredCount = mockTest.questions.filter(q => q.userAnswer).length;
+    const progress = (answeredCount / mockTest.questions.length) * 100;
+    progressBar.style.width = `${progress}%`;
+    progressPercent.textContent = `${Math.round(progress)}%`;
+}
+
+function confirmSubmit() {
+    if (confirm('Are you sure you want to submit the test?')) { submitTest(); }
+}
+
+function submitTest() {
+    if (testSubmitted) return;
+    testSubmitted = true;
+    clearInterval(timer);
+
+    let correct = 0, incorrect = 0, unanswered = 0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+
+    const totalQuestions = mockTest.questions.length;
+    const maxScore = totalQuestions * mockTest.markingScheme.correct;
+    const totalScore = (correct * mockTest.markingScheme.correct) + (incorrect * mockTest.markingScheme.incorrect);
+    const percentage = ((totalScore / maxScore) * 100).toFixed(2);
+    const accuracy = correct + incorrect > 0 ? (correct / (correct + incorrect) * 100).toFixed(2) : '0';
+
+    const resultData = {
+    studentId: localStorage.getItem('ts_student_id') || '',
+    name: localStorage.getItem('cbtUserName') || 'Unknown', // Changed from userName
+    subject: SUBJECT_ID,                                   // Changed from subjectId
+    chapter: CHAPTER_ID,                                   // Changed from chapterId
+    date: new Date().toISOString(),
+    score: totalScore,
+    maxScore: maxScore,
+    correct: correct,
+    wrong: incorrect,
+    skipped: unanswered,
+    totalQ: totalQuestions,
+    percentage: parseFloat(percentage),
+    accuracy: parseFloat(accuracy),
+    timeTaken: mockTest.duration - timeLeft
+};
+
+    const storageKey = `thunderstudy_result_${SUBJECT_ID}_${CHAPTER_ID}`;
+    localStorage.setItem(storageKey, JSON.stringify(resultData));
+
+    const GS_URL = "https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec";
+    fetch(GS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(resultData)
+    }).then(() => {
+        localStorage.setItem(`synced_${SUBJECT_ID}_${CHAPTER_ID}`, "true");
+    }).catch(err => console.error("Sync failed", err));
+
+    correctAnswersElement.textContent = correct;
+    incorrectAnswersElement.textContent = incorrect;
+    unansweredElement.textContent = unanswered;
+    totalScoreElement.textContent = totalScore;
+    percentageElement.textContent = percentage;
+    accuracyElement.textContent = accuracy;
+    resultsModal.style.display = 'flex';
+    renderQuestion();
+
+    const submitBtn = document.getElementById('submit-test-btn');
+    submitBtn.textContent = '📄 Download PDF';
+    submitBtn.classList.remove('submit-fancy-btn');
+    submitBtn.classList.add('pdf-download-btn');
+    submitBtn.onclick = generatePDF;
+
+    renderLegend(true);
+}
+
+function closeResultsModal() { resultsModal.style.display = 'none'; }
+
+function reviewAnswers() {
+    resultsModal.style.display = 'none';
+    currentQuestionIndex = 0;
+    renderQuestion();
+}
+
+/* Tab switch guard */
+document.addEventListener("visibilitychange", function() {
+    if (!testStarted || testSubmitted) return;
+    updateFocusMode();
+    if (document.hidden) startCountdown('tab');
+    else cancelCountdown();
+});
+
+/* Arrow key navigation */
+document.addEventListener('keydown', function(e) {
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); }
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); }
+    }
+});
+</script>
+
+<script>
+// Function to start the Mock
+function startMock() {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+    
+    const inputName = document.getElementById('username-input').value.trim();
+
+    // 1. Validate Name
+    if (!savedName && !inputName) {
+        alert("⚠️ Please enter your name to continue!");
+        document.getElementById('username-input').focus();
+        return;
+    }
+    
+    // Save name if typed manually
+    if (!savedName && inputName) {
+        localStorage.setItem("cbtUserName", inputName);
+    }
+
+    // 2. Validate Student ID (The specific check you asked for)
+    if (!savedSID) {
+        const goToDash = confirm("⚠️ Student ID not found!\n\nYou must have a Student ID to start the mock.\n\nClick OK to open Dashboard to generate one, or Cancel to stay here.");
+        if (goToDash) {
+            window.open('https://commercesehoga.github.io/dashboard/', '_blank');
+        }
+        return;
+    }
+
+    // 3. If everything is OK, proceed
+    enterFullscreen();
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('instruction-screen').style.display = 'block';
+}
+
+// Update displays when the test actually starts
+document.getElementById('start-test-btn').addEventListener('click', () => {
+    if (!document.getElementById('agree-checkbox').checked) return;
+    
+    const name = localStorage.getItem("cbtUserName") || "Thunder";
+    const sid = localStorage.getItem("ts_student_id") || "N/A";
+    
+    // Update Desktop Displays
+    document.getElementById('user-name-display').innerText = "👤 " + name;
+    if(document.getElementById('display-user-name')) document.getElementById('display-user-name').innerText = name;
+    if(document.getElementById('display-user-sid')) document.getElementById('display-user-sid').innerText = sid;
+    
+    // Update Mobile Displays
+    const mobileNameEl = document.getElementById('mobile-name-display');
+    if (mobileNameEl) mobileNameEl.innerText = "👤 " + name + " | " + sid;
+});
+
+// Auto-fill and Fetch on Page Load
+window.addEventListener('DOMContentLoaded', () => {
+    // Fetch Name and Student ID from local storage
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+
+    // Set and Lock Name Input
+    if (savedName) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = savedName;
+            // Apply locked styling
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.style.color = '#4f6ef7';
+            inp.style.fontWeight = 'bold';
+            
+            // Force Read-Only (Removes ability to change)
+            inp.setAttribute('readonly', true);
+            
+            // Add a simple verification label (No "Change" link)
+            inp.insertAdjacentHTML('afterend', 
+                `<div style="font-size:11px; color:#4f6ef7; font-weight:700; margin-top:5px;">
+                    ✅ Verified Dashboard Profile
+                </div>`
+            );
+        }
+    }
+
+    // Set and Show Student ID
+    if (savedSID) {
+        const sidArea = document.getElementById('sid-display-area');
+        const sidVal = document.getElementById('sid-value');
+        if (sidArea && sidVal) {
+            sidArea.style.display = 'block';
+            sidVal.textContent = savedSID;
+            // Optional: Match the theme color
+            sidArea.style.color = '#4f6ef7';
+        }
+    }
+});
+
+const darkModeToggles = document.querySelectorAll('#dark-mode-toggle, #dark-mode-toggle-bottom, #dark-mode-toggle-top');
+darkModeToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        darkModeToggles.forEach(btn => {
+            const iconSpan = btn.querySelector('.icon');
+            if (iconSpan) iconSpan.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+    });
+});
+</script>
+
+<script>
+const checkbox = document.getElementById('agree-checkbox');
+const startBtn = document.getElementById('start-test-btn');
+
+checkbox.addEventListener('change', () => {
+    startBtn.disabled = !checkbox.checked;
+    startBtn.style.opacity = checkbox.checked ? "1" : "0.6";
+    startBtn.style.cursor = checkbox.checked ? "pointer" : "not-allowed";
+});
+
+startBtn.addEventListener('click', () => {
+    if (!checkbox.checked) { alert("Please accept instructions first!"); return; }
+    document.getElementById('instruction-screen').style.display = 'none';
+    document.getElementById('test-screen').style.display = 'block';
+    const name = localStorage.getItem("cbtUserName") || "Thunder";
+    document.getElementById('user-name-display').innerText = "👤 " + name;
+    const mobileNameEl = document.getElementById('mobile-name-display');
+    if (mobileNameEl) mobileNameEl.innerText = "👤 " + name;
+    testStarted = true;
+    enterFullscreen();
+    initTest();
+});
+
+function enterFullscreen() {
+    const el = document.documentElement;
+    try {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+        else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    } catch(e) {}
+}
+
+document.addEventListener('fullscreenchange', onFSChange);
+document.addEventListener('webkitfullscreenchange', onFSChange);
+document.addEventListener('mozfullscreenchange', onFSChange);
+document.addEventListener('MSFullscreenChange', onFSChange);
+
+function isInFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement ||
+              document.mozFullScreenElement || document.msFullscreenElement);
+}
+
+function onFSChange() {
+    if (!testStarted || testSubmitted) return;
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    updateFocusMode();
+    if (!isInFullscreen()) startCountdown('fullscreen');
+    else cancelCountdown();
+}
+
+let countdownTimer = null;
+let countdownSeconds = 0;
+
+function updateFocusMode() {
+    const color = (document.hidden || !isInFullscreen()) ? "#FF474D" : "#90EE90";
+    const text = (document.hidden || !isInFullscreen()) ? "● Disturbed" : "● Focus On";
+    const els = [document.getElementById('focus-laptop'), document.getElementById('focus-mobile')];
+    els.forEach(el => { if(el) { el.style.color = color; el.innerText = text; }});
+}
+
+function startCountdown(reason) {
+    if (!testStarted || testSubmitted) return;
+    if (countdownTimer) return;
+    countdownSeconds = (reason === 'tab') ? 2 : 5;
+    const msg  = (reason === 'tab') ? '⚠️ You switched tabs!' : '⚠️ You exited fullscreen!';
+    const hint = (reason === 'tab') ? 'Switch back to this tab to cancel.' : 'Click the button below to return to fullscreen.';
+    showOverlay(msg, hint, countdownSeconds, reason === 'fullscreen');
+    countdownTimer = setInterval(() => {
+        countdownSeconds--;
+        updateOverlayCount(countdownSeconds);
+        if (countdownSeconds <= 0) { cancelCountdown(); submitTest(); }
+    }, 1000);
+}
+
+function cancelCountdown() {
+    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+    hideOverlay();
+}
+
+function showOverlay(msg, hint, secs, showBtn) {
+    let ov = document.getElementById('security-overlay');
+    if (!ov) {
+        ov = document.createElement('div');
+        ov.id = 'security-overlay';
+        ov.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:'Segoe UI',sans-serif;color:#fff;text-align:center;padding:24px;`;
+        document.body.appendChild(ov);
+    }
+    ov.innerHTML = `
+        <div style="font-size:60px;margin-bottom:14px;">🚨</div>
+        <div style="font-size:22px;font-weight:800;margin-bottom:8px;">${msg}</div>
+        <div style="font-size:15px;color:#fbbf24;margin-bottom:20px;">${hint}</div>
+        <div style="font-size:16px;color:#e0e0e0;margin-bottom:6px;">Auto-submitting in</div>
+        <div id="overlay-count" style="font-size:72px;font-weight:900;color:#f87171;line-height:1;">${secs}</div>
+        <div style="font-size:14px;color:#9ca3af;margin-top:4px;">seconds</div>
+        ${showBtn ? `<button onclick="enterFullscreen()" style="margin-top:24px;padding:13px 34px;border-radius:30px;border:none;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(34,197,94,0.5);">🔲 Return to Fullscreen</button>` : ''}`;
+    ov.style.display = 'flex';
+}
+
+function updateOverlayCount(n) {
+    const el = document.getElementById('overlay-count');
+    if (el) el.textContent = n;
+}
+
+function hideOverlay() {
+    const ov = document.getElementById('security-overlay');
+    if (ov) ov.style.display = 'none';
+}
+</script>
+
+<div id="pdf-print-area"></div>
+
+<script>
+function generatePDF() {
+    const name = localStorage.getItem('cbtUserName') || 'Thunder';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+    const timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+
+    let correct = 0, incorrect = 0, unanswered = 0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+    const totalScore = (correct * mockTest.markingScheme.correct) + (incorrect * mockTest.markingScheme.incorrect);
+    const maxScore = mockTest.questions.length * mockTest.markingScheme.correct;
+    const pct = ((totalScore / maxScore) * 100).toFixed(1);
+    const optionLabel = { a:'A', b:'B', c:'C', d:'D' };
+
+    let questionsHTML = '';
+    mockTest.questions.forEach((q, i) => {
+        const isCorrect = q.userAnswer === q.correctAnswer;
+        const isWrong   = q.userAnswer && !isCorrect;
+        const isSkipped = !q.userAnswer;
+        const statusColor = isCorrect ? '#16a34a' : isWrong ? '#dc2626' : '#9ca3af';
+        const statusLabel = isCorrect ? '✓ Correct' : isWrong ? '✗ Wrong' : '— Skipped';
+        const rowBg = isCorrect ? '#f0fdf4' : isWrong ? '#fef2f2' : '#fafafa';
+        let optionsHTML = '';
+        for (const [key, val] of Object.entries(q.options)) {
+            const isRight = key === q.correctAnswer;
+            const isUser  = key === q.userAnswer;
+            let bg = 'transparent', fw = 'normal', prefix = '';
+            if (isRight) { bg = '#dcfce7'; fw = 'bold'; prefix = '✓ '; }
+            if (isUser && !isRight) { bg = '#fee2e2'; fw = 'bold'; prefix = '✗ '; }
+            optionsHTML += `<div style="display:flex;gap:8px;padding:4px 8px;margin:2px 0;border-radius:4px;background:${bg};font-weight:${fw};font-size:12px;"><span style="min-width:18px;font-weight:700;">${optionLabel[key]}.</span><span>${prefix}${val}</span></div>`;
+        }
+        let yourAnswer = isSkipped
+            ? '<span style="color:#9ca3af;">Not Attempted</span>'
+            : `<span style="color:${isCorrect?'#16a34a':'#dc2626'};font-weight:bold;">${optionLabel[q.userAnswer]}. ${q.options[q.userAnswer]}</span>`;
+        questionsHTML += `
+        <div style="margin-bottom:18px;padding:14px 16px;border-radius:8px;background:${rowBg};border:1px solid #e5e7eb;page-break-inside:avoid;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div style="font-weight:700;font-size:13px;color:#374151;">Q${i+1}. ${q.text}</div>
+                <div style="font-weight:700;font-size:12px;color:${statusColor};white-space:nowrap;margin-left:12px;">${statusLabel}</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:8px;">${optionsHTML}</div>
+            <div style="font-size:12px;border-top:1px solid #e5e7eb;padding-top:6px;margin-top:4px;">
+                <span style="color:#6b7280;">Your answer: </span>${yourAnswer}&nbsp;&nbsp;
+                <span style="color:#6b7280;">Correct answer: </span>
+                <span style="color:#16a34a;font-weight:bold;">${optionLabel[q.correctAnswer]}. ${q.options[q.correctAnswer]}</span>
+            </div>
+        </div>`;
+    });
+
+    const scoreColor = pct >= 60 ? '#16a34a' : pct >= 35 ? '#d97706' : '#dc2626';
+    const html = `<div style="max-width:780px;margin:0 auto;font-family:Arial,sans-serif;color:#111;">
+        <div style="background:linear-gradient(135deg,#f97316,#ea580c);color:white;padding:20px 24px;border-radius:10px 10px 0 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <div><div style="font-size:22px;font-weight:800;">⚡ Thunderstudy CBT</div><div style="font-size:13px;opacity:0.85;margin-top:3px;">Result Report — ${CHAPTER_ID.toUpperCase()}</div></div>
+                <div style="text-align:right;font-size:12px;opacity:0.85;"><div>📅 ${dateStr} &nbsp; 🕐 ${timeStr}</div><div style="margin-top:2px;">👤 ${name}</div></div>
+            </div>
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-top:none;padding:16px 24px;border-radius:0 0 10px 10px;margin-bottom:20px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;">
+                <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                    <div style="background:white;border:1px solid #e2e8f0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SCORE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${totalScore}<span style="font-size:14px;color:#6b7280;">/${maxScore}</span></div></div>
+                    <div style="background:white;border:1px solid #e2e8f0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">PERCENTAGE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${pct}%</div></div>
+                    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#16a34a;">CORRECT</div><div style="font-size:24px;font-weight:800;color:#16a34a;">${correct}</div></div>
+                    <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#dc2626;">WRONG</div><div style="font-size:24px;font-weight:800;color:#dc2626;">${incorrect}</div></div>
+                    <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SKIPPED</div><div style="font-size:24px;font-weight:800;color:#6b7280;">${unanswered}</div></div>
+                </div>
+            </div>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#374151;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #6a11cb;">📋 Question-wise Answer Key</div>
+        ${questionsHTML}
+        <div style="text-align:center;margin-top:24px;padding:14px;background:#f1f5f9;border-radius:8px;font-size:12px;color:#6b7280;">Generated by <b>Thunderstudy CBT</b> &nbsp;|&nbsp; t.me/thunderstudy_official &nbsp;|&nbsp; ${dateStr}</div>
+    </div>`;
+
+    const printWin = window.open('', '_blank', 'width=950,height=700,scrollbars=yes');
+    if (!printWin) { alert('Popup blocked! Please allow popups for this site and try again.'); return; }
+    printWin.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Thunderstudy_Result_${name}_${dateStr.replace(/ /g,'-')}</title>
+    <style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;padding:20px;}@media print{body{padding:0;}.no-print{display:none !important;}}.print-btn{display:block;margin:0 auto 20px;padding:12px 36px;background:linear-gradient(135deg,#f97316,#ea580c);color:white;font-size:16px;font-weight:700;border:none;border-radius:30px;cursor:pointer;}</style>
+    </head><body><button class="print-btn no-print" onclick="window.print()">🖨️ Print / Save as PDF</button>${html}</body></html>`);
+    printWin.document.close();
+    printWin.focus();
+}
+
+   // Auto-fill name from dashboard on page load
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('cbtUserName') || 
+                  (() => { try { return JSON.parse(localStorage.getItem('ts_profile')||'{}').name || ''; } catch(e){ return ''; } })();
+    if (saved) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = saved;
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.setAttribute('readonly', true);
+            inp.title = 'Name loaded from Dashboard';
+            // Add a small label below
+            inp.insertAdjacentHTML('afterend', 
+                
+            );
+        }
+    }
+});
+</script>
+
+</body>
+</html>
