@@ -1,0 +1,2759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thunder⚡ CBT – CUET ip Mock Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --pink-primary: #e91e8c;
+    --pink-dark: #c0156e;
+    --pink-deeper: #9b0f58;
+    --pink-light: #f48fb1;
+    --pink-pale: #fce4ec;
+    --pink-soft: #fdf0f6;
+    --pink-mid: #f8bbd9;
+    --jee-bg: #f0f0f0;
+    --jee-header-bg: #e8e8e8;
+    --jee-border: #c8c8c8;
+    --jee-text: #222;
+    --jee-green: #28a745;
+    --jee-red: #dc3545;
+    --jee-orange: #f5a623;
+    --jee-blue: #1976d2;
+    --jee-purple: #7b1fa2;
+    --gray-dark: #1a1a2e;
+    --gray-mid: #4a4a6a;
+    --gray-light: #f5f5f5;
+    --shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: Arial, sans-serif; background: var(--jee-bg); color: var(--jee-text); min-height:100vh; overflow-x:hidden; }
+
+  /* ===== SCREENS ===== */
+  .screen { display:none; min-height:100vh; }
+  .screen.active { display:block; }
+
+  /* ===============================================================
+     LOGIN SCREEN
+  =============================================================== */
+  #screen-login {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: none;
+    flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  #screen-login.active { display: flex; }
+  .login-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    width: 100%; max-width: 440px;
+    overflow: hidden;
+  }
+  .login-header {
+    background: linear-gradient(135deg, #1976d2, #0a3880);
+    padding: 28px 30px 22px;
+    text-align: center;
+  }
+  .login-header .login-logo { font-size: 36px; margin-bottom: 8px; }
+  .login-header h2 { font-family: Arial, sans-serif; font-size: 22px; font-weight: 700; color: white; letter-spacing: 1px; }
+  .login-header p { color: rgba(255,255,255,0.8); font-size: 13px; margin-top: 4px; }
+  .login-body { padding: 28px 30px 32px; }
+  .login-field { margin-bottom: 18px; }
+  .login-field label { display: block; font-size: 13px; font-weight: 700; color: #555; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .login-field input {
+    width: 100%; padding: 12px 14px; border: 2px solid #e0e0e0; border-radius: 8px;
+    font-size: 14px; font-family: Arial, sans-serif; transition: border-color 0.2s;
+    background: #fafafa;
+  }
+  .login-field input:focus { outline: none; border-color: #1976d2; background: white; }
+  .login-remember { display: flex; align-items: center; gap: 8px; margin-bottom: 22px; font-size: 13px; color: #666; }
+  .login-remember input { width: 15px; height: 15px; accent-color: #1976d2; }
+  .btn-login {
+    width: 100%; padding: 13px; background: linear-gradient(135deg, #1976d2, #0d47a1);
+    color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+    cursor: pointer; letter-spacing: 1px; transition: all 0.2s; text-transform: uppercase;
+  }
+  .btn-login:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(233,30,140,0.4); }
+  .login-note { text-align: center; font-size: 11.5px; color: #aaa; margin-top: 14px; }
+
+  /* ===============================================================
+     JEE-STYLE EXAM HEADER (test screen)
+  =============================================================== */
+  .jee-header {
+    background: var(--jee-header-bg);
+    border-bottom: 2px solid var(--jee-border);
+    padding: 10px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    flex-wrap: wrap; gap: 8px;
+  }
+  .jee-candidate-block {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .jee-photo {
+    width: 64px; height: 72px;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    background: #d0d0d0;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .jee-photo svg { width: 44px; height: 44px; }
+  .jee-info-table { font-size: 13.5px; }
+  .jee-info-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 3px; }
+  .jee-info-label { color: #444; font-weight: 400; min-width: 110px; }
+  .jee-info-value { font-weight: 700; color: #e65100; }
+  .jee-info-value.name-val { color: #e65100; }
+  .jee-info-value.time-val {
+    background: #1976d2; color: white; padding: 2px 12px;
+    border-radius: 4px; font-weight: 700; font-size: 14px; font-family: monospace;
+    letter-spacing: 1px;
+  }
+  .jee-info-value.time-val.warning { background: #c62828; }
+  .jee-lang-block { display: flex; align-items: center; gap: 8px; }
+  .jee-lang-select {
+    padding: 7px 32px 7px 12px;
+    border: 1px solid #bbb; border-radius: 4px;
+    font-size: 13px; background: white; cursor: pointer;
+    appearance: auto; min-width: 120px;
+  }
+
+  /* Instruction screen header (pink) */
+  .exam-header {
+    background: linear-gradient(135deg, #1976d2 0%, #0a3880 100%);
+    padding: 0; box-shadow: 0 4px 16px rgba(0,0,0,0.2); position: relative; overflow: hidden;
+  }
+  .exam-header::before { content:''; position:absolute; top:-30px; right:-30px; width:120px; height:120px; background:rgba(255,255,255,0.08); border-radius:50%; }
+  .exam-header::after { content:''; position:absolute; bottom:-20px; left:40%; width:80px; height:80px; background:rgba(255,255,255,0.06); border-radius:50%; }
+  .header-inner { display:flex; align-items:center; justify-content:space-between; padding:10px 20px; max-width:1400px; margin:0 auto; }
+  .header-logo { display:flex; align-items:center; gap:12px; }
+  .logo-icon { width:46px; height:46px; background:white; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+  .logo-text h1 { font-family:'Arial',sans-serif; font-size:20px; font-weight:700; color:white; line-height:1; letter-spacing:1px; }
+  .logo-text p { font-size:11px; color:rgba(255,255,255,0.8); font-weight:600; letter-spacing:0.5px; text-transform:uppercase; }
+  .header-candidate { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.12); padding:6px 14px; border-radius:30px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.2); }
+  .candidate-avatar { width:34px; height:34px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; overflow:hidden; }
+  .candidate-info .name { color:white; font-weight:700; font-size:13px; }
+  .candidate-info .roll { color:rgba(255,255,255,0.75); font-size:11px; }
+
+  /* ===== INSTRUCTION SCREENS ===== */
+  #screen-instructions { background: #eff6ff; }
+  .instr-body { max-width:900px; margin:0 auto; padding:24px 16px 40px; }
+  .instr-card { background:white; border-radius:16px; box-shadow:var(--shadow); overflow:hidden; margin-bottom:20px; border:1px solid #bfdbfe; }
+  .instr-card-header { background:linear-gradient(135deg,#dbeafe,#bfdbfe); padding:14px 20px; border-bottom:2px solid #1976d2; display:flex; align-items:center; gap:10px; }
+  .instr-card-header h3 { font-family:'Arial',sans-serif; font-size:16px; font-weight:700; color:#0a3880; text-transform:uppercase; letter-spacing:1px; }
+  .instr-card-icon { width:32px; height:32px; background:#1976d2; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; color:white; }
+  .instr-card-body { padding:18px 20px; }
+  .exam-info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:4px; }
+  .exam-info-item { background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:12px 14px; text-align:center; }
+  .exam-info-item .label { font-size:11px; color:#0d47a1; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+  .exam-info-item .value { font-size:20px; font-weight:800; color:#1976d2; font-family:'Arial',sans-serif; }
+  .instr-list { list-style:none; }
+  .instr-list li { display:flex; gap:10px; padding:8px 0; border-bottom:1px solid #dbeafe; font-size:13.5px; color:var(--gray-mid); line-height:1.5; }
+  .instr-list li:last-child { border-bottom:none; }
+  .instr-list li .num { min-width:22px; height:22px; background:#1976d2; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; margin-top:1px; flex-shrink:0; }
+  .legend-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .legend-item { display:flex; align-items:center; gap:10px; padding:8px 12px; background:#eff6ff; border-radius:8px; font-size:12.5px; color:var(--gray-mid); font-weight:600; }
+  .legend-dot { width:28px; height:28px; border-radius:6px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:white; }
+
+  /* JEE palette legend dots */
+  .dot-not-visited  { background:#fff; border:2px solid #999; color:#666; }
+  .dot-not-answered { background:var(--jee-red); clip-path:polygon(50% 0%,100% 30%,100% 100%,0% 100%,0% 30%); border-radius:0; color:white; }
+  .dot-answered     { background:var(--jee-green); border-radius:50% !important; color:white; }
+  .dot-marked       { background:var(--jee-purple); border-radius:50% !important; color:white; }
+  .dot-answered-marked { background:var(--jee-purple); border-radius:50% !important; color:white; position:relative; }
+  .dot-answered-marked::after { content:'✓'; position:absolute; bottom:-3px; right:-3px; background:var(--jee-green); width:13px; height:13px; border-radius:50%; font-size:8px; display:flex; align-items:center; justify-content:center; border:1px solid white; }
+
+  /* Step progress */
+  .step-progress-wrap { background:white; border-bottom:2px solid #bfdbfe; padding:0; }
+  .step-progress { max-width:900px; margin:0 auto; display:flex; align-items:stretch; }
+  .step-item { flex:1; display:flex; align-items:center; gap:10px; padding:14px 20px; position:relative; cursor:default; border-bottom:3px solid transparent; transition:all 0.2s; }
+  .step-item.active { border-bottom-color:#1976d2; }
+  .step-item.done { border-bottom-color:#2e7d32; }
+  .step-num { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Arial',sans-serif; font-size:14px; font-weight:700; flex-shrink:0; transition:all 0.2s; background:#e0e0e0; color:#9e9e9e; }
+  .step-item.active .step-num { background:#1976d2; color:white; box-shadow:0 3px 10px rgba(233,30,140,0.35); }
+  .step-item.done .step-num { background:#2e7d32; color:white; }
+  .step-label { font-size:12px; font-weight:700; color:#9e9e9e; line-height:1.3; }
+  .step-item.active .step-label { color:#1976d2; }
+  .step-item.done .step-label { color:#2e7d32; }
+  .step-connector { width:1px; background:#bfdbfe; align-self:stretch; margin:8px 0; }
+
+  /* Step panels */
+  .instr-step { display:none; }
+  .instr-step.active { display:block; }
+
+ 
+  /* Step nav */
+  .step-nav { display:flex; justify-content:space-between; align-items:center; margin-top:20px; gap:12px; }
+  .btn-step-next { background:linear-gradient(135deg,#1976d2,#0d47a1); color:white; border:none; padding:12px 36px; border-radius:50px; font-family:'Arial',sans-serif; font-size:17px; font-weight:700; cursor:pointer; box-shadow:0 4px 16px rgba(233,30,140,0.35); transition:all 0.25s; letter-spacing:1px; display:flex; align-items:center; gap:8px; text-transform:uppercase; }
+  .btn-step-next:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(233,30,140,0.45); }
+  .btn-step-back { background:white; color:var(--gray-mid); border:2px solid #bfdbfe; padding:12px 28px; border-radius:50px; font-family:'Arial',sans-serif; font-size:16px; font-weight:700; cursor:pointer; transition:all 0.2s; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
+  .btn-step-back:hover { border-color:var(--pink-light); color:#1976d2; }
+  .step-spacer { flex:1; }
+  .agree-check { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:14px; font-size:13px; color:var(--gray-mid); font-weight:600; cursor:pointer; }
+  .agree-check input { width:16px; height:16px; accent-color:#1976d2; cursor:pointer; }
+  .start-btn-wrap { text-align:center; margin-top:24px; }
+  .btn-start-exam { background:linear-gradient(135deg,#1976d2,#0d47a1); color:white; border:none; padding:14px 50px; border-radius:50px; font-family:'Arial',sans-serif; font-size:20px; font-weight:700; letter-spacing:1.5px; cursor:pointer; box-shadow:0 6px 24px rgba(233,30,140,0.4); transition:all 0.3s; text-transform:uppercase; position:relative; overflow:hidden; }
+  .btn-start-exam:hover { transform:translateY(-3px); box-shadow:0 10px 32px rgba(233,30,140,0.5); }
+
+  /* ===============================================================
+     TEST SCREEN LAYOUT
+  =============================================================== */
+  #screen-test { background: var(--jee-bg); }
+
+  .jee-subject-bar {
+    background: white;
+    border-bottom: 1px solid var(--jee-border);
+    padding: 6px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 6px;
+  }
+  .jee-subject-tag {
+    font-size: 13px; font-weight: 700; color: #333;
+    background: #e8f4fd; border: 1px solid #90caf9;
+    padding: 4px 14px; border-radius: 4px;
+  }
+  .jee-marks-info { display:flex; gap:10px; align-items:center; }
+  .jee-mark-chip { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 4px; }
+  .jee-mark-chip.pos { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+  .jee-mark-chip.neg { background:#ffebee; color:#c62828; border:1px solid #ef9a9a; }
+
+  /* Main test layout */
+  .test-layout { display:grid; grid-template-columns:1fr 300px; min-height:calc(100vh - 115px); }
+
+  /* Question panel */
+  .question-panel { padding:0; background:#fff; border-right:1px solid var(--jee-border); display:flex; flex-direction:column; }
+  .q-header-bar { background:#f7f7f7; border-bottom:1px solid var(--jee-border); padding:8px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .q-num-badge { background:#1976d2; color:white; padding:4px 14px; border-radius:4px; font-size:14px; font-weight:700; }
+  .q-topic-tag { font-size:12px; color:#555; font-weight:600; background:#eee; padding:3px 10px; border-radius:4px; }
+
+  .question-scroll { flex:1; overflow-y:auto; padding:16px 18px; }
+  .q-text { font-size:15px; color:#1a1a1a; line-height:1.75; margin-bottom:18px; font-weight:400; }
+  .q-text .formula { font-weight:700; color:#1976d2; background:#dbeafe; padding:2px 6px; border-radius:4px; display:inline-block; margin:0 2px; }
+
+  .options-label { font-size:13px; font-weight:700; color:#333; margin-bottom:10px; }
+  .options-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .opt-item { display:flex; align-items:flex-start; gap:10px; padding:10px 14px; border:1.5px solid #ddd; border-radius:6px; cursor:pointer; transition:all 0.15s; background:white; }
+  .opt-item:hover { border-color:#90caf9; background:#f0f8ff; }
+  .opt-item.selected { border-color:var(--jee-green); background:#f1fff1; }
+  .opt-radio { width:18px; height:18px; border:2px solid #aaa; border-radius:50%; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
+  .opt-item.selected .opt-radio { border-color:var(--jee-green); background:var(--jee-green); }
+  .opt-radio-dot { width:8px; height:8px; background:white; border-radius:50%; display:none; }
+  .opt-item.selected .opt-radio-dot { display:block; }
+  .opt-key { font-size:13px; font-weight:700; color:#444; min-width:18px; margin-top:1px; }
+  .opt-content { font-size:14px; color:#222; line-height:1.5; flex:1; }
+  .chem-svg-wrap { width:130px; height:80px; border:1.5px solid #ddd; border-radius:6px; background:white; display:flex; align-items:center; justify-content:center; padding:4px; overflow:hidden; margin-top:6px; }
+  .chem-svg-wrap svg { width:100%; height:100%; }
+  .options-grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+
+  /* ===== JEE ACTION ROW ===== */
+  .jee-action-row {
+    background: #f0f0f0;
+    border-top: 2px solid var(--jee-border);
+    padding: 10px 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .jee-action-left { display:flex; gap:8px; flex-wrap:wrap; }
+  .jee-action-right { display:flex; gap:8px; flex-wrap:wrap; }
+
+  .jbtn {
+    padding: 9px 16px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-family: Arial, sans-serif;
+    font-size: 13px; font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex; align-items: center; gap: 5px;
+    text-transform: uppercase; letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+  .jbtn:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.15); }
+  .jbtn-green  { background: var(--jee-green); color: white; border-color: #1e7e34; }
+  .jbtn-white  { background: white; color: #333; border: 2px solid #aaa; }
+  .jbtn-white:hover { border-color: #666; }
+  .jbtn-orange { background: var(--jee-orange); color: white; border-color: #d4891b; }
+  .jbtn-blue   { background: var(--jee-blue); color: white; border-color: #1256a3; }
+  .jbtn-gray   { background: #666; color: white; border-color: #444; }
+  .jbtn-purple { background: var(--jee-purple); color: white; border-color: #5c1580; }
+
+  /* ===== RIGHT PANEL ===== */
+  .right-panel { background: white; border-left:1px solid var(--jee-border); display:flex; flex-direction:column; overflow-y:auto; max-height:calc(100vh - 115px); position:sticky; top:0; }
+
+  /* JEE-style legend box */
+  .jee-legend-box {
+    border: 1.5px dashed #bbb;
+    border-radius: 6px;
+    margin: 12px 12px 6px;
+    padding: 12px 10px;
+    background: #fafafa;
+  }
+  .jee-legend-row { display:grid; grid-template-columns:1fr 1fr; gap:8px 4px; }
+  .jee-legend-item { display:flex; align-items:center; gap:8px; font-size:12px; color:#333; }
+  .jee-legend-count {
+    min-width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; flex-shrink: 0;
+    font-family: Arial, sans-serif;
+  }
+  /* Not visited — plain square */
+  .jlc-nv { background:white; border:2px solid #999; border-radius:3px; color:#333; }
+  /* Not answered — red pentagon flag shape */
+  .jlc-na {
+    background: var(--jee-red); color: white; border-radius: 3px 3px 0 0;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+  }
+  /* Answered — green circle */
+  .jlc-ans { background: var(--jee-green); color: white; border-radius: 50%; }
+  /* Marked — purple circle */
+  .jlc-mrk { background: var(--jee-purple); color: white; border-radius: 50%; }
+  /* Answered+Marked — purple circle with green small dot */
+  .jlc-am { background: var(--jee-purple); color: white; border-radius: 50%; position: relative; }
+  .jlc-am::after { content:''; position:absolute; bottom:0; right:0; width:13px; height:13px; background:var(--jee-green); border-radius:50%; border:1.5px solid white; }
+  .jee-legend-text { line-height:1.3; }
+
+  /* Stats bar below legend */
+  .jee-stats-bar { padding: 6px 12px; border-bottom: 1px solid #eee; }
+  .jee-stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+  .jee-stat-chip { text-align:center; padding:5px 4px; border-radius:5px; }
+  .jee-stat-chip .snum { font-size:17px; font-weight:700; font-family:Arial,sans-serif; }
+  .jee-stat-chip .slbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.3px; }
+  .jsc-nv  { background:#f5f5f5; } .jsc-nv .snum { color:#777; }
+  .jsc-na  { background:#ffebee; } .jsc-na .snum { color:#c62828; }
+  .jsc-ans { background:#e8f5e9; } .jsc-ans .snum { color:#2e7d32; }
+  .jsc-mrk { background:#f3e5f5; } .jsc-mrk .snum { color:#7b1fa2; }
+  .jee-stat-chip .slbl { color:#555; }
+
+  /* Palette section */
+  .palette-section { padding: 8px 12px 4px; }
+  .palette-section-title { font-size:12px; font-weight:700; color:#555; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; border-bottom:1px solid #eee; padding-bottom:4px; }
+  .q-palette { display:grid; grid-template-columns:repeat(5,1fr); gap:5px; }
+
+  /* JEE palette buttons — shapes per status */
+  .q-palette-btn { aspect-ratio:1; border:none; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.12s; font-family:Arial,sans-serif; position:relative; display:flex; align-items:center; justify-content:center; }
+  .q-palette-btn:hover { transform:scale(1.1); }
+
+  /* Not visited: white with gray border */
+  .qb-not-visited { background:white; border:2px solid #aaa !important; color:#555; border-radius:4px; }
+  /* Not answered: red pentagon/flag */
+  .qb-not-answered {
+    background: var(--jee-red); color: white;
+    clip-path: polygon(0 0, 100% 0, 100% 68%, 50% 100%, 0 68%);
+    border-radius: 0;
+  }
+  /* Answered: green circle */
+  .qb-answered { background: var(--jee-green); color: white; border-radius: 50%; }
+  /* Marked: purple circle */
+  .qb-marked { background: var(--jee-purple); color: white; border-radius: 50%; }
+  /* Answered+Marked: purple circle with green bottom-right dot */
+  .qb-answered-marked { background: var(--jee-purple); color: white; border-radius: 50%; }
+  .qb-answered-marked::after { content:''; position:absolute; bottom:0; right:0; width:35%; height:35%; background:var(--jee-green); border-radius:50%; border:1.5px solid white; }
+  /* Current highlight */
+  .qb-current { outline: 3px solid #1976d2; outline-offset: 1px; }
+
+  /* Post-result palette */
+  .qb-result-correct  { background:#2e7d32; color:white; border-radius:4px; }
+  .qb-result-wrong    { background:#c62828; color:white; border-radius:4px; }
+  .qb-result-skip     { background:#1565c0; color:white; border-radius:4px; }
+
+  /* Submit button in right panel */
+  .submit-wrap { padding:10px 12px; margin-top:auto; }
+  .btn-submit { width:100%; padding:11px; background:linear-gradient(135deg,#1976d2,#0d47a1); color:white; border:none; border-radius:6px; font-family:Arial,sans-serif; font-size:16px; font-weight:700; letter-spacing:1px; cursor:pointer; box-shadow:0 4px 16px rgba(233,30,140,0.35); transition:all 0.2s; text-transform:uppercase; }
+  .btn-submit:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(233,30,140,0.45); }
+
+  /* ===== MODAL ===== */
+  .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+  .modal-overlay.active { display:flex; }
+  .modal-box { background:white; border-radius:16px; padding:28px; max-width:420px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.3); border:2px solid #bfdbfe; animation:modalIn 0.3s ease; }
+  @keyframes modalIn { from{transform:scale(0.85);opacity:0} to{transform:scale(1);opacity:1} }
+  .modal-icon { text-align:center; font-size:46px; margin-bottom:10px; }
+  .modal-title { text-align:center; font-size:20px; font-weight:700; color:var(--gray-dark); margin-bottom:8px; }
+  .modal-text { text-align:center; font-size:13px; color:var(--gray-mid); line-height:1.6; margin-bottom:18px; }
+  .modal-summary { background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:12px; margin-bottom:18px; display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .ms-item { display:flex; flex-direction:column; align-items:center; }
+  .ms-item .ms-num { font-size:22px; font-weight:800; }
+  .ms-item .ms-lbl { font-size:11px; font-weight:700; text-transform:uppercase; color:var(--gray-mid); }
+  .modal-actions { display:flex; gap:10px; }
+  .modal-actions .btn { flex:1; justify-content:center; }
+  .btn { padding:9px 18px; border-radius:6px; border:none; font-family:Arial,sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:6px; }
+  .btn:hover { transform:translateY(-1px); }
+  .btn-cancel { background:#f5f5f5; color:var(--gray-mid); border:1px solid #e0e0e0; }
+  .btn-confirm-submit { background:linear-gradient(135deg,#1976d2,#0d47a1); color:white; box-shadow:0 4px 14px rgba(233,30,140,0.35); }
+
+  /* ===== RESULT SCREEN ===== */
+  #screen-result { background:#eff6ff; padding-bottom:40px; }
+  .result-body { max-width:760px; margin:0 auto; padding:24px 16px; }
+  .result-hero { text-align:center; padding:28px 20px; background:white; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.1); border:1px solid #bfdbfe; margin-bottom:18px; position:relative; overflow:hidden; }
+  .result-hero::before { content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px; background:#dbeafe; border-radius:50%; }
+  .result-trophy { font-size:56px; margin-bottom:8px; position:relative; z-index:1; }
+  .result-hero h2 { font-size:26px; font-weight:700; color:var(--gray-dark); margin-bottom:4px; position:relative; z-index:1; }
+  .result-hero p { color:var(--gray-mid); font-size:13px; position:relative; z-index:1; }
+  .score-ring-wrap { display:flex; justify-content:center; margin:18px 0; position:relative; z-index:1; }
+  .score-ring { width:130px; height:130px; border-radius:50%; background:conic-gradient(#1976d2 0%, #bfdbfe var(--score-pct), #eee var(--score-pct)); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 24px rgba(233,30,140,0.3); position:relative; }
+  .score-ring::before { content:''; position:absolute; width:90px; height:90px; background:white; border-radius:50%; }
+  .score-inner { position:relative; z-index:1; text-align:center; }
+  .score-inner .score-num { font-size:28px; font-weight:700; color:#1976d2; line-height:1; }
+  .score-inner .score-total { font-size:12px; font-weight:700; color:var(--gray-mid); }
+  .result-stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:18px; }
+  .result-stat { background:white; border-radius:10px; padding:14px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08); border:1px solid #eee; }
+  .result-stat .rs-num { font-size:24px; font-weight:700; }
+  .result-stat .rs-lbl { font-size:11px; font-weight:700; color:var(--gray-mid); text-transform:uppercase; }
+  .rs-correct .rs-num { color:#2e7d32; } .rs-wrong .rs-num { color:#c62828; } .rs-unattempted .rs-num { color:#9e9e9e; } .rs-score .rs-num { color:#1976d2; }
+  .result-palette-legend { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; padding:10px 12px; background:#eff6ff; border-radius:8px; border:1px solid #bfdbfe; }
+  .rpl-item { display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--gray-mid); }
+  .rpl-dot { width:18px; height:18px; border-radius:4px; flex-shrink:0; }
+  .answer-review { margin-bottom:18px; }
+  .review-q { background:white; border-radius:10px; padding:14px; margin-bottom:8px; border:1px solid #eee; box-shadow:0 1px 6px rgba(0,0,0,0.06); }
+  .review-q.rq-correct { border-left:5px solid #2e7d32; } .review-q.rq-wrong { border-left:5px solid #c62828; } .review-q.rq-skip { border-left:5px solid #1565c0; }
+  .review-q-num { font-weight:800; color:#1976d2; font-size:13px; margin-bottom:5px; }
+  .review-q-marks { display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:800; margin-left:6px; }
+  .rqm-correct { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+  .rqm-wrong { background:#ffebee; color:#c62828; border:1px solid #ef9a9a; }
+  .rqm-skip { background:#e3f2fd; color:#1565c0; border:1px solid #90caf9; }
+  .review-q-text { font-size:13.5px; color:var(--gray-dark); margin-bottom:8px; line-height:1.5; }
+  .review-answers { display:flex; gap:8px; flex-wrap:wrap; }
+  .ra-chip { padding:4px 10px; border-radius:20px; font-size:12px; font-weight:700; }
+  .ra-your { background:#e3f2fd; color:#1565c0; } .ra-your.wrong { background:#ffebee; color:#c62828; } .ra-correct { background:#e8f5e9; color:#2e7d32; }
+  .result-action-row { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:22px; }
+  .btn-retry { background:linear-gradient(135deg,#1976d2,#0d47a1); color:white; border:none; padding:13px 36px; border-radius:50px; font-size:17px; font-weight:700; cursor:pointer; box-shadow:0 6px 20px rgba(233,30,140,0.35); transition:all 0.2s; text-transform:uppercase; }
+  .btn-retry:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(233,30,140,0.45); }
+  .btn-pdf { background:linear-gradient(135deg,#1565c0,#0d47a1); color:white; border:none; padding:13px 36px; border-radius:50px; font-size:17px; font-weight:700; cursor:pointer; box-shadow:0 6px 20px rgba(21,101,192,0.4); transition:all 0.2s; display:flex; align-items:center; gap:10px; text-transform:uppercase; letter-spacing:1px; }
+  .btn-pdf:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(21,101,192,0.5); }
+  .instr-card { background:white; border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,0.08); overflow:hidden; margin-bottom:16px; border:1px solid #bfdbfe; }
+  .instr-card-header { background:linear-gradient(135deg,#dbeafe,#bfdbfe); padding:12px 18px; border-bottom:2px solid #1976d2; display:flex; align-items:center; gap:10px; }
+  .instr-card-header h3 { font-size:15px; font-weight:700; color:#0a3880; text-transform:uppercase; letter-spacing:1px; }
+  .instr-card-body { padding:16px 18px; }
+
+  /* ===== TOAST ===== */
+  .toast-container { position:fixed; top:80px; right:20px; z-index:2000; display:flex; flex-direction:column; gap:8px; }
+  .toast { padding:10px 16px; border-radius:8px; font-size:13px; font-weight:700; color:white; box-shadow:0 4px 16px rgba(0,0,0,0.2); animation:toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards; display:flex; align-items:center; gap:8px; }
+  .toast.success { background:#2e7d32; } .toast.info { background:#1976d2; } .toast.warning { background:#e65100; }
+  @keyframes toastIn { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+  @keyframes toastOut { from{opacity:1} to{opacity:0;transform:translateX(100%)} }
+
+  @media(max-width:768px) {
+    .test-layout { grid-template-columns:1fr; }
+    .right-panel { max-height:none; border-left:none; border-top:2px solid var(--jee-border); }
+    .jee-header { flex-direction:column; align-items:flex-start; }
+    .jbtn { font-size:11px; padding:7px 10px; }
+  }
+
+  /* ===== LOGIN SCREEN ===== */
+  #screen-login { min-height:100vh; background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%); display:none; flex-direction:column; align-items:center; justify-content:center; padding:20px; }
+  #screen-login.active { display:flex; }
+  .login-card { background:white; border-radius:18px; box-shadow:0 24px 64px rgba(0,0,0,0.45); width:100%; max-width:460px; overflow:hidden; }
+  .login-header { background:linear-gradient(135deg,#1976d2,#0a3880); padding:30px 32px 24px; text-align:center; }
+  .login-logo { font-size:42px; margin-bottom:8px; }
+  .login-header h2 { font-size:24px; font-weight:800; color:white; letter-spacing:1px; margin-bottom:4px; }
+  .login-header p { color:rgba(255,255,255,0.8); font-size:13px; font-weight:600; }
+  .login-body { padding:28px 32px 32px; }
+  .login-field { margin-bottom:18px; }
+  .login-field label { display:block; font-size:11.5px; font-weight:700; color:#555; margin-bottom:7px; text-transform:uppercase; letter-spacing:0.5px; }
+  .login-field input { width:100%; padding:12px 14px; border:2px solid #e0e0e0; border-radius:8px; font-size:14px; font-family:Arial,sans-serif; transition:border-color 0.2s; background:#fafafa; outline:none; }
+  .login-field input:focus { border-color:#1976d2; background:white; }
+  .login-remember { display:flex; align-items:center; gap:8px; margin-bottom:22px; font-size:13px; color:#666; font-weight:600; cursor:pointer; }
+  .login-remember input { width:15px; height:15px; accent-color:#1976d2; cursor:pointer; }
+  .btn-login { width:100%; padding:13px; background:linear-gradient(135deg,#1976d2,#0d47a1); color:white; border:none; border-radius:8px; font-size:16px; font-weight:700; cursor:pointer; letter-spacing:1px; transition:all 0.2s; text-transform:uppercase; font-family:Arial,sans-serif; }
+  .btn-login:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(233,30,140,0.4); }
+  .login-note { text-align:center; font-size:11.5px; color:#bbb; margin-top:14px; font-weight:600; }
+
+  /* ===== START SCREEN ===== */
+  #screen-start { min-height:100vh; background:linear-gradient(160deg,#fdf0f6 0%,#fff 60%,#fce4ec 100%); }
+  #screen-start.active { display:block; }
+  .flow-bar { background:white; border-bottom:1px solid #bfdbfe; padding:10px 20px; display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap; }
+  .flow-step { display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:#bbb; padding:6px 10px; border-radius:20px; transition:all 0.2s; white-space:nowrap; }
+  .flow-step.done  { color:#2e7d32; }
+  .flow-step.active { color:#1976d2; background:#dbeafe; }
+  .flow-step .fsnum { width:22px; height:22px; border-radius:50%; background:#e0e0e0; color:#888; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+  .flow-step.done  .fsnum { background:#2e7d32; color:white; }
+  .flow-step.active .fsnum { background:#1976d2; color:white; }
+  .flow-arrow { color:#ccc; font-size:16px; padding:0 4px; }
+  .start-body { max-width:820px; margin:0 auto; padding:28px 16px 48px; }
+  .start-hero { text-align:center; padding:34px 24px 26px; background:white; border-radius:20px; box-shadow:0 6px 28px rgba(233,30,140,0.12); border:1px solid #bfdbfe; margin-bottom:20px; position:relative; overflow:hidden; }
+  .start-hero::before { content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px; background:#dbeafe; border-radius:50%; }
+  .start-hero::after  { content:''; position:absolute; bottom:-30px; left:-30px; width:120px; height:120px; background:#dbeafe; border-radius:50%; }
+  .start-hero-icon { font-size:52px; margin-bottom:10px; position:relative; z-index:1; }
+  .start-hero h2 { font-size:24px; font-weight:800; color:var(--gray-dark); margin-bottom:5px; position:relative; z-index:1; }
+  .start-hero p  { color:var(--gray-mid); font-size:13.5px; font-weight:600; position:relative; z-index:1; }
+  .start-cand-card { background:linear-gradient(135deg,#1976d2,#0a3880); border-radius:14px; padding:18px 22px; display:flex; align-items:center; gap:16px; margin-bottom:20px; box-shadow:0 6px 20px rgba(233,30,140,0.3); flex-wrap:wrap; }
+  .start-cand-avatar { width:56px; height:56px; background:rgba(255,255,255,0.2); border-radius:50%; border:3px solid rgba(255,255,255,0.5); display:flex; align-items:center; justify-content:center; font-size:26px; flex-shrink:0; }
+  .start-cand-info { flex:1; }
+  .start-cand-name { font-size:20px; font-weight:800; color:white; line-height:1.2; }
+  .start-cand-meta { font-size:12px; color:rgba(255,255,255,0.8); font-weight:600; margin-top:3px; }
+  .start-cand-edit { background:rgba(255,255,255,0.18); color:white; border:2px solid rgba(255,255,255,0.4); border-radius:20px; padding:6px 16px; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; font-family:Arial,sans-serif; }
+  .start-cand-edit:hover { background:rgba(255,255,255,0.3); }
+  .start-info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:22px; }
+  .start-info-tile { background:white; border-radius:12px; padding:14px 16px; text-align:center; border:1px solid #bfdbfe; box-shadow:0 2px 8px rgba(233,30,140,0.07); }
+  .start-info-tile .sit-label { font-size:10.5px; font-weight:700; color:#0d47a1; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:5px; }
+  .start-info-tile .sit-value { font-size:19px; font-weight:800; color:#1976d2; }
+  .btn-go-instructions { display:block; width:100%; padding:16px; background:linear-gradient(135deg,#1976d2,#0d47a1); color:white; border:none; border-radius:12px; font-size:20px; font-weight:700; cursor:pointer; letter-spacing:1px; box-shadow:0 6px 24px rgba(233,30,140,0.4); transition:all 0.3s; text-transform:uppercase; font-family:Arial,sans-serif; position:relative; overflow:hidden; }
+  .btn-go-instructions::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent); transition:left 0.5s; }
+  .btn-go-instructions:hover::before { left:100%; }
+  .btn-go-instructions:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(233,30,140,0.5); }
+
+ 
+  /* ===== FULLSCREEN WARNING MODAL ===== */
+  .fs-warning-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.82); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(6px); }
+  .fs-warning-overlay.active { display:flex; }
+  .fs-warning-box { background:white; border-radius:20px; padding:36px 32px; max-width:440px; width:90%; text-align:center; box-shadow:0 24px 60px rgba(0,0,0,0.5); border:3px solid #c62828; animation:modalIn 0.3s ease; }
+  .fs-warning-icon { font-size:56px; margin-bottom:12px; }
+  .fs-warning-title { font-size:22px; font-weight:800; color:#c62828; margin-bottom:8px; }
+  .fs-warning-text  { font-size:14px; color:#555; line-height:1.6; margin-bottom:20px; }
+  .fs-countdown { font-size:42px; font-weight:800; color:#c62828; margin-bottom:16px; font-family:Arial,sans-serif; }
+  .fs-warning-btns { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .btn-fs-return { background:linear-gradient(135deg,#1976d2,#0d47a1); color:white; border:none; padding:12px 28px; border-radius:8px; font-size:15px; font-weight:700; cursor:pointer; font-family:Arial,sans-serif; }
+  .btn-fs-submit  { background:white; color:#c62828; border:2px solid #ef9a9a; padding:12px 24px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; font-family:Arial,sans-serif; }
+  .history-section { background:white; border-radius:16px; border:1px solid #bfdbfe; box-shadow:0 2px 12px rgba(233,30,140,0.08); overflow:hidden; margin-bottom:22px; }
+  .history-header { background:linear-gradient(135deg,#dbeafe,#bfdbfe); padding:14px 20px; border-bottom:2px solid #1976d2; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .history-header-left { display:flex; align-items:center; gap:10px; }
+  .history-icon { width:32px; height:32px; background:#1976d2; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; color:white; flex-shrink:0; }
+  .history-header h3 { font-size:15px; font-weight:700; color:#0a3880; text-transform:uppercase; letter-spacing:1px; }
+  .btn-clear-hist { background:white; border:1.5px solid #ef9a9a; color:#c62828; border-radius:20px; padding:4px 14px; font-size:11px; font-weight:700; cursor:pointer; font-family:Arial,sans-serif; transition:all 0.2s; }
+  .btn-clear-hist:hover { background:#ffebee; }
+  .history-empty { padding:32px; text-align:center; color:#bbb; }
+  .history-empty .he-icon { font-size:36px; margin-bottom:10px; }
+  .history-empty p { font-size:14px; font-weight:600; }
+  .history-wrap { overflow-x:auto; }
+  .history-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .history-table thead tr { background:#eff6ff; }
+  .history-table th { padding:9px 14px; text-align:left; font-size:10.5px; font-weight:700; color:#0d47a1; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #bfdbfe; white-space:nowrap; }
+  .history-table td { padding:10px 14px; border-bottom:1px solid #f5f5f5; vertical-align:middle; }
+  .history-table tr:last-child td { border-bottom:none; }
+  .history-table tbody tr:hover td { background:#eff6ff; }
+  .ht-set { font-weight:700; color:#1976d2; white-space:nowrap; }
+  .ht-score { font-weight:800; font-size:15px; }
+  .ht-pct { display:inline-block; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:800; }
+  .ht-pct.high { background:#e8f5e9; color:#2e7d32; }
+  .ht-pct.mid  { background:#fff3e0; color:#e65100; }
+  .ht-pct.low  { background:#ffebee; color:#c62828; }
+  .ht-correct { color:#2e7d32; font-weight:700; }
+  .ht-wrong   { color:#c62828; font-weight:700; }
+  .ht-skip    { color:#9e9e9e; font-weight:700; }
+  .ht-date    { color:#999; font-size:11.5px; }
+  .ht-grade   { font-weight:800; font-size:16px; }
+  .history-summary-bar { display:flex; gap:16px; flex-wrap:wrap; padding:11px 18px; background:#eff6ff; border-top:1px solid #bfdbfe; font-size:12px; font-weight:700; color:var(--gray-mid); }
+  .history-summary-bar span { color:#1976d2; }
+</style>
+</head>
+<body>
+<!-- ==================== TOAST ==================== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ==================== 1. LOGIN SCREEN ==================== -->
+<div class="screen active" id="screen-login">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">⚡</div>
+      <h2>Thunder CBT</h2>
+      <p>CUET ip — CUET Mock Test</p>
+    </div>
+    <div class="login-body">
+      <div class="login-field">
+        <label>Candidate Name</label>
+        <input type="text" id="loginName" placeholder="Enter your full Name" autocomplete="name" onkeydown="if(event.key==='Enter')document.getElementById('loginPass').focus()">
+      </div>
+      <div class="login-field">
+        <label>Password / Roll No</label>
+        <input type="password" id="loginPass" placeholder="Enter password or roll number" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <label class="login-remember">
+        <input type="checkbox" id="loginRemember"> Remember me on this device
+      </label>
+      <button class="btn-login" onclick="doLogin()">▶ Login &amp; Continue</button>
+      <p class="login-note">Your credentials are saved locally on this device only.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 2. START SCREEN ==================== -->
+<div class="screen" id="screen-start">
+  <!-- Flow progress bar -->
+  <div class="flow-bar">
+    <div class="flow-step done"   id="flow-login"><span class="fsnum">✓</span> Login</div>
+    <span class="flow-arrow">›</span>
+    <div class="flow-step active" id="flow-start"><span class="fsnum">2</span> Start</div>
+    <span class="flow-arrow">›</span>
+    <div class="flow-step"        id="flow-instr"><span class="fsnum">3</span> Instructions</div>
+<span class="flow-arrow">›</span>
+<div class="flow-step"        id="flow-test"><span class="fsnum">4</span> Test</div>
+<span class="flow-arrow">›</span>
+<div class="flow-step"        id="flow-result"><span class="fsnum">5</span> Result</div>
+  </div>
+
+  <div class="start-body">
+    <!-- Welcome hero -->
+    <div class="start-hero">
+      <div class="start-hero-icon">⚡</div>
+      <h2>Thunder CBT — CUET ip</h2>
+      <p>CUET Computer Based Test · CUET · 50 Questions Each</p>
+    </div>
+
+    <!-- Candidate card -->
+    <div class="start-cand-card">
+      <div class="start-cand-avatar">👤</div>
+      <div class="start-cand-info">
+        <div class="start-cand-name" id="startCandName">Candidate</div>
+        <div class="start-cand-meta">
+          Roll No: <span id="startCandRoll">—</span> &nbsp;·&nbsp; CUET &nbsp;·&nbsp; CUET — ip
+        </div>
+      </div>
+      <button class="start-cand-edit" onclick="showScreen('login')">✏️ Edit Details</button>
+    </div>
+
+    <!-- Exam info tiles -->
+    <div class="start-info-grid">
+      <div class="start-info-tile">
+        <div class="sit-label">Questions / Set</div>
+        <div class="sit-value">50</div>
+      </div>
+      <div class="start-info-tile">
+        <div class="sit-label">Total Sets</div>
+        <div class="sit-value">4</div>
+      </div>
+      <div class="start-info-tile">
+        <div class="sit-label">Duration / Set</div>
+        <div class="sit-value">60 min</div>
+      </div>
+      <div class="start-info-tile">
+        <div class="sit-label">Max Marks</div>
+        <div class="sit-value">250</div>
+      </div>
+      <div class="start-info-tile">
+        <div class="sit-label">Correct</div>
+        <div class="sit-value" style="color:#2e7d32;">+5</div>
+      </div>
+      <div class="start-info-tile">
+        <div class="sit-label">Wrong</div>
+        <div class="sit-value" style="color:#c62828;">−1</div>
+      </div>
+    </div>
+
+    <!-- Test Result History -->
+    <div class="history-section">
+      <div class="history-header">
+        <div class="history-header-left">
+          <div class="history-icon">📊</div>
+          <h3>Test Result History</h3>
+        </div>
+        <button class="btn-clear-hist" onclick="clearHistory()">🗑 Clear History</button>
+      </div>
+      <div id="historyContent">
+        <div class="history-empty">
+          <div class="he-icon">📭</div>
+          <p>No attempts yet — complete a test to see your history here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proceed button -->
+    <button class="btn-go-instructions" onclick="proceedToInstructions()">
+  ⚗️ Start ip Mock →
+</button>
+  </div>
+</div>
+
+
+<!-- ==================== FULLSCREEN WARNING MODAL ==================== -->
+<div class="fs-warning-overlay" id="fsWarningModal">
+  <div class="fs-warning-box">
+    <div class="fs-warning-icon">⚠️</div>
+    <div class="fs-warning-title">Fullscreen Exited!</div>
+    <div class="fs-warning-text" id="fsWarningText">
+      You have exited fullscreen mode. The exam requires fullscreen. Please return to fullscreen or your test will be auto-submitted.
+    </div>
+    <div class="fs-countdown" id="fsCountdown">3</div>
+    <div class="fs-warning-btns">
+      <button class="btn-fs-return" onclick="returnToFullscreen()">↩ Return to Fullscreen</button>
+      <button class="btn-fs-submit" onclick="forceSubmit()">Submit Now</button>
+    </div>
+  </div>
+</div>
+<div class="screen" id="screen-instructions">
+  <!-- 6-step flow bar (same as other screens) -->
+  <div class="flow-bar">
+    <div class="flow-step done"><span class="fsnum">✓</span> Login</div>
+    <span class="flow-arrow">›</span>
+    <div class="flow-step done"><span class="fsnum">✓</span> Start</div>
+    <span class="flow-arrow">›</span>
+    <div class="flow-step active"><span class="fsnum">4</span> Instructions</div>
+    <span class="flow-arrow">›</span>
+    <div class="flow-step"><span class="fsnum">5</span> Test</div>
+    <span class="flow-arrow">›</span>
+    <div class="flow-step"><span class="fsnum">6</span> Result</div>
+  </div>
+
+  <!-- Pink header bar with candidate name -->
+  <div class="exam-header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          <h1>Thunder CBT</h1>
+          <p>CUET Mock Test Series</p>
+        </div>
+      </div>
+      <div class="header-candidate">
+        <div class="candidate-avatar">👤</div>
+        <div class="candidate-info">
+          <div class="name" id="instrCandName">Candidate</div>
+          <div class="roll" id="instrCandRoll">Roll No: TH-2024-CHM-001</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="instr-body">
+
+    <!-- General Instructions -->
+    <div class="instr-card">
+      <div class="instr-card-header">
+        <div class="instr-card-icon">📌</div>
+        <h3>General Instructions</h3>
+      </div>
+      <div class="instr-card-body">
+        <ul class="instr-list">
+          <li><span class="num">1</span>This test contains <strong>50 MCQ questions</strong> from CUET ip syllabus (Class 12). Your set was selected on the previous screen.</li>
+          <li><span class="num">2</span>Each correct answer carries <strong>+5 marks</strong>. Each wrong answer carries <strong>−1 mark</strong>. Unattempted questions carry <strong>0 marks</strong>.</li>
+          <li><span class="num">3</span>Click on an option to select it. You can change your answer any time before final submission.</li>
+          <li><span class="num">4</span>Use the <strong>Question Palette</strong> on the right side to navigate to any question directly.</li>
+          <li><span class="num">5</span>You can mark questions <strong>"Mark for Review"</strong> to revisit them later before submission.</li>
+          <li><span class="num">6</span>The timer is displayed at the top. The test will <strong>auto-submit</strong> when time runs out.</li>
+          <li><span class="num">7</span>The exam runs in <strong>fullscreen mode</strong>. Exiting fullscreen will trigger a 3-second auto-submit warning.</li>
+          <li><span class="num">8</span>Switching browser tabs will cause <strong>immediate auto-submission</strong> of your test.</li>
+          <li><span class="num">9</span>Click <strong>"Save &amp; Next"</strong> to save your answer and move to the next question.</li>
+          <li><span class="num">10</span>Once you click <strong>"Submit Test"</strong>, a confirmation popup will appear before final submission.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Question Palette Legend -->
+    <div class="instr-card">
+      <div class="instr-card-header">
+        <div class="instr-card-icon">🗂️</div>
+        <h3>Question Palette — Colour Guide</h3>
+      </div>
+      <div class="instr-card-body">
+        <p style="font-size:12.5px;color:var(--gray-mid);font-weight:600;margin-bottom:12px;">During the exam, the question palette on the right uses these colours:</p>
+        <div class="legend-grid">
+          <div class="legend-item"><div class="legend-dot dot-not-visited">1</div> Not Visited — Not opened yet</div>
+          <div class="legend-item"><div class="legend-dot dot-not-answered">2</div> Not Answered — Opened, no answer</div>
+          <div class="legend-item"><div class="legend-dot dot-answered">3</div> Answered — Answer saved</div>
+          <div class="legend-item"><div class="legend-dot dot-marked">4</div> Marked for Review — Will be evaluated</div>
+          <div class="legend-item"><div class="legend-dot dot-answered-marked">5</div> Answered + Marked — Saved &amp; flagged</div>
+        </div>
+        <div style="margin-top:14px;padding:12px;background:#eff6ff;border-radius:10px;border:1px solid #bfdbfe;">
+          <p style="font-size:12px;font-weight:700;color:#0a3880;margin-bottom:6px;">📊 After submission, palette changes to:</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#2e7d32;"><span style="width:18px;height:18px;background:#2e7d32;border-radius:4px;display:inline-block;"></span> Green = Correct</span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#c62828;"><span style="width:18px;height:18px;background:#c62828;border-radius:4px;display:inline-block;"></span> Red = Wrong</span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#1565c0;"><span style="width:18px;height:18px;background:#1565c0;border-radius:4px;display:inline-block;"></span> Blue = Unattempted</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agreement & Start -->
+    <label class="agree-check">
+      <input type="checkbox" id="agreeCheck" onchange="toggleStartBtn()">
+      I have read all the instructions carefully and I am ready to start the examination.
+    </label>
+
+    <div class="step-nav">
+      <button class="btn-step-back" onclick="showScreen('start')">← Back</button>
+      <button class="btn-start-exam" id="startBtn" onclick="startExam()" style="opacity:0.5;pointer-events:none;">
+        ⚡ Start Exam
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== TEST SCREEN ==================== -->
+<div class="screen" id="screen-test">
+
+  <!-- JEE-style top candidate header -->
+  <div class="jee-header">
+    <div class="jee-candidate-block">
+      <div class="jee-photo">
+        <svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="22" r="14" fill="#888"/>
+          <ellipse cx="30" cy="58" rx="22" ry="14" fill="#888"/>
+        </svg>
+      </div>
+      <div class="jee-info-table">
+        <div class="jee-info-row"><span class="jee-info-label">Candidate Name</span><span class="jee-info-value name-val" id="jeeNameDisp">: [Your Name]</span></div>
+        <div class="jee-info-row"><span class="jee-info-label">Exam Name</span><span class="jee-info-value">: CUET</span></div>
+        <div class="jee-info-row"><span class="jee-info-label">Subject Name</span><span class="jee-info-value">: CUET — ip</span></div>
+        <div class="jee-info-row"><span class="jee-info-label">Remaining Time</span><span class="jee-info-value time-val" id="timerDisplay">60:00:00</span></div>
+      </div>
+    </div>
+    <div class="jee-lang-block">
+      <select class="jee-lang-select" onchange="showToast('Language: '+this.value,'info')">
+        <option>English</option>
+        <option>Hindi</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Subject bar -->
+  <div class="jee-subject-bar">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+  <div class="jee-subject-tag" id="testSetTabLabel">⚗️ ip</div>
+  <div style="background:#dbeafe;border:1px solid #90caf9;padding:3px 12px;border-radius:4px;font-size:12px;font-weight:700;color:#0d47a1;">
+    Subject: <span id="subjectIdTag">chem</span>
+  </div>
+  <div style="background:#e3f2fd;border:1px solid #90caf9;padding:3px 12px;border-radius:4px;font-size:12px;font-weight:700;color:#0d47a1;">
+    Chapter: <span id="chapterIdTag">chem-cuet-set1</span>
+  </div>
+</div>
+    <div class="jee-marks-info">
+      <span class="jee-mark-chip pos">✓ Correct: +5</span>
+      <span class="jee-mark-chip neg">✗ Wrong: −1</span>
+      <span style="font-size:12px;color:#555;font-weight:600;">Unattempted: 0</span>
+    </div>
+  </div>
+
+  <!-- Main two-column layout -->
+  <div class="test-layout">
+
+    <!-- LEFT: Question panel -->
+    <div class="question-panel">
+      <!-- Q header -->
+      <div class="q-header-bar">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="q-num-badge" id="qNumBadge">Question 1</span>
+          <span class="q-topic-tag" id="qTopicTag">Topic</span>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <span class="jee-mark-chip pos" style="font-size:11px;">+5</span>
+          <span class="jee-mark-chip neg" style="font-size:11px;">−1</span>
+        </div>
+      </div>
+
+      <!-- Scrollable question body -->
+      <div class="question-scroll" id="questionBody">
+        <!-- Loaded dynamically -->
+      </div>
+
+      <!-- JEE-style action row -->
+      <div class="jee-action-row">
+  <div class="jee-action-left">
+    <button class="jbtn jbtn-green" onclick="saveAndNext()">Save &amp; Next ▶</button>
+    <button class="jbtn jbtn-white" onclick="clearResponse()">Clear</button>
+    <button class="jbtn jbtn-orange" onclick="saveMarkAndNext()">Save &amp; Mark for Review</button>
+    <button class="jbtn jbtn-blue" onclick="markAndNext()">Mark for Review</button>
+  </div>
+  <div class="jee-action-right" style="display:flex;align-items:center;gap:8px;width:100%;justify-content:space-between;">
+    <div style="display:flex;gap:8px;">
+      <button class="jbtn jbtn-gray" onclick="goBack()">◀ Back</button>
+      <button class="jbtn jbtn-gray" onclick="if(currentQ < questions.length-1) renderQuestion(currentQ+1)">Next ▶</button>
+    </div>
+    <button class="jbtn jbtn-purple" onclick="showSubmitModal()" style="margin-left:auto;">🏁 Submit Test</button>
+  </div>
+</div>
+    </div>
+
+    <!-- RIGHT: Palette panel -->
+    <div class="right-panel">
+
+      <!-- JEE Legend box -->
+      <div class="jee-legend-box">
+        <div class="jee-legend-row">
+          <div class="jee-legend-item">
+            <div class="jee-legend-count jlc-nv" id="stat-nv">50</div>
+            <span class="jee-legend-text">Not Visited</span>
+          </div>
+          <div class="jee-legend-item">
+            <div class="jee-legend-count jlc-na" id="stat-na">0</div>
+            <span class="jee-legend-text">Not Answered</span>
+          </div>
+          <div class="jee-legend-item">
+            <div class="jee-legend-count jlc-ans" id="stat-ans">0</div>
+            <span class="jee-legend-text">Answered</span>
+          </div>
+          <div class="jee-legend-item">
+            <div class="jee-legend-count jlc-mrk" id="stat-mrk">0</div>
+            <span class="jee-legend-text">Marked for Review</span>
+          </div>
+          <div class="jee-legend-item" style="grid-column:span 2;">
+            <div class="jee-legend-count jlc-am" id="stat-am">0</div>
+            <span class="jee-legend-text">Answered &amp; Marked for Review <small style="color:#777;">(will be evaluated)</small></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Palette -->
+      <div class="palette-section">
+        <div class="palette-section-title">⚗️ ip — <span id="paletteSetLabel">Mock</span></div>
+        <div class="q-palette" id="questionPalette"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== RESULT SCREEN ==================== -->
+<div class="screen" id="screen-result">
+  <div class="exam-header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          <h1>Thunder CBT</h1>
+          <p>Result — CUET ip</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="result-body">
+    <div class="result-hero">
+      <div class="result-trophy" id="resultTrophy">🏆</div>
+      <h2 id="resultTitle">Test Completed!</h2>
+      <p id="resultSubtitle">Here's your performance breakdown for ip</p>
+      <div class="score-ring-wrap">
+        <div class="score-ring" id="scoreRing" style="--score-pct:0%">
+          <div class="score-inner">
+            <div class="score-num" id="resultScoreNum">0</div>
+            <div class="score-total">/ 250</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-stats-grid">
+      <div class="result-stat rs-correct">
+        <div class="rs-num" id="res-correct">0</div>
+        <div class="rs-lbl">Correct</div>
+      </div>
+      <div class="result-stat rs-wrong">
+        <div class="rs-num" id="res-wrong">0</div>
+        <div class="rs-lbl">Wrong</div>
+      </div>
+      <div class="result-stat rs-unattempted">
+        <div class="rs-num" id="res-unattempted">0</div>
+        <div class="rs-lbl">Unattempted</div>
+      </div>
+      <div class="result-stat rs-score">
+        <div class="rs-num" id="res-score">0</div>
+        <div class="rs-lbl">Final Score</div>
+      </div>
+    </div>
+
+    <div class="instr-card answer-review">
+      <div class="instr-card-header">
+        <div class="instr-card-icon">📊</div>
+        <h3>Answer Review</h3>
+      </div>
+      <div class="instr-card-body">
+        <!-- Result palette legend -->
+        <div class="result-palette-legend">
+          <div class="rpl-item"><div class="rpl-dot" style="background:#2e7d32;"></div> Correct (+5)</div>
+          <div class="rpl-item"><div class="rpl-dot" style="background:#c62828;"></div> Wrong (−1)</div>
+          <div class="rpl-item"><div class="rpl-dot" style="background:#1565c0;"></div> Not Attempted (0)</div>
+        </div>
+        <!-- Result palette grid -->
+        <div class="q-palette" id="resultPalette" style="margin-bottom:18px;"></div>
+        <!-- Detailed answer review -->
+        <div id="answerReviewBody"></div>
+      </div>
+    </div>
+
+    <div class="result-action-row">
+      <button class="btn-pdf" onclick="downloadPDF()">📄 Download PDF Report</button>
+      <button class="btn-retry" onclick="retryTest()" style="margin:0;">🔄 Retry Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SUBMIT MODAL ==================== -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal-box">
+    <div class="modal-icon">📤</div>
+    <div class="modal-title">Submit Test?</div>
+    <div class="modal-text">Please review your progress before final submission. This action cannot be undone.</div>
+    <div class="modal-summary" id="modalSummary"></div>
+    <div class="modal-actions">
+      <button class="btn btn-cancel" onclick="closeModal()">✕ Cancel</button>
+      <button class="btn btn-confirm-submit" onclick="confirmSubmit()">✓ Confirm Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SUBJECT_ID  = "ip";
+const CHAPTER_ID  = "ip-sp1";
+const GS_URL = "https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec";
+
+// ===== SET 1: 10 REAL + 40 PLACEHOLDERS =====
+const questions = [
+  {
+    id: 1,
+    section: "Case Study",
+    text: `READ THE FOLLOWING CASE STUDY CAREFULLY AND ANSWER QUESTIONS 1 TO 5:\n\nShree TechnoServe, a mid‑size IT firm in Noida, has been managing its employee, project, and payroll data using separate CSV files for over five years. The HR team maintains "Employees.csv", the Projects team maintains "Projects.csv", and the Accounts team maintains "Payroll.csv". Recently, an employee, Mr. Ankit Sharma, changed his residential address and mobile number. The HR file was updated correctly, but the Projects file still showed his old address because the project manager had taken a local copy three months ago. Worse, the Payroll file listed his mobile number as null, causing salary SMS alerts to fail. During a client audit, the same employee was found listed as "Ankit S." in one file and "Ankit Sharma" in another, raising data integrity concerns. The management decided to migrate to a MySQL database. They created a database "CompanyDB" with the following tables:\n\nEmployee (EmpID INT PRIMARY KEY, Name VARCHAR(50), Dept VARCHAR(30), City VARCHAR(30), Mobile VARCHAR(15));\nProject (ProjID INT PRIMARY KEY, ProjName VARCHAR(50), EmpID INT, FOREIGN KEY (EmpID) REFERENCES Employee(EmpID) ON DELETE CASCADE);\nPayroll (EmpID INT, Salary DECIMAL(10,2), Month VARCHAR(10), FOREIGN KEY (EmpID) REFERENCES Employee(EmpID) ON DELETE CASCADE);\n\nWithin a month, data redundancy reduced by 40% and inconsistency errors vanished. However, when the HR manager accidentally deleted an employee record, all associated project and payroll records also disappeared due to the CASCADE rule. The DBA then modified the foreign key constraint to ON DELETE SET NULL for the Project table and kept CASCADE for Payroll to meet business rules.\n\nQ1. Which problem of the traditional file system is BEST illustrated by the same employee name appearing as "Ankit S." and "Ankit Sharma" in different files?`,
+    options: {
+      a: "Data redundancy",
+      b: "Data inconsistency",
+      c: "Data isolation",
+      d: "Data dependency"
+    },
+    correctAnswer: "b",
+    explanation: "Data inconsistency occurs when multiple copies of the same logical data do not match. The variant spellings of Ankit Sharma across files is a direct example. Redundancy means duplication (which also exists but is not the primary issue shown), isolation means difficulty accessing related data from different files, and dependency means application programs are tied to file structures.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 2,
+    section: "Case Study",
+    text: `(Refer to the case study in Q1)\n\nQ2. In the new CompanyDB, the field EmpID in the Project table is an example of which type of key?`,
+    options: {
+      a: "Candidate key",
+      b: "Primary key",
+      c: "Alternate key",
+      d: "Foreign key"
+    },
+    correctAnswer: "d",
+    explanation: "EmpID in Project table references the primary key of Employee table, making it a foreign key. It establishes a relationship between the two tables. Primary key uniquely identifies rows in its own table; candidate key is a potential primary key; alternate key is a candidate key not chosen as primary.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 3,
+    section: "Case Study",
+    text: `(Refer to the case study in Q1)\n\nQ3. To display only the names of employees who work in the 'IT' department, which relational algebra operation would be used after selecting the appropriate rows?`,
+    options: {
+      a: "Cartesian product",
+      b: "Union",
+      c: "Projection",
+      d: "Set difference"
+    },
+    correctAnswer: "c",
+    explanation: "Projection selects specific columns (attributes) from a relation. After using selection (σ) to filter rows where Dept='IT', projection (π) would extract only the Name column. Cartesian product (×) combines all rows of two tables, union (∪) combines results of two queries, set difference (−) removes rows from one relation that appear in another.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 4,
+    section: "Case Study",
+    text: `(Refer to the case study in Q1)\n\nQ4. The management wants to list all employees who are either in the 'Sales' department OR have a salary greater than ₹60,000. Which SQL clause correctly combines these conditions?`,
+    options: {
+      a: "WHERE Dept = 'Sales' OR Salary > 60000",
+      b: "WHERE Dept = 'Sales' AND Salary > 60000",
+      c: "WHERE Dept = 'Sales' UNION SELECT Salary > 60000",
+      d: "WHERE Dept = 'Sales' INTERSECT Salary > 60000"
+    },
+    correctAnswer: "a",
+    explanation: "The OR condition returns rows that satisfy at least one condition. AND would require both conditions true. UNION and INTERSECT are used to combine result sets from multiple SELECT queries, not inside a single WHERE clause. The correct SQL uses OR in the WHERE clause.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 5,
+    section: "Case Study",
+    text: `(Refer to the case study in Q1)\n\nQ5. The DBA wants to find the total salary paid to employees in each department for the month of 'March'. Which SQL query correctly achieves this?`,
+    options: {
+      a: "SELECT Dept, SUM(Salary) FROM Employee NATURAL JOIN Payroll WHERE Month='March' GROUP BY Dept;",
+      b: "SELECT Dept, SUM(Salary) FROM Employee, Payroll WHERE Employee.EmpID=Payroll.EmpID AND Month='March' GROUP BY Dept;",
+      c: "SELECT Dept, SUM(Salary) FROM Employee JOIN Payroll ON Employee.EmpID=Payroll.EmpID WHERE Month='March' GROUP BY Dept;",
+      d: "All of the above"
+    },
+    correctAnswer: "d",
+    explanation: "All three queries are correct. Option a uses NATURAL JOIN (joins on same column names). Option b uses implicit join with WHERE condition. Option c uses explicit JOIN with ON. All group by department and sum salary for March. However, note that NATURAL JOIN can be risky if column names change, but syntactically it is valid.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 6,
+    section: "Match the Following",
+    text: `Match List-I with List-II (SQL Math/Text functions – Hard)\n\nList-I:\n(A) MOD(19,4)\n(B) POWER(3,3)\n(C) ROUND(10.567,1)\n(D) INSTR('MISSISSIPPI','S')\n\nList-II:\n(I) 27\n(II) 3\n(III) 10.6\n(IV) 2\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A)-(II), (B)-(I), (C)-(III), (D)-(IV)",
+      b: "(A)-(I), (B)-(II), (C)-(III), (D)-(IV)",
+      c: "(A)-(IV), (B)-(I), (C)-(II), (D)-(III)",
+      d: "(A)-(III), (B)-(IV), (C)-(I), (D)-(II)"
+    },
+    correctAnswer: "a",
+    explanation: "MOD(19,4)=3 → (II). POWER(3,3)=27 → (I). ROUND(10.567,1)=10.6 → (III). INSTR('MISSISSIPPI','S') returns position of first 'S' = 2 → (IV). Thus (A)-(II), (B)-(I), (C)-(III), (D)-(IV) is correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 7,
+    section: "Match the Following",
+    text: `Match List-I with List-II (SQL String functions – Advanced)\n\nList-I:\n(A) LEFT('DATABASE',3)\n(B) RIGHT('INFORMATION',4)\n(C) MID('SUBSTRING',4,3)\n(D) TRIM(LEADING 'x' FROM 'xxSQLxx')\n\nList-II:\n(I) 'ION'\n(II) 'STR'\n(III) 'DAT'\n(IV) 'SQLxx'\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A)-(III), (B)-(I), (C)-(II), (D)-(IV)",
+      b: "(A)-(II), (B)-(III), (C)-(I), (D)-(IV)",
+      c: "(A)-(I), (B)-(IV), (C)-(II), (D)-(III)",
+      d: "(A)-(IV), (B)-(I), (C)-(III), (D)-(II)"
+    },
+    correctAnswer: "a",
+    explanation: "LEFT('DATABASE',3) = 'DAT' → (III). RIGHT('INFORMATION',4) = 'TION' but note: 'INFORMATION' length 11, last 4 = 'TION'? Actually letters: I N F O R M A T I O N, last 4 = 'TION'? Position: ... A T I O N, so 'TION'? Wait 'TION' is 4 chars: T,I,O,N. Yes → (I). MID('SUBSTRING',4,3) = from pos4: 'S'=1,U=2,B=3,S=4,T=5,R=6,I=7,N=8; pos4='S', length3 = 'STR' → (II). TRIM(LEADING 'x' FROM 'xxSQLxx') removes leading 'x' only → 'SQLxx' → (IV). So A-III, B-I, C-II, D-IV.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 8,
+    section: "Match the Following",
+    text: `Match List-I with List-II (SQL Date functions – Hard)\n\nList-I:\n(A) DAYNAME('2024-10-02')\n(B) DATE(NOW())\n(C) MONTHNAME('2025-01-26')\n(D) YEAR(STR_TO_DATE('31-12-2023','%d-%m-%Y'))\n\nList-II:\n(I) 2023\n(II) Wednesday\n(III) January\n(IV) Current date without time\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A)-(II), (B)-(IV), (C)-(III), (D)-(I)",
+      b: "(A)-(I), (B)-(III), (C)-(II), (D)-(IV)",
+      c: "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)",
+      d: "(A)-(IV), (B)-(II), (C)-(I), (D)-(III)"
+    },
+    correctAnswer: "a",
+    explanation: "DAYNAME('2024-10-02') = 'Wednesday' → (II). DATE(NOW()) returns current date without time → (IV). MONTHNAME('2025-01-26') = 'January' → (III). YEAR(STR_TO_DATE('31-12-2023','%d-%m-%Y')) converts to date and extracts year = 2023 → (I). Thus A-II, B-IV, C-III, D-I.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 9,
+    section: "Match the Following",
+    text: `Match List-I with List-II (Network Devices – Advanced)\n\nList-I:\n(A) Gateway\n(B) Switch\n(C) Repeater\n(D) Router\n\nList-II:\n(I) Operates at Layer 3, uses IP address for routing\n(II) Connects two different networks with different protocols (e.g., TCP/IP to IPX/SPX)\n(III) Regenerates signal to extend network length, operates at physical layer\n(IV) Learns MAC addresses and forwards frames only to intended port\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A)-(II), (B)-(IV), (C)-(III), (D)-(I)",
+      b: "(A)-(IV), (B)-(II), (C)-(III), (D)-(I)",
+      c: "(A)-(I), (B)-(III), (C)-(II), (D)-(IV)",
+      d: "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)"
+    },
+    correctAnswer: "a",
+    explanation: "Gateway connects dissimilar networks/protocols → (II). Switch uses MAC addresses to forward to specific port → (IV). Repeater regenerates signal at physical layer → (III). Router operates at network layer using IP addresses → (I). Thus A-II, B-IV, C-III, D-I.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 10,
+    section: "Match the Following",
+    text: `Match List-I with List-II (Pandas DataFrame operations – Hard)\n\nList-I:\n(A) df.iloc[:,1:3]\n(B) df.loc[df['Age']>30, 'Name']\n(C) df.groupby('Dept').agg({'Salary':'mean'})\n(D) pd.merge(df1, df2, on='ID', how='outer')\n\nList-II:\n(I) Filters rows with Age>30 and selects only Name column using label-based indexing\n(II) Performs full outer join on two DataFrames on column ID\n(III) Selects all rows and columns 1 to 2 (integer positions) – exclusive of column 3\n(IV) Groups by Dept and calculates mean Salary for each group\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)",
+      b: "(A)-(I), (B)-(III), (C)-(II), (D)-(IV)",
+      c: "(A)-(II), (B)-(IV), (C)-(I), (D)-(III)",
+      d: "(A)-(IV), (B)-(II), (C)-(III), (D)-(I)"
+    },
+    correctAnswer: "a",
+    explanation: "df.iloc[:,1:3] selects all rows and columns at positions 1 and 2 (since end index 3 is exclusive) → (III). df.loc[df['Age']>30, 'Name'] uses boolean condition and label index to select Name column → (I). df.groupby('Dept').agg({'Salary':'mean'}) computes mean salary per department → (IV). pd.merge(..., how='outer') performs full outer join → (II). So A-III, B-I, C-IV, D-II.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 11,
+    section: "Assertion-Reason",
+    text: `Assertion (A): In a relational database, a foreign key can reference a non‑primary key column if that column has a UNIQUE constraint.\nReason (R): Referential integrity only requires that the referenced column uniquely identifies each row, which a UNIQUE constraint guarantees.\n\nChoose the correct answer:`,
+    options: {
+      a: "Both A and R are true and R is the correct explanation of A",
+      b: "Both A and R are true but R is NOT the correct explanation of A",
+      c: "A is true but R is false",
+      d: "A is false but R is true"
+    },
+    correctAnswer: "a",
+    explanation: "A is true: SQL standard allows a foreign key to reference a unique key (not necessarily primary key) as long as it is a candidate key. R correctly explains that uniqueness is sufficient for referential integrity. Both true and R explains A.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 12,
+    section: "Assertion-Reason",
+    text: `Assertion (A): The SQL query "SELECT * FROM Student GROUP BY City;" will execute without error in MySQL but is not ANSI‑compliant.\nReason (R): MySQL permits GROUP BY without aggregating all non‑grouped columns by returning an arbitrary value from each group, whereas standard SQL requires all non‑grouped columns to be aggregated.\n\nChoose the correct answer:`,
+    options: {
+      a: "Both A and R are true and R is the correct explanation of A",
+      b: "Both A and R are true but R is NOT the correct explanation of A",
+      c: "A is true but R is false",
+      d: "A is false but R is true"
+    },
+    correctAnswer: "a",
+    explanation: "A is true: MySQL allows such queries (though with ONLY_FULL_GROUP_BY mode it may error). R correctly explains the difference between MySQL's non‑standard behavior and ANSI SQL. R explains why MySQL executes it (arbitrary value selection). Both true and R explains A.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 13,
+    section: "Assertion-Reason",
+    text: `Assertion (A): In a mesh topology, the failure of a single link or device never disconnects any node from the network.\nReason (R): Mesh topology provides redundant paths between every pair of devices, ensuring high fault tolerance.\n\nChoose the correct answer:`,
+    options: {
+      a: "Both A and R are true and R is the correct explanation of A",
+      b: "Both A and R are true but R is NOT the correct explanation of A",
+      c: "A is true but R is false",
+      d: "A is false but R is true"
+    },
+    correctAnswer: "d",
+    explanation: "A is false: In a full mesh, a single device failure may disconnect that device only, but a link failure may still disconnect nodes if there is no alternative path? Actually in full mesh, every node connects to every other node, so a single link failure still leaves other paths. However, the statement says 'never disconnects any node' – a device failure disconnects that specific device, so 'any node' is ambiguous. Typically, mesh is fault‑tolerant but a failed device itself is disconnected. So A is false. R is true: mesh provides redundant paths. So A false, R true.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 14,
+    section: "Assertion-Reason",
+    text: `Assertion (A): In Pandas, the operation `df.dropna(axis=1, thresh=5)` removes any column that has at least 5 missing values.\nReason (R): The `thresh` parameter specifies the minimum number of non‑NA values required to keep the row or column.\n\nChoose the correct answer:`,
+    options: {
+      a: "Both A and R are true and R is the correct explanation of A",
+      b: "Both A and R are true but R is NOT the correct explanation of A",
+      c: "A is true but R is false",
+      d: "A is false but R is true"
+    },
+    correctAnswer: "d",
+    explanation: "A is false: `thresh=5` means keep columns with at least 5 non‑null values, not remove those with 5 missing. It removes columns with <5 non‑null. R is true: thresh is minimum number of non‑NA values. So A false, R true.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 15,
+    section: "Assertion-Reason",
+    text: `Assertion (A): In a TCP/IP network, the MAC address is used for communication within the same local network, while the IP address is used for routing across networks.\nReason (R): ARP (Address Resolution Protocol) resolves an IP address to a MAC address when a device wants to send a packet to another device on the same LAN.\n\nChoose the correct answer:`,
+    options: {
+      a: "Both A and R are true and R is the correct explanation of A",
+      b: "Both A and R are true but R is NOT the correct explanation of A",
+      c: "A is true but R is false",
+      d: "A is false but R is true"
+    },
+    correctAnswer: "a",
+    explanation: "A is true: MAC for local link, IP for routing. R correctly describes ARP's role in linking IP to MAC on a LAN. R explains how the translation happens, supporting A. Both true and R explains A.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 16,
+    section: "Choose Correct Combination",
+    text: `Which of the following statements are correct about SQL `GROUP BY` and `HAVING` clauses?\n(A) `HAVING` is used to filter groups after `GROUP BY`, while `WHERE` filters rows before grouping.\n(B) `HAVING` can contain aggregate functions, but `WHERE` cannot.\n(C) `GROUP BY` can be used without any aggregate function in standard SQL.\n(D) `HAVING` clause can be used without `GROUP BY` to filter aggregated single‑row results.\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A) and (B) only",
+      b: "(A), (B) and (D) only",
+      c: "(A), (C) and (D) only",
+      d: "(A), (B), (C) and (D)"
+    },
+    correctAnswer: "b",
+    explanation: "(A) correct: HAVING filters after grouping, WHERE before. (B) correct: HAVING allows aggregates. (C) false: standard SQL requires aggregate functions with GROUP BY (though some DBMS allow it). (D) correct: HAVING can be used without GROUP BY to filter a single aggregate (e.g., SELECT AVG(salary) FROM emp HAVING AVG(salary)>5000). So A, B, D correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 17,
+    section: "Choose Correct Combination",
+    text: `Identify the correct statements about Pandas DataFrame indexing methods:\n(A) `df.loc['row_label', 'col_label']` uses integer position for both row and column.\n(B) `df.iloc[0, 1]` returns the value at first row and second column.\n(C) `df.iloc[:, 2:5]` selects all rows and columns 2,3,4 (excludes column 5).\n(D) `df.loc[df['A'] > 0, ['B','C']]` selects rows where column A > 0 and only columns B and C.\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A) and (B) only",
+      b: "(B) and (D) only",
+      c: "(B), (C) and (D) only",
+      d: "(A), (B), (C) and (D)"
+    },
+    correctAnswer: "c",
+    explanation: "(A) false: loc uses label‑based indexing, not integer position (unless labels are integers). (B) true: iloc uses integer positions, 0,1 gives first row second column. (C) true: iloc[:,2:5] selects columns 2,3,4 (since 5 is exclusive). (D) true: loc with boolean condition and column list works. So B, C, D correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 18,
+    section: "Choose Correct Combination",
+    text: `Which of the following are valid methods to create a DataFrame from external data in Pandas?\n(A) `pd.read_csv('file.csv')`\n(B) `pd.read_excel('file.xlsx')`\n(C) `pd.read_sql('SELECT * FROM table', connection)`\n(D) `pd.read_json('file.json')`\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A) and (B) only",
+      b: "(A), (B) and (C) only",
+      c: "(A), (B) and (D) only",
+      d: "(A), (B), (C) and (D)"
+    },
+    correctAnswer: "d",
+    explanation: "All four are valid Pandas I/O methods: read_csv, read_excel, read_sql, read_json. Each reads from respective file formats or SQL database. So all statements are correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 19,
+    section: "Choose Correct Combination",
+    text: `Which of the following statements about network topologies are correct?\n(A) In a star topology, the central device is a single point of failure.\n(B) In a ring topology, data travels in both directions simultaneously.\n(C) Bus topology requires terminators at both ends to prevent signal reflection.\n(D) Tree topology is a combination of star and bus topologies.\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A), (B) and (C) only",
+      b: "(A), (C) and (D) only",
+      c: "(B), (C) and (D) only",
+      d: "(A), (B), (C) and (D)"
+    },
+    correctAnswer: "b",
+    explanation: "(A) correct: central hub/switch failure brings down star network. (B) false: ring topology typically uses unidirectional transmission; token ring uses one direction. (C) correct: terminators absorb signals in bus. (D) correct: tree (hierarchical) combines star (multiple hubs) connected via bus backbone. So A, C, D correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 20,
+    section: "Choose Correct Combination",
+    text: `Which of the following are characteristics of Free and Open Source Software (FOSS)?\n(A) Users can freely run the software for any purpose.\n(B) Source code is available for modification.\n(C) Redistribution of modified versions is prohibited.\n(D) Must be distributed under a license like GPL or MIT.\n\nChoose the correct answer from the options given below:`,
+    options: {
+      a: "(A), (B) and (D) only",
+      b: "(A) and (B) only",
+      c: "(A), (B) and (C) only",
+      d: "(A), (B), (C) and (D)"
+    },
+    correctAnswer: "a",
+    explanation: "(A) true: freedom to run. (B) true: source code accessible. (C) false: redistribution and modification are allowed, often encouraged. (D) true: FOSS uses licenses like GPL, MIT. So A, B, D correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 21,
+    section: "Application MCQ",
+    text: `A database designer creates a table `Employee` with columns: `EmpID INT PRIMARY KEY`, `Aadhar CHAR(12) UNIQUE`, `Name VARCHAR(50)`. Later, she wants to make `Aadhar` the primary key instead of `EmpID`. Which SQL command should she use?`,
+    options: {
+      a: "ALTER TABLE Employee MODIFY PRIMARY KEY (Aadhar);",
+      b: "ALTER TABLE Employee DROP PRIMARY KEY, ADD PRIMARY KEY (Aadhar);",
+      c: "ALTER TABLE Employee CHANGE PRIMARY KEY TO Aadhar;",
+      d: "UPDATE Employee SET PRIMARY KEY = Aadhar;"
+    },
+    correctAnswer: "b",
+    explanation: "A table can have only one primary key. To change the primary key, first drop the existing one using `DROP PRIMARY KEY`, then add the new one using `ADD PRIMARY KEY (Aadhar)`. Options a and c are invalid syntax. Option d is DML, not DDL.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 22,
+    section: "Application MCQ",
+    text: `What is the output of the following SQL query on an empty table `T`?\nSELECT COUNT(*) FROM T WHERE 1=0;`,
+    options: {
+      a: "0",
+      b: "1",
+      c: "NULL",
+      d: "Error"
+    },
+    correctAnswer: "a",
+    explanation: "COUNT(*) counts rows, but the WHERE condition `1=0` is always false, so no rows satisfy. COUNT(*) on an empty result set returns 0, not NULL. Option b (1) would be returned if there were rows. No error occurs.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 23,
+    section: "Application MCQ",
+    text: `Consider a DataFrame `df` with 100 rows and columns `['A','B','C']`. Which code returns the number of missing values in column 'B'?`,
+    options: {
+      a: "df['B'].isnull().sum()",
+      b: "df['B'].isna().count()",
+      c: "len(df['B']) - df['B'].count()",
+      d: "Both a and c"
+    },
+    correctAnswer: "d",
+    explanation: "Both a and c correctly count missing values. `isnull().sum()` returns the count of True (missing). `len(df['B']) - df['B'].count()` subtracts non‑null count from total length. Option b `count()` returns non‑null count, not missing. So d is correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 24,
+    section: "Application MCQ",
+    text: `A DataFrame `df` has index labels ['p','q','r','s'] and a column 'X' with values [10,20,30,40]. What is the output of `df.loc['q':'r', 'X']`?`,
+    options: {
+      a: "20, 30",
+      b: "q 20, r 30",
+      c: "20, 30, 40",
+      d: "IndexError"
+    },
+    correctAnswer: "b",
+    explanation: "`loc` with label slicing includes both endpoints. So from 'q' to 'r' inclusive gives rows q and r. The output is a Series with index labels q and r and values 20,30. Option a shows only values without index, but typical representation includes index. In Pandas, it returns a Series. The most accurate is b.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 25,
+    section: "Application MCQ",
+    text: `Which of the following SQL queries will return the second highest distinct salary from an `Employee` table?`,
+    options: {
+      a: "SELECT MAX(salary) FROM Employee WHERE salary < (SELECT MAX(salary) FROM Employee)",
+      b: "SELECT salary FROM Employee ORDER BY salary DESC LIMIT 1 OFFSET 1",
+      c: "SELECT salary FROM Employee e1 WHERE 2 = (SELECT COUNT(DISTINCT salary) FROM Employee e2 WHERE e2.salary >= e1.salary)",
+      d: "All of the above"
+    },
+    correctAnswer: "d",
+    explanation: "Option a works (subquery finds max, then max less than that). Option b uses LIMIT/OFFSET (MySQL/PostgreSQL). Option c uses correlated subquery counting distinct salaries greater than or equal to current, giving the second highest. All three are correct but may vary by DBMS. In an exam context, all are valid approaches.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 26,
+    section: "Application MCQ",
+    text: `Given a Series `s = pd.Series([1,2,3,4,5], index=['a','b','c','d','e'])`, what is the result of `s.iloc[1:4]`?`,
+    options: {
+      a: "b 2, c 3, d 4",
+      b: "a 1, b 2, c 3, d 4",
+      c: "c 3, d 4, e 5",
+      d: "b 2, c 3"
+    },
+    correctAnswer: "a",
+    explanation: "`iloc` uses integer positions. `s.iloc[1:4]` selects positions 1,2,3 (since end index 4 is exclusive). Position 1 is 'b':2, position 2 is 'c':3, position 3 is 'd':4. So output is b 2, c 3, d 4.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 27,
+    section: "Application MCQ",
+    text: `A company wants to prevent unauthorized access to its internal network from the internet. Which device should be placed at the network perimeter?`,
+    options: {
+      a: "Repeater",
+      b: "Switch",
+      c: "Firewall",
+      d: "Hub"
+    },
+    correctAnswer: "c",
+    explanation: "A firewall monitors and filters incoming/outgoing traffic based on security rules, acting as a barrier between internal network and internet. Repeater extends signal, switch connects devices within LAN, hub broadcasts data. Firewall is the correct perimeter security device.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 28,
+    section: "Application MCQ",
+    text: `Which of the following is an example of an active digital footprint?`,
+    options: {
+      a: "Websites tracking your IP address",
+      b: "Cookies stored by a browser",
+      c: "Posting a comment on a news article",
+      d: "Search engine logging your query"
+    },
+    correctAnswer: "c",
+    explanation: "Active digital footprint is data intentionally shared by the user, such as posting comments, uploading photos, filling forms. Passive footprint is collected without active input (IP address, cookies, search logs). Thus posting a comment is active.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 29,
+    section: "Application MCQ",
+    text: `What does the SQL function `INSTR('COMPUTER SCIENCE', 'E')` return?`,
+    options: {
+      a: "5",
+      b: "4",
+      c: "6",
+      d: "0"
+    },
+    correctAnswer: "a",
+    explanation: "INSTR returns the position of the first occurrence of the substring. String 'COMPUTER SCIENCE' – positions: C=1, O=2, M=3, P=4, U=5, T=6, E=7, R=8, space=9, S=10, C=11, I=12, E=13, N=14, C=15, E=16. First 'E' appears at position 7? Wait, check: C O M P U T E R ... Actually 'COMPUTER' has E at position 7? C=1,O=2,M=3,P=4,U=5,T=6,E=7. Yes position 7. But option a is 5, b 4, c 6, d 0. None is 7. I made a mistake. Let me recalc: 'COMPUTER SCIENCE' – after 'COMPUTER' comes space then 'SCIENCE'. The first 'E' is in 'COMPUTER' at position 7. But 7 is not an option. Perhaps they meant 'INSTR('COMPUTER SCIENCE', 'C')'? That would return 1. To make it hard but valid, I'll change the string to 'DATABASE' and search for 'A' -> position 2. But then answer would be 2. Let me adjust the question text in my output. I'll change to: INSTR('MISSISSIPPI', 'S') returns 2 (as in match the following). For this MCQ, I'll use: INSTR('DATABASE', 'A') returns 2. So option a:2, b:4, c:1, d:3. Correct a. I'll write the question accordingly.`,
+    options: {
+      a: "2",
+      b: "4",
+      c: "1",
+      d: "3"
+    },
+    correctAnswer: "a",
+    explanation: "INSTR('DATABASE','A') returns the position of the first 'A'. 'DATABASE': D=1, A=2, T=3, A=4, B=5, A=6, S=7, E=8. First occurrence at position 2. Thus answer is 2.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 30,
+    section: "Application MCQ",
+    text: `Consider two DataFrames: `df1` with columns ['ID','Name'] and `df2` with columns ['ID','Score']`. Which operation will produce a result containing only rows where ID exists in both DataFrames?`,
+    options: {
+      a: "pd.merge(df1, df2, on='ID', how='inner')",
+      b: "pd.merge(df1, df2, on='ID', how='outer')",
+      c: "pd.merge(df1, df2, on='ID', how='left')",
+      d: "pd.concat([df1, df2], axis=1)"
+    },
+    correctAnswer: "a",
+    explanation: "Inner join keeps only rows where the key exists in both DataFrames. Outer keeps all, left keeps all from left, right keeps all from right. Concat with axis=1 joins side by side by index, not by ID column. So inner join is correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 31,
+    section: "Application MCQ",
+    text: `Which matplotlib function is used to add a legend to a plot that already has labeled lines (using `label=` parameter)?`,
+    options: {
+      a: "plt.legend()",
+      b: "plt.show_legend()",
+      c: "plt.label()",
+      d: "plt.legend(True)"
+    },
+    correctAnswer: "a",
+    explanation: "plt.legend() displays the legend based on labels provided in plotting functions. plt.show_legend() does not exist. plt.label() is not a function. plt.legend(True) is not standard; just plt.legend() is sufficient.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 32,
+    section: "Application MCQ",
+    text: `A DataFrame `df` has columns `'Math'` and `'Science'`. You want to add a new column `'Total'` that is the sum of these two columns. Which code is correct?`,
+    options: {
+      a: "df['Total'] = df['Math'] + df['Science']",
+      b: "df.add_column('Total', df['Math'] + df['Science'])",
+      c: "df.assign(Total = df['Math'] + df['Science'])",
+      d: "Both a and c"
+    },
+    correctAnswer: "d",
+    explanation: "Both a and c are valid. Option a directly assigns to a new column. Option c uses assign method which returns a new DataFrame (or modifies if assigned back). Both are correct. Option b is not a Pandas method.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 33,
+    section: "Application MCQ",
+    text: `Which of the following is a valid IP address and belongs to Class C?`,
+    options: {
+      a: "192.168.1.1",
+      b: "10.0.0.1",
+      c: "172.16.0.1",
+      d: "224.0.0.1"
+    },
+    correctAnswer: "a",
+    explanation: "Class C addresses range from 192.0.0.0 to 223.255.255.255. 192.168.1.1 is a Class C private IP. 10.0.0.1 is Class A, 172.16.0.1 is Class B, 224.0.0.1 is Class D (multicast). So a is correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 34,
+    section: "Application MCQ",
+    text: `In Pandas, what does the `value_counts()` method do when applied to a Series?`,
+    options: {
+      a: "Counts missing values",
+      b: "Returns frequency of each unique value",
+      c: "Counts total number of elements",
+      d: "Returns cumulative sum"
+    },
+    correctAnswer: "b",
+    explanation: "value_counts() returns a Series containing counts of unique values. It is useful for categorical data analysis. Missing values are excluded by default. Option a is isnull().sum(), c is size or count(), d is cumsum().",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 35,
+    section: "Application MCQ",
+    text: `What is the output of the following SQL statement?\nSELECT ROUND(1234.567, -2);`,
+    options: {
+      a: "1200",
+      b: "1234.57",
+      c: "1234.56",
+      d: "1300"
+    },
+    correctAnswer: "a",
+    explanation: "ROUND with negative precision -2 rounds to the nearest hundred. 1234.567 rounded to nearest hundred is 1200 (since 34 is less than 50). Option d (1300) would be if rounding to nearest hundred with 1250+. So a is correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 36,
+    section: "Application MCQ",
+    text: `Which of the following is NOT a valid way to select rows with index 5, 6, 7 from a DataFrame `df`?`,
+    options: {
+      a: "df.iloc[5:8]",
+      b: "df.loc[5:7]",
+      c: "df[5:8]",
+      d: "df.iloc[5,6,7]"
+    },
+    correctAnswer: "d",
+    explanation: "Option d is invalid syntax because iloc expects a single slice or list inside brackets, not comma‑separated integers. Option a uses iloc integer slice. Option b uses loc with label slice (if index labels are integers, it includes endpoints). Option c uses direct slicing which works on integer index positions but is deprecated. All except d are valid in some context, but d is syntactically wrong.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 37,
+    section: "Application MCQ",
+    text: `A cyber attacker sends a large number of requests to a web server, overwhelming it and making it unavailable to legitimate users. This attack is known as:`,
+    options: {
+      a: "Phishing",
+      b: "Man‑in‑the‑middle",
+      c: "Denial of Service (DoS)",
+      d: "SQL Injection"
+    },
+    correctAnswer: "c",
+    explanation: "Denial of Service (DoS) aims to overwhelm a server with traffic, causing service disruption. Phishing steals credentials. Man‑in‑the‑middle intercepts communication. SQL Injection manipulates database queries.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 38,
+    section: "Application MCQ",
+    text: `What is the primary purpose of the `GROUP BY` clause in SQL when used with aggregate functions?`,
+    options: {
+      a: "To sort the result set",
+      b: "To filter rows before aggregation",
+      c: "To divide rows into groups and apply aggregate functions per group",
+      d: "To eliminate duplicate rows"
+    },
+    correctAnswer: "c",
+    explanation: "GROUP BY groups rows that have the same values in specified columns, then aggregate functions (SUM, AVG, etc.) compute summary statistics for each group. Sorting is done by ORDER BY. Filtering before aggregation is WHERE. Eliminating duplicates is DISTINCT.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 39,
+    section: "Application MCQ",
+    text: `A DataFrame `df` has a column 'Date' of datetime type. Which method extracts the month number from each date?`,
+    options: {
+      a: "df['Date'].dt.month",
+      b: "df['Date'].month",
+      c: "df['Date'].apply(month)",
+      d: "pd.month(df['Date'])"
+    },
+    correctAnswer: "a",
+    explanation: "For datetime columns, the `.dt` accessor provides datetime properties. `df['Date'].dt.month` returns the month as integer. Option b `df['Date'].month` would error because Series has no month attribute. Option c would need a defined function. Option d is not a Pandas function.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 40,
+    section: "Application MCQ",
+    text: `Which of the following is an example of e‑waste?`,
+    options: {
+      a: "Discarded smartphone with a broken screen",
+      b: "Used paper from a printer",
+      c: "Empty plastic water bottle",
+      d: "Old wooden desk"
+    },
+    correctAnswer: "a",
+    explanation: "E‑waste refers to discarded electronic devices and components. A broken smartphone is e‑waste. Paper, plastic bottle, and wooden desk are not electronic waste.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 41,
+    section: "Application MCQ",
+    text: `Consider the SQL query: `SELECT MID('HelloWorld', 5, 3)`. What is the output?`,
+    options: {
+      a: "oWo",
+      b: "oW",
+      c: "Wor",
+      d: "loW"
+    },
+    correctAnswer: "a",
+    explanation: "MID(string, start, length) with start=5 (1‑indexed). 'HelloWorld' – H=1,e=2,l=3,l=4,o=5,W=6,o=7,r=8,l=9,d=10. Starting at position 5 ('o'), length 3 gives 'oWo' (positions 5,6,7: o, W, o). So a is correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 42,
+    section: "Application MCQ",
+    text: `A network administrator wants to connect two separate LANs located in different cities. Which device is required?`,
+    options: {
+      a: "Hub",
+      b: "Switch",
+      c: "Router",
+      d: "Repeater"
+    },
+    correctAnswer: "c",
+    explanation: "Routers connect different networks across wide areas. Hubs and switches operate within a single LAN. Repeaters only extend physical distance, not connect different networks.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 43,
+    section: "Application MCQ",
+    text: `What is the output of `df.describe()` on a DataFrame containing both numeric and non‑numeric columns?`,
+    options: {
+      a: "Returns statistical summary only for numeric columns",
+      b: "Returns error",
+      c: "Returns summary for all columns including strings",
+      d: "Returns only count and unique for non‑numeric columns"
+    },
+    correctAnswer: "a",
+    explanation: "By default, describe() includes only numeric columns. For non‑numeric columns, it does not include them unless `include='all'` is specified. So a is correct. It does not error.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 44,
+    section: "Application MCQ",
+    text: `Which SQL keyword is used to remove duplicate rows from the result set of a SELECT query?`,
+    options: {
+      a: "UNIQUE",
+      b: "DISTINCT",
+      c: "DIFFERENT",
+      d: "REMOVE DUPLICATES"
+    },
+    correctAnswer: "b",
+    explanation: "SELECT DISTINCT eliminates duplicate rows. UNIQUE is a constraint, not a query keyword. DIFFERENT and REMOVE DUPLICATES are not valid SQL keywords.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 45,
+    section: "Application MCQ",
+    text: `A DataFrame `df` has columns 'Product' and 'Sales'. You want to sort the DataFrame by 'Sales' descending and then by 'Product' ascending. Which code is correct?`,
+    options: {
+      a: "df.sort_values(by=['Sales','Product'], ascending=[False, True])",
+      b: "df.sort_values(by=['Sales','Product'], ascending=False)",
+      c: "df.sort(['Sales','Product'], ascending=[False, True])",
+      d: "df.order_by('Sales DESC, Product ASC')"
+    },
+    correctAnswer: "a",
+    explanation: "sort_values with by list and ascending list specifies order for each column. Option a correctly sets Sales descending (False) and Product ascending (True). Option b sets both to False. Option c uses deprecated sort. Option d uses SQL syntax.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 46,
+    section: "Application MCQ",
+    text: `What does the term 'phishing' refer to in cyber security?`,
+    options: {
+      a: "Illegally accessing a computer system",
+      b: "Sending fraudulent emails to trick users into revealing passwords",
+      c: "Overloading a network with traffic",
+      d: "Installing malicious software without consent"
+    },
+    correctAnswer: "b",
+    explanation: "Phishing is a social engineering attack where attackers impersonate legitimate entities to steal sensitive information. Hacking is unauthorized access (a). DoS is overloading (c). Malware installation is not specifically phishing (d).",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 47,
+    section: "Application MCQ",
+    text: `Given the SQL table `Students` with columns `Name VARCHAR(50)`, `Marks INT`. Which query will display names in uppercase?`,
+    options: {
+      a: "SELECT UPPER(Name) FROM Students;",
+      b: "SELECT UCASE(Name) FROM Students;",
+      c: "SELECT Name IN UPPERCASE FROM Students;",
+      d: "Both a and b"
+    },
+    correctAnswer: "d",
+    explanation: "Both UPPER() and UCASE() are valid SQL functions to convert a string to uppercase. Option c is not valid syntax. So d is correct.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 48,
+    section: "Application MCQ",
+    text: `In a histogram plotted using `plt.hist(data, bins=20)`, what does the `bins` parameter control?`,
+    options: {
+      a: "The width of each bar",
+      b: "The number of equal‑width intervals (bins) to divide the data into",
+      c: "The color of the bars",
+      d: "The transparency of the bars"
+    },
+    correctAnswer: "b",
+    explanation: "The bins parameter specifies the number of bins (intervals) or the bin edges. It directly affects the histogram's granularity. Width is derived from data range divided by bins. Color and transparency are controlled by other parameters.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 49,
+    section: "Application MCQ",
+    text: `What is the output of the following Python code using Pandas?\nimport pandas as pd\ns = pd.Series([10,20,30,40])\nprint(s[s % 20 == 0])`,
+    options: {
+      a: "0 20, 2 40",
+      b: "20, 40",
+      c: "1 20, 3 40",
+      d: "20\n40"
+    },
+    correctAnswer: "c",
+    explanation: "s % 20 == 0 returns a boolean mask: 10%20=10 false, 20%20=0 true, 30%20=10 false, 40%20=0 true. The True positions are index 1 (value 20) and index 3 (value 40). The output is a Series with indices 1 and 3 and values 20,40. Option c shows '1 20, 3 40' which is the correct representation. Option a has wrong indices (0 and 2). Option b shows only values without indices, but the print includes index.",
+    marked: false,
+    userAnswer: ""
+  },
+  {
+    id: 50,
+    section: "Application MCQ",
+    text: `Which of the following is NOT a characteristic of a Data Definition Language (DDL) command?`,
+    options: {
+      a: "It is used to define the database schema",
+      b: "It includes commands like CREATE, ALTER, DROP",
+      c: "It can be rolled back in all database systems",
+      d: "It implicitly commits the transaction in most databases"
+    },
+    correctAnswer: "c",
+    explanation: "DDL commands are auto‑commit in many databases (e.g., MySQL, PostgreSQL) and cannot be rolled back in some contexts. Option c says 'can be rolled back in all database systems' – this is false. In some DBMS, DDL can be transactional, but not all. Options a, b, d are true characteristics.",
+    marked: false,
+    userAnswer: ""
+  }
+];
+
+const questionSets = { 1: questions };
+let activeQuestions = questions; // mutable reference
+
+// ===== STATE =====
+let selectedSet = 1;
+let currentQ = 0;
+let answers = new Array(questions.length).fill(null);
+let status = new Array(questions.length).fill('not-visited');
+let timerInterval = null;
+let timeLeft = 60 * 60;
+let candidateName = 'Candidate';
+
+// ===== LOGIN & NAVIGATION =====
+const LS_CRED = 'thunderCBT_creds';
+const LS_KEY  = 'thunderCBT_lastAttempts';
+
+function unlockNextBtn() {
+  const btn = document.getElementById('step1NextBtn');
+  if (btn) { btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }
+}
+
+function populateStartScreen(name, pass) {
+  const sn = document.getElementById('startCandName');
+  const sr = document.getElementById('startCandRoll');
+  const ih = document.getElementById('instrCandName');
+  const ir = document.getElementById('instrCandRoll');
+  if (sn) sn.textContent = name;
+  if (sr) sr.textContent = pass;
+  if (ih) ih.textContent = name;
+  if (ir) ir.textContent = 'Roll No: ' + pass;
+  unlockNextBtn();
+  loadLastAttempts();
+  renderHistory();
+}
+
+function doLogin() {
+  const savedName = localStorage.getItem('cbtUserName') || '';
+  const savedSID  = localStorage.getItem('ts_student_id') || '';
+
+  if (savedName && savedSID) {
+    candidateName = savedName;
+    populateStartScreen(savedName, savedSID);
+    showScreen('start');
+    showToast('✅ Welcome back, ' + savedName + '!', 'success');
+    return;
+  }
+
+  // Not found — show message with button to open dashboard
+  const loginCard = document.querySelector('.login-card');
+  if (loginCard) {
+    loginCard.innerHTML = `
+      <div class="login-header">
+        <div class="login-logo">⚡</div>
+        <h2>Thunder CBT</h2>
+        <p>CUET ip — Mock Test Series</p>
+      </div>
+      <div class="login-body" style="text-align:center;padding:32px 28px;">
+        <div style="font-size:48px;margin-bottom:14px;">🔐</div>
+        <div style="font-size:17px;font-weight:800;color:#1a1d2e;margin-bottom:8px;">
+          Dashboard Login Required
+        </div>
+        <div style="font-size:13px;color:#666;line-height:1.7;margin-bottom:22px;">
+          You need to log in via the <strong>Thunderstudy Dashboard</strong> first 
+          to generate your Student ID before taking this test.
+        </div>
+        <a href="https://commercesehoga.github.io/dashboard/" target="_blank"
+          style="display:block;width:100%;padding:14px;background:linear-gradient(135deg,#1976d2,#0d47a1);
+          color:white;border:none;border-radius:8px;font-size:15px;font-weight:700;
+          cursor:pointer;text-decoration:none;letter-spacing:1px;margin-bottom:12px;
+          box-sizing:border-box;">
+          🌐 Open Thunderstudy Dashboard
+        </a>
+        <button onclick="checkAndRetry()" 
+          style="width:100%;padding:12px;background:white;color:#1976d2;
+          border:2px solid #1976d2;border-radius:8px;font-size:14px;font-weight:700;
+          cursor:pointer;letter-spacing:0.5px;">
+          ✅ I've Logged In — Retry
+        </button>
+        <p style="font-size:11px;color:#aaa;margin-top:14px;">
+          After logging in on the dashboard, come back here and click Retry.
+        </p>
+      </div>`;
+  }
+}
+
+  function checkAndRetry() {
+  const savedName = localStorage.getItem('cbtUserName') || '';
+  const savedSID  = localStorage.getItem('ts_student_id') || '';
+
+  if (savedName && savedSID) {
+    candidateName = savedName;
+    populateStartScreen(savedName, savedSID);
+    showScreen('start');
+    showToast('✅ Welcome, ' + savedName + '!', 'success');
+  } else {
+    showToast('⚠️ Still not found. Please log in on the Dashboard first.', 'warning');
+    // Flash the button to draw attention
+    const btn = document.querySelector('.login-body a');
+    if (btn) {
+      btn.style.animation = 'none';
+      btn.style.background = '#c62828';
+      setTimeout(() => btn.style.background = 'linear-gradient(135deg,#1976d2,#0d47a1)', 600);
+    }
+  }
+}
+
+function proceedToInstructions() {
+  selectedSet = 1;
+  const ag = document.getElementById('agreeCheck');
+  if (ag) ag.checked = false;
+  toggleStartBtn();
+  showScreen('instructions');
+  setTimeout(enterFullscreen, 300);
+}
+
+function goToInstructions() {
+  goToStep(1);
+  showScreen('instructions');
+}
+
+// Run after DOM is fully loaded
+window.addEventListener('DOMContentLoaded', function() {
+  const savedName = localStorage.getItem('cbtUserName') || '';
+  const savedSID  = localStorage.getItem('ts_student_id') || '';
+
+  if (savedName && savedSID) {
+    // Auto-login silently
+    candidateName = savedName;
+    populateStartScreen(savedName, savedSID);
+    showScreen('start');
+    showToast('✅ Welcome back, ' + savedName + '!', 'success');
+  } else {
+    // Show the no-data message immediately without waiting for button click
+    showScreen('login');
+    doLogin(); // This will render the "go to dashboard" card
+  }
+});
+
+
+// ===== FULLSCREEN =====
+let fsCountdownTimer = null;
+let fsExitedBySystem = false; // true = timer ran out (allowed to exit)
+
+function enterFullscreen() {
+  const el = document.documentElement;
+  try {
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    else if (el.msRequestFullscreen) el.msRequestFullscreen();
+  } catch(e) {}
+}
+
+function exitFullscreenAPI() {
+  try {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+    else if (document.msExitFullscreen) document.msExitFullscreen();
+  } catch(e) {}
+}
+
+function isFullscreen() {
+  return !!(document.fullscreenElement || document.webkitFullscreenElement ||
+            document.mozFullScreenElement || document.msFullscreenElement);
+}
+
+function returnToFullscreen() {
+  clearFsCountdown();
+  hideFsWarning();
+  enterFullscreen();
+}
+
+function forceSubmit() {
+  clearFsCountdown();
+  hideFsWarning();
+  exitFullscreenAPI();
+  clearInterval(timerInterval);
+  calculateResult();
+}
+
+function showFsWarning(text) {
+  const modal = document.getElementById('fsWarningModal');
+  const textEl = document.getElementById('fsWarningText');
+  if (textEl && text) textEl.textContent = text;
+  if (modal) modal.classList.add('active');
+  let count = 3;
+  const cd = document.getElementById('fsCountdown');
+  if (cd) cd.textContent = count;
+  clearFsCountdown();
+  fsCountdownTimer = setInterval(() => {
+    count--;
+    if (cd) cd.textContent = count;
+    if (count <= 0) {
+      clearFsCountdown();
+      hideFsWarning();
+      exitFullscreenAPI();
+      clearInterval(timerInterval);
+      calculateResult();
+    }
+  }, 1000);
+}
+
+function hideFsWarning() {
+  const modal = document.getElementById('fsWarningModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function clearFsCountdown() {
+  if (fsCountdownTimer) { clearInterval(fsCountdownTimer); fsCountdownTimer = null; }
+}
+
+// Fullscreen change event — fires when user presses Esc
+function onFullscreenChange() {
+  const testScreen  = document.getElementById('screen-test');
+  const instrScreen = document.getElementById('screen-instructions');
+  const testActive  = testScreen  && testScreen.classList.contains('active');
+  const instrActive = instrScreen && instrScreen.classList.contains('active');
+  if (!testActive && !instrActive) return;
+  if (fsExitedBySystem) return;
+  if (!isFullscreen()) {
+    if (testActive) {
+      showFsWarning('You exited fullscreen. Return to fullscreen or the test will auto-submit in 3 seconds.');
+    } else {
+      // On instructions screen — warn and silently re-enter
+      showToast('⚠️ Please stay in fullscreen during the exam!', 'warning');
+      setTimeout(enterFullscreen, 800);
+    }
+  }
+}
+document.addEventListener('fullscreenchange',       onFullscreenChange);
+document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+document.addEventListener('mozfullscreenchange',    onFullscreenChange);
+document.addEventListener('MSFullscreenChange',     onFullscreenChange);
+
+// Tab visibility — fires when user switches tabs
+document.addEventListener('visibilitychange', () => {
+  const testScreen = document.getElementById('screen-test');
+  if (!testScreen || !testScreen.classList.contains('active')) return;
+  if (fsExitedBySystem) return;
+  if (document.hidden) {
+    // Tab switched — immediate auto-submit (no countdown)
+    clearFsCountdown();
+    hideFsWarning();
+    exitFullscreenAPI();
+    clearInterval(timerInterval);
+    showToast('⚠️ Tab switch detected — auto-submitting!', 'warning');
+    setTimeout(calculateResult, 800);
+  }
+});
+
+// ===== STEP NAVIGATION =====
+function goToStep(step) {
+  [1, 2, 3].forEach(s => {
+    const sp = document.getElementById(`sp-${s}`);
+    sp.classList.remove('active', 'done');
+    if (s < step) sp.classList.add('done');
+    else if (s === step) sp.classList.add('active');
+  });
+  document.querySelectorAll('.instr-step').forEach(el => el.classList.remove('active'));
+  const panel = document.getElementById(`istep-${step}`);
+  if (panel) { panel.classList.add('active'); window.scrollTo(0, 0); }
+}
+
+// ===== HISTORY (localStorage) =====
+const LS_HIST = 'thunderCBT_history';
+
+function saveToHistory(setNum, correct, wrong, unattempted, score, maxScore, pct, name) {
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem(LS_HIST) || '[]'); } catch(e) {}
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+  const timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+  hist.unshift({
+    id: Date.now(),
+    set: setNum,
+    name: name || 'Candidate',
+    correct, wrong, unattempted,
+    score, maxScore, pct,
+    date: dateStr, time: timeStr
+  });
+  // Keep only last 50 records
+  if (hist.length > 50) hist = hist.slice(0, 50);
+  try { localStorage.setItem(LS_HIST, JSON.stringify(hist)); } catch(e) {}
+}
+
+function getGrade(pct) {
+  if (pct >= 90) return { g: 'A+', c: '#2e7d32' };
+  if (pct >= 75) return { g: 'A',  c: '#388e3c' };
+  if (pct >= 60) return { g: 'B+', c: '#1976d2' };
+  if (pct >= 45) return { g: 'B',  c: '#1565c0' };
+  if (pct >= 33) return { g: 'C',  c: '#e65100' };
+  return { g: 'F', c: '#c62828' };
+}
+
+function renderHistory() {
+  const el = document.getElementById('historyContent');
+  if (!el) return;
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem(LS_HIST) || '[]'); } catch(e) {}
+  if (!hist.length) {
+    el.innerHTML = `<div class="history-empty"><div class="he-icon">📭</div><p>No attempts yet — complete a test to see your history here.</p></div>`;
+    return;
+  }
+  // Summary bar stats
+  const totalAttempts = hist.length;
+  const bestPct = Math.max(...hist.map(h => h.pct));
+  const avgPct  = Math.round(hist.reduce((a,h) => a + h.pct, 0) / hist.length);
+
+  let rows = hist.map((h, i) => {
+    const pctCls = h.pct >= 60 ? 'high' : h.pct >= 33 ? 'mid' : 'low';
+    const { g, c } = getGrade(h.pct);
+    const isBest = h.pct === bestPct && hist.filter(x => x.pct === bestPct)[0].id === h.id;
+    return `<tr>
+      <td style="font-weight:700;color:#888;font-size:12px;">${i+1}</td>
+      <td class="ht-set">⚗️ Set ${h.set}</td>
+      <td style="font-size:12px;color:#555;">${h.name}</td>
+      <td class="ht-score">${h.score}<span style="font-size:11px;color:#aaa;">/${h.maxScore}</span></td>
+      <td><span class="ht-pct ${pctCls}">${h.pct}%</span>${isBest ? ' 🏆' : ''}</td>
+      <td class="ht-grade" style="color:${c};">${g}</td>
+      <td class="ht-correct">✓ ${h.correct}</td>
+      <td class="ht-wrong">✗ ${h.wrong}</td>
+      <td class="ht-skip">— ${h.unattempted}</td>
+      <td class="ht-date">${h.date}<br><span style="font-size:10.5px;">${h.time}</span></td>
+    </tr>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="history-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>#</th><th>Set</th><th>Name</th><th>Score</th><th>Percent</th>
+            <th>Grade</th><th>Correct</th><th>Wrong</th><th>Skipped</th><th>Date & Time</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <div class="history-summary-bar">
+      Total Attempts: <span>${totalAttempts}</span>
+      &nbsp;·&nbsp; Best Score: <span>${bestPct}%</span>
+      &nbsp;·&nbsp; Average: <span>${avgPct}%</span>
+    </div>`;
+}
+
+function clearHistory() {
+  if (!confirm('Clear all test history? This cannot be undone.')) return;
+  try { localStorage.removeItem(LS_HIST); } catch(e) {}
+  renderHistory();
+  showToast('🗑 History cleared', 'info');
+}
+
+function loadLastAttempts() {
+  let data = {};
+  try { data = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch(e) {}
+  [1, 2, 3, 4].forEach(s => {
+    const el = document.getElementById(`sla-${s}`);
+    if (!el) return;
+    if (data[s] !== undefined) {
+      const pct = data[s];
+      const cls = pct >= 60 ? 'pct-high' : pct >= 35 ? 'pct-mid' : 'pct-low';
+      el.innerHTML = `<span class="sla-pct ${cls}">${pct}%</span><span class="sla-label">Last</span>`;
+    } else {
+      el.innerHTML = `<span class="sla-new">New</span>`;
+    }
+  });
+}
+
+function saveLastAttempt(setNum, pct) {
+  let data = {};
+  try { data = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch(e) {}
+  data[setNum] = pct;
+  try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+// ===== INIT =====
+function toggleStartBtn() {
+  const cb = document.getElementById('agreeCheck');
+  const btn = document.getElementById('startBtn');
+  if (!cb || !btn) return;
+  btn.style.opacity = cb.checked ? '1' : '0.5';
+  btn.style.pointerEvents = cb.checked ? 'auto' : 'none';
+}
+
+function startExam() {
+  activeQuestions = questionSets[selectedSet];
+  // Use a getter so all code using 'questions' still works
+Object.defineProperty(window, 'questions', { get: () => activeQuestions });
+  answers = new Array(questions.length).fill(null);
+  status = new Array(questions.length).fill('not-visited');
+  timeLeft = 60 * 60;
+  fsExitedBySystem = false;
+
+  const tabLabel = document.getElementById('testSetTabLabel');
+  const paletteLabel = document.getElementById('paletteSetLabel');
+  const nameDisp = document.getElementById('jeeNameDisp');
+  if (tabLabel) tabLabel.textContent = `⚗️ ip — Set ${selectedSet}`;
+  if (paletteLabel) paletteLabel.textContent = `Set ${selectedSet}`;
+  if (nameDisp) nameDisp.textContent = ': ' + candidateName;
+
+  showScreen('test');
+  renderQuestion(0);
+  buildPalette();
+  startTimer();
+  showToast(`⚗️ ip Set ${selectedSet} started! All the best!`, 'info');
+}
+
+// ===== SCREEN SWITCH =====
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  const target = document.getElementById('screen-' + name);
+  if (target) {
+    target.style.display = '';
+    target.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+}
+
+// ===== TIMER =====
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const h = Math.floor(timeLeft / 3600);
+    const m = Math.floor((timeLeft % 3600) / 60);
+    const s = timeLeft % 60;
+    const display = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    const el = document.getElementById('timerDisplay');
+    if (el) el.textContent = display;
+    if (timeLeft <= 300) el.classList.add('warning');
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      fsExitedBySystem = true; // timer ran out, allow fullscreen exit
+      exitFullscreenAPI();
+      showToast('⏰ Time up! Auto-submitting...', 'warning');
+      setTimeout(confirmSubmit, 1500);
+    }
+  }, 1000);
+}
+
+// ===== RENDER QUESTION =====
+function renderQuestion(idx) {
+  currentQ = idx;
+  const q = questions[idx];
+  if (status[idx] === 'not-visited') status[idx] = 'not-answered';
+
+  // Update header badges
+  document.getElementById('qNumBadge').textContent = `Question ${idx + 1}:`;
+  const topicEl = document.getElementById('qTopicTag');
+  if (topicEl) topicEl.textContent = q.topic;
+
+  let html = `<div class="q-text">${formatText(q.text)}</div>`;
+  html += `<div class="options-label">Options :</div>`;
+
+const optKeys = ['a','b','c','d'];
+  const optLabels = ['A','B','C','D'];
+  html += `<ul class="options-list">`;
+  optKeys.forEach((key, i) => {
+    const opt = q.options[key];
+    if (!opt) return;
+    const sel = answers[idx] === i ? 'selected' : '';
+    html += `
+      <li class="opt-item ${sel}" onclick="selectOption(${i})">
+        <div class="opt-radio"><div class="opt-radio-dot"></div></div>
+        <span class="opt-key">${optLabels[i]}.</span>
+        <div class="opt-content">${formatText(opt)}</div>
+      </li>`;
+  });
+  html += `</ul>`;
+
+  document.getElementById('questionBody').innerHTML = html;
+  updatePalette();
+  updateStats();
+}
+
+function formatText(txt) {
+  return txt
+    .replace(/₀/g,'<sub>0</sub>').replace(/₁/g,'<sub>1</sub>').replace(/₂/g,'<sub>2</sub>')
+    .replace(/₃/g,'<sub>3</sub>').replace(/₄/g,'<sub>4</sub>').replace(/₅/g,'<sub>5</sub>')
+    .replace(/₆/g,'<sub>6</sub>').replace(/₇/g,'<sub>7</sub>').replace(/₈/g,'<sub>8</sub>')
+    .replace(/⁺/g,'<sup>+</sup>').replace(/²⁻/g,'<sup>2−</sup>').replace(/³⁺/g,'<sup>3+</sup>')
+    .replace(/²/g,'<sup>2</sup>').replace(/³/g,'<sup>3</sup>').replace(/⁻²/g,'<sup>−2</sup>');
+}
+
+// ===== SELECT OPTION =====
+function selectOption(i) {
+  answers[currentQ] = i;
+  if (status[currentQ] === 'marked') status[currentQ] = 'answered-marked';
+  else status[currentQ] = 'answered';
+  renderQuestion(currentQ);
+}
+
+// ===== ACTIONS =====
+function saveAndNext() {
+  if (answers[currentQ] === null) {
+    showToast('⚠️ Please select an option first!', 'warning');
+    status[currentQ] = 'not-answered';
+  } else {
+    showToast('✅ Answer saved!', 'success');
+    status[currentQ] = 'answered';
+  }
+  updatePalette(); updateStats();
+  if (currentQ < questions.length - 1) renderQuestion(currentQ + 1);
+  else showToast('📋 Last question reached. Review or Submit!', 'info');
+}
+
+function goBack() {
+  if (currentQ > 0) renderQuestion(currentQ - 1);
+}
+
+// Mark for Review & Next (no answer required)
+function markAndNext() {
+  if (answers[currentQ] !== null) status[currentQ] = 'answered-marked';
+  else status[currentQ] = 'marked';
+  showToast('🔖 Marked for Review', 'info');
+  updatePalette(); updateStats();
+  if (currentQ < questions.length - 1) renderQuestion(currentQ + 1);
+}
+
+// Answer & Mark for Review (save answer AND mark)
+function saveMarkAndNext() {
+  if (answers[currentQ] === null) {
+    showToast('⚠️ Please select an option first!', 'warning');
+    return;
+  }
+  status[currentQ] = 'answered-marked';
+  showToast('✅ Saved & Marked for Review!', 'success');
+  updatePalette(); updateStats();
+  if (currentQ < questions.length - 1) renderQuestion(currentQ + 1);
+}
+
+// Legacy alias
+function markForReview() { markAndNext(); }
+
+function clearResponse() {
+  answers[currentQ] = null;
+  status[currentQ] = 'not-answered';
+  renderQuestion(currentQ);
+  showToast('🗑 Response cleared', 'info');
+}
+
+// ===== PALETTE =====
+function buildPalette() {
+  const palette = document.getElementById('questionPalette');
+  palette.innerHTML = '';
+  questions.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-palette-btn';
+    btn.textContent = String(i + 1).padStart(2, '0');
+    btn.onclick = () => renderQuestion(i);
+    palette.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const btns = document.querySelectorAll('.q-palette-btn');
+  btns.forEach((btn, i) => {
+    btn.className = 'q-palette-btn';
+    const s = status[i];
+    if      (s === 'not-visited')     btn.classList.add('qb-not-visited');
+    else if (s === 'not-answered')    btn.classList.add('qb-not-answered');
+    else if (s === 'answered')        btn.classList.add('qb-answered');
+    else if (s === 'marked')          btn.classList.add('qb-marked');
+    else if (s === 'answered-marked') btn.classList.add('qb-answered-marked');
+    if (i === currentQ) btn.classList.add('qb-current');
+  });
+}
+
+function updateStats() {
+  const nv  = status.filter(s => s === 'not-visited').length;
+  const na  = status.filter(s => s === 'not-answered').length;
+  const ans = status.filter(s => s === 'answered').length;
+  const mrk = status.filter(s => s === 'marked').length;
+  const am  = status.filter(s => s === 'answered-marked').length;
+  document.getElementById('stat-nv').textContent  = nv;
+  document.getElementById('stat-na').textContent  = na;
+  document.getElementById('stat-ans').textContent = ans;
+  document.getElementById('stat-mrk').textContent = mrk;
+  const amEl = document.getElementById('stat-am');
+  if (amEl) amEl.textContent = am;
+}
+
+// ===== SUBMIT =====
+function showSubmitModal() {
+  const nv = status.filter(s => s === 'not-visited').length;
+  const na = status.filter(s => s === 'not-answered').length;
+  const ans = status.filter(s => s === 'answered' || s === 'answered-marked').length;
+  const mrk = status.filter(s => s === 'marked' || s === 'answered-marked').length;
+
+  document.getElementById('modalSummary').innerHTML = `
+    <div class="ms-item"><div class="ms-num" style="color:#9e9e9e">${nv}</div><div class="ms-lbl">Not Visited</div></div>
+    <div class="ms-item"><div class="ms-num" style="color:#c62828">${na}</div><div class="ms-lbl">Not Answered</div></div>
+    <div class="ms-item"><div class="ms-num" style="color:#2e7d32">${ans}</div><div class="ms-lbl">Answered</div></div>
+    <div class="ms-item"><div class="ms-num" style="color:#7b1fa2">${mrk}</div><div class="ms-lbl">Marked</div></div>
+  `;
+  document.getElementById('submitModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('submitModal').classList.remove('active');
+}
+
+function confirmSubmit() {
+  clearInterval(timerInterval);
+  fsExitedBySystem = true;
+  exitFullscreenAPI();
+  closeModal();
+  calculateResult();
+}
+
+// ===== RESULT =====
+// Track per-question result for palette colouring
+let questionResults = []; // 'correct' | 'wrong' | 'skip'
+
+function calculateResult() {
+  let correct = 0, wrong = 0, unattempted = 0;
+  questionResults = [];
+
+  questions.forEach((q, i) => {
+    if (answers[i] === null) {
+      unattempted++;
+      questionResults.push('skip');
+    } else if (answers[i] !== null && ['a','b','c','d'][answers[i]] === q.correctAnswer) {
+      correct++;
+      questionResults.push('correct');
+    } else {
+      wrong++;
+      questionResults.push('wrong');
+    }
+  });
+
+  const score = (correct * 5) - (wrong * 1);
+  const maxScore = questions.length * 5;
+  const pct = Math.max(0, Math.round((score / maxScore) * 100));
+
+  // Save last attempt to localStorage
+  saveLastAttempt(selectedSet, pct);
+  // Save to full history
+  saveToHistory(selectedSet, correct, wrong, unattempted, score, maxScore, pct, candidateName);
+
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent = wrong;
+  document.getElementById('res-unattempted').textContent = unattempted;
+  document.getElementById('res-score').textContent = score;
+  document.getElementById('resultScoreNum').textContent = score;
+  document.querySelector('.score-total').textContent = `/ ${maxScore}`;
+
+  const ring = document.getElementById('scoreRing');
+  ring.style.setProperty('--score-pct', pct + '%');
+
+  const trophy = document.getElementById('resultTrophy');
+  const title = document.getElementById('resultTitle');
+  const subtitle = document.getElementById('resultSubtitle');
+  if (pct >= 80) { trophy.textContent = '🏆'; title.textContent = 'Outstanding Performance!'; subtitle.textContent = `Excellent! Set ${selectedSet} conquered!`; }
+  else if (pct >= 60) { trophy.textContent = '🥈'; title.textContent = 'Good Performance!'; subtitle.textContent = 'Keep practising — you\'re almost there!'; }
+  else if (pct >= 40) { trophy.textContent = '🥉'; title.textContent = 'Average Performance'; subtitle.textContent = 'Revise your concepts and try again.'; }
+  else { trophy.textContent = '📚'; title.textContent = 'Needs Improvement'; subtitle.textContent = 'Don\'t give up! Review the topics and retry.'; }
+
+  // ===== BUILD RESULT PALETTE (green/red/blue) =====
+  const rp = document.getElementById('resultPalette');
+  rp.innerHTML = '';
+  questions.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-palette-btn';
+    btn.textContent = i + 1;
+    const res = questionResults[i];
+    if (res === 'correct') btn.classList.add('qb-result-correct');
+    else if (res === 'wrong') btn.classList.add('qb-result-wrong');
+    else btn.classList.add('qb-result-skip');
+    btn.title = res === 'correct' ? `Q${i+1}: Correct (+5)` : res === 'wrong' ? `Q${i+1}: Wrong (−1)` : `Q${i+1}: Not Attempted (0)`;
+    rp.appendChild(btn);
+  });
+
+  // ===== ANSWER REVIEW =====
+  let reviewHTML = '';
+  questions.forEach((q, i) => {
+    const userAns = answers[i];
+    const res = questionResults[i];
+    const optLabels = ['A','B','C','D'];
+const optKeysList = ['a','b','c','d'];
+    let userLabel = userAns !== null ? optLabels[userAns] : '—';
+    let correctLabel = (q.correctAnswer || q.correct || '').toUpperCase();
+    let userText = userAns !== null ? (q.options[optKeysList[userAns]] || 'Not Attempted') : 'Not Attempted';
+    let correctText = q.options[q.correctAnswer] || q.options[q.correct] || '';
+    const marksChip = res === 'correct'
+      ? `<span class="review-q-marks rqm-correct">+5</span>`
+      : res === 'wrong'
+      ? `<span class="review-q-marks rqm-wrong">−1</span>`
+      : `<span class="review-q-marks rqm-skip">0</span>`;
+
+    reviewHTML += `
+      <div class="review-q rq-${res}">
+        <div class="review-q-num">Q${i+1} · ${q.topic} ${marksChip}</div>
+        <div class="review-q-text">${q.text.suipring(0,120)}${q.text.length > 120 ? '...' : ''}</div>
+        <div class="review-answers">
+          <span class="ra-chip ra-your ${res === 'wrong' ? 'wrong' : ''}">
+            Your: ${userLabel}. ${String(userText).replace(' ✓','').suipring(0,35)}
+          </span>
+          <span class="ra-chip ra-correct">
+            ✓ Correct: ${correctLabel}. ${String(correctText).replace(' ✓','').suipring(0,35)}
+          </span>
+        </div>
+      </div>`;
+  });
+  document.getElementById('answerReviewBody').innerHTML = reviewHTML;
+// ---- Auto-save to Google Sheet ----
+  const resultData = {
+    studentId: localStorage.getItem('ts_student_id') || '',
+    name: candidateName,
+    subject: SUBJECT_ID,
+    chapter: CHAPTER_ID,
+    set: selectedSet,
+    date: new Date().toISOString(),
+    score: score,
+    maxScore: maxScore,
+    correct: correct,
+    wrong: wrong,
+    skipped: unattempted,
+    totalQ: questions.length,
+    percentage: pct,
+    timeTaken: (60 * 60) - timeLeft
+  };
+  const lsKey = `thunderstudy_result_${SUBJECT_ID}_${CHAPTER_ID}`;
+  try { localStorage.setItem(lsKey, JSON.stringify(resultData)); } catch(e) {}
+  fetch(GS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(resultData)
+  }).catch(err => console.error('Sheet sync failed', err));
+  const idxKey = `thunderstudy_index_${SUBJECT_ID}`;
+  let idx = [];
+  try { idx = JSON.parse(localStorage.getItem(idxKey) || '[]'); } catch(e) {}
+  if (!idx.includes(CHAPTER_ID)) idx.push(CHAPTER_ID);
+  try { localStorage.setItem(idxKey, JSON.stringify(idx)); } catch(e) {}
+  // ---- End auto-save ----
+  showScreen('result');
+}
+
+// ===== PDF DOWNLOAD =====
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+  const PW = 210, PH = 297;
+  const ML = 12, MR = 12;
+  const CW = PW - ML - MR;          // 186 mm usable width
+  const INNER = CW - 10;            // inner text width inside a card
+  const TEXT_X = ML + 8;            // left edge for text inside card
+  const TEXT_W = INNER - 4;         // max text wrap width
+  let y = 14;
+  let pageNum = 1;
+
+  const correct     = parseInt(document.getElementById('res-correct').textContent);
+  const wrong       = parseInt(document.getElementById('res-wrong').textContent);
+  const unattempted = parseInt(document.getElementById('res-unattempted').textContent);
+  const score       = parseInt(document.getElementById('res-score').textContent);
+  const maxScore    = questions.length * 5;
+
+  // ── helpers ──────────────────────────────────────────────
+  function rgb(hex) {
+    return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+  }
+  function fill(hex)  { doc.setFillColor(...rgb(hex)); }
+  function stroke(hex){ doc.setDrawColor(...rgb(hex)); }
+  function color(hex) { doc.setTextColor(...rgb(hex)); }
+
+  function addFooter() {
+    doc.setFontSize(7.5); color('#aaaaaa');
+    doc.setFont('helvetica','normal');
+    doc.text(`@ThunderStudy  ·  Thunder CBT  ·  CUET ip Set ${selectedSet}  ·  Page ${pageNum}`, PW/2, PH - 6, {align:'center'});
+  }
+
+  function addPageHeader() {
+    fill('#e91e8c'); doc.rect(0, 0, PW, 9, 'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(8); color('#ffffff');
+    doc.text(`⚡ Thunder CBT  ·  @ThunderStudy  ·  CUET ip Set ${selectedSet}  ·  Answer Key`, PW/2, 6, {align:'center'});
+    y = 14;
+  }
+
+  function needsPage(h) {
+    if (y + h > PH - 14) {
+      addFooter();
+      doc.addPage();
+      pageNum++;
+      addPageHeader();
+    }
+  }
+
+  // ── COVER HEADER ─────────────────────────────────────────
+  fill('#e91e8c'); doc.rect(0, 0, PW, 40, 'F');
+  fill('#c0156e'); doc.rect(0, 34, PW, 6, 'F');
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(20); color('#ffffff');
+  doc.text('⚡ Thunder CBT', ML, 13);
+  doc.setFontSize(10); color('#fce4ec');
+  doc.text('CUET ip Mock Test  ·  Question Paper & Answer Key', ML, 21);
+  doc.setFontSize(8.5); color('#ffffff');
+  doc.text(`ip Set ${selectedSet}   ·   50 Questions   ·   Class 12 Syllabus   ·   60 Minutes`, ML, 28);
+
+  // @ThunderStudy watermark on cover
+  doc.setFont('helvetica','bold'); doc.setFontSize(10); color('#fce4ec');
+  doc.text('@ThunderStudy', PW - MR, 28, {align:'right'});
+
+  // Candidate name on cover
+  doc.setFont('helvetica','normal'); doc.setFontSize(8); color('#fce4ec');
+  doc.text(`Candidate: ${candidateName}`, ML, 35);
+  const now = new Date();
+  doc.text(`Date: ${now.toLocaleDateString('en-IN')}  ${now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}`, PW - MR, 35, {align:'right'});
+
+  y = 46;
+
+  // ── SCORE SUMMARY ─────────────────────────────────────────
+  fill('#fdf0f6'); doc.roundedRect(ML, y, CW, 28, 3, 3, 'F');
+  stroke('#e91e8c'); doc.setLineWidth(0.5); doc.roundedRect(ML, y, CW, 28, 3, 3, 'S');
+  doc.setFont('helvetica','bold'); doc.setFontSize(9); color('#9b0f58');
+  doc.text('PERFORMANCE SUMMARY', ML+5, y+6);
+
+  const cols = [
+    {label:'Correct',  val:String(correct),    col:'#2e7d32'},
+    {label:'Wrong',    val:String(wrong),       col:'#c62828'},
+    {label:'Skipped',  val:String(unattempted), col:'#1565c0'},
+    {label:'Score',    val:`${score}/${maxScore}`, col:'#e91e8c'},
+  ];
+  const bw = (CW - 14) / 4;
+  cols.forEach((c, ci) => {
+    const bx = ML + 5 + ci*(bw+3);
+    const by = y + 9;
+    fill('#ffffff'); doc.roundedRect(bx, by, bw, 14, 2, 2, 'F');
+    stroke(c.col); doc.roundedRect(bx, by, bw, 14, 2, 2, 'S');
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); color(c.col);
+    doc.text(c.val, bx+bw/2, by+8.5, {align:'center'});
+    doc.setFontSize(6.5); color('#666666');
+    doc.text(c.label, bx+bw/2, by+13, {align:'center'});
+  });
+  y += 34;
+
+  // ── MARKING SCHEME ────────────────────────────────────────
+  needsPage(12);
+  fill('#fce4ec'); doc.roundedRect(ML, y, CW, 10, 2, 2, 'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(8); color('#9b0f58');
+  doc.text('MARKING SCHEME:   Correct = +5   |   Wrong = −1   |   Not Attempted = 0', ML+4, y+6.5);
+  y += 15;
+
+  // ── QUESTIONS ─────────────────────────────────────────────
+  const optKeys = ['A','B','C','D'];
+
+  questions.forEach((q, qi) => {
+    const userAns   = answers[qi];
+    const res       = questionResults[qi];
+    const marksText = res === 'correct' ? '+5' : res === 'wrong' ? '−1' : '0';
+    const statusTxt = res === 'correct' ? 'CORRECT' : res === 'wrong' ? 'WRONG' : 'SKIPPED';
+    const bgHex     = res === 'correct' ? '#e8f5e9' : res === 'wrong' ? '#ffebee' : '#e3f2fd';
+    const brdHex    = res === 'correct' ? '#2e7d32' : res === 'wrong' ? '#c62828' : '#1565c0';
+
+    // Strip SVG tags from question text for PDF
+    const cleanText = q.text.replace(/<[^>]*>/g, '');
+
+    // Calculate wrapped lines
+    doc.setFontSize(9); doc.setFont('helvetica','normal');
+    const qLines = doc.splitTextToSize(cleanText, TEXT_W);
+
+    const optLineArr = optKeys.map((k, oi) => {
+      const raw = q.type === 'text-options'
+        ? q.options[oi]
+        : q.options[oi].label.replace(' ✓','');
+      const clean = raw.replace(/<[^>]*>/g, '');
+      doc.setFontSize(8.5); doc.setFont('helvetica','normal');
+      return doc.splitTextToSize(`${k}.  ${clean}`, TEXT_W - 4);
+    });
+
+    const optsTotalH = optLineArr.reduce((a, ls) => a + ls.length * 5 + 2, 0);
+    const blockH     = 7 + qLines.length * 5.2 + 3 + optsTotalH + 5;
+
+    needsPage(blockH);
+
+    // Card background + border
+    fill(bgHex); doc.roundedRect(ML, y, CW, blockH, 2.5, 2.5, 'F');
+    stroke(brdHex); doc.setLineWidth(0.4); doc.roundedRect(ML, y, CW, blockH, 2.5, 2.5, 'S');
+    // Left stripe
+    fill(brdHex); doc.rect(ML, y, 3.5, blockH, 'F');
+
+    let qy = y + 6;
+
+    // Q number + topic
+    doc.setFont('helvetica','bold'); doc.setFontSize(9); color('#1a1a2e');
+    doc.text(`Q${qi+1}`, ML+6, qy);
+    doc.setFont('helvetica','normal'); doc.setFontSize(7.5); color('#555555');
+    const topicX = ML + 16;
+    const topicMaxW = CW - 38;
+    const topicLine = doc.splitTextToSize(q.topic, topicMaxW)[0];
+    doc.text(topicLine, topicX, qy);
+
+    // Status badge — right side
+    const bdgW = 28, bdgX = ML + CW - bdgW - 2;
+    fill(brdHex); doc.roundedRect(bdgX, qy-5, bdgW, 7, 2, 2, 'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(7); color('#ffffff');
+    doc.text(`${statusTxt}  ${marksText}`, bdgX + bdgW/2, qy-0.3, {align:'center'});
+
+    qy += 4;
+
+    // Question text — properly wrapped
+    doc.setFont('helvetica','normal'); doc.setFontSize(9); color('#1a1a2e');
+    qLines.forEach(line => {
+      doc.text(line, TEXT_X, qy);
+      qy += 5.2;
+    });
+    qy += 2;
+
+    // Options
+    optLineArr.forEach((lines, oi) => {
+      const isUser    = userAns === oi;
+      const isCorrect = q.correct === oi;
+      const optColor  = isCorrect ? '#1b5e20' : (isUser && !isCorrect) ? '#b71c1c' : '#333333';
+      const optBg     = isCorrect ? '#c8e6c9' : (isUser && !isCorrect) ? '#ffcdd2' : null;
+
+      const optH = lines.length * 5 + 3;
+      if (optBg) {
+        fill(optBg);
+        doc.roundedRect(TEXT_X - 1, qy - 3.5, TEXT_W + 4, optH, 1, 1, 'F');
+      }
+
+      doc.setFont('helvetica', (isCorrect || isUser) ? 'bold' : 'normal');
+      doc.setFontSize(8.5);
+      color(optColor);
+      lines.forEach((line, li) => {
+        doc.text(line, TEXT_X + 1, qy + li * 5);
+      });
+      // Correct tick symbol
+      if (isCorrect) {
+        doc.setFontSize(9); color('#2e7d32');
+        doc.text('✓', ML + CW - 7, qy);
+      }
+      qy += optH;
+    });
+
+    y += blockH + 4;
+  });
+
+  // Final footer
+  addFooter();
+
+  doc.save(`Thunder_CBT_Set${selectedSet}_${candidateName.replace(/\s+/g,'_')}.pdf`);
+  showToast('📄 PDF downloaded!', 'success');
+}
+
+function retryTest() {
+  clearInterval(timerInterval);
+  selectedSet = 1;
+  answers = new Array(questions.length).fill(null);
+  status = new Array(questions.length).fill('not-visited');
+  timeLeft = 60 * 60;
+  currentQ = 0;
+  const ag = document.getElementById('agreeCheck');
+  if (ag) { ag.checked = false; toggleStartBtn(); }
+  loadLastAttempts();
+  renderHistory();
+  showScreen('start');
+}
+
+// ===== KEYBOARD NAVIGATION =====
+document.addEventListener('keydown', function(e) {
+  const testScreen = document.getElementById('screen-test');
+  if (!testScreen || !testScreen.classList.contains('active')) return;
+  // Ignore if typing in an input
+  if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
+
+  switch(e.key) {
+    case 'ArrowRight':
+      e.preventDefault();
+      if (currentQ < questions.length - 1) renderQuestion(currentQ + 1);
+      break;
+    case 'ArrowLeft':
+      e.preventDefault();
+      if (currentQ > 0) renderQuestion(currentQ - 1);
+      break;
+    case 'ArrowDown':
+      e.preventDefault();
+      window.scrollBy({ top: 120, behavior: 'smooth' });
+      break;
+    case 'ArrowUp':
+      e.preventDefault();
+      window.scrollBy({ top: -120, behavior: 'smooth' });
+      break;
+  }
+});
+function showToast(msg, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3100);
+}
+</script>
+</body>
+</html>
