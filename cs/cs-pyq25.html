@@ -1775,19 +1775,6 @@ const mockTest = {
   {
     id: 26,
     section: "Application MCQ",
-    text: `Consider a relation R(A, B, C, D) with functional dependencies: A → B, B → C. Which of the following is a candidate key?`,
-    options: { a: "A", b: "B", c: "C", d: "D" },
-    correctAnswer: "a",
-    explanation: "A determines B, and B determines C, so A determines A, B, C. But D is not determined by A. Wait, A does not determine D, so A alone cannot be a candidate key because D is missing. Actually candidate key must uniquely identify all attributes. With given FDs, A determines B and C but not D. So (A,D) would be a candidate key, but that's not an option. Option A alone is insufficient. None of the options are correct? Let's re-evaluate: The question might assume that D is independent. For a candidate key, we need closure. Closure of A = {A,B,C}. Missing D. So A is not a superkey. But among options, only A could be part of a key. However, typical exam questions: if D has no dependency, then candidate key is (A,D) or (B,D) etc. Since options only single attributes, none is correct. But to follow format, I'll adjust: assume additional FD: D → D trivial. Actually, standard trick: If no FD for D, then candidate key must include D. So answer none. But I need to provide an option. I'll change the question to avoid this. Let me replace Q26 with a better one.`,
-    options: { a: "A", b: "B", c: "C", d: "D" },
-    correctAnswer: "a",
-    explanation: "This question has an issue. I'll rewrite properly. For now, I'll skip and later correct. Since output must be complete, I'll replace Q26 entirely.",
-    marked: false,
-    userAnswer: ""
-  },
-  {
-    id: 26,
-    section: "Application MCQ",
     text: `Which relational algebra operation produces a new relation by combining every tuple of one relation with every tuple of another relation?`,
     options: { a: "Union", b: "Set difference", c: "Cartesian product", d: "Natural join" },
     correctAnswer: "c",
@@ -1802,19 +1789,6 @@ const mockTest = {
     options: { a: "try: result = a/b\nexcept: print('Error')", b: "try: result = a/b\nexcept ZeroDivisionError: print('Cannot divide by zero')", c: "try: result = a/b\nexcept ValueError: print('Cannot divide by zero')", d: "if b==0: raise Exception\ntry: result = a/b\nexcept: print('Error')" },
     correctAnswer: "b",
     explanation: "Option b specifically catches ZeroDivisionError and prints the correct message. Option a catches all exceptions (bad practice). Option c catches ValueError which is not raised by division by zero. Option d raises exception before try.",
-    marked: false,
-    userAnswer: ""
-  },
-  {
-    id: 28,
-    section: "Application MCQ",
-    text: `A text file 'data.txt' contains lines: 'Apple\\nBanana\\nCherry'. After executing f = open('data.txt', 'r'); f.seek(5); print(f.read(3)); what is the output? (Assume each character is 1 byte)`,
-    options: { a: "Ban", b: "ana", c: "nan", d: "ppl" },
-    correctAnswer: "b",
-    explanation: "File content: positions: 0:A,1:p,2:p,3:l,4:e,5:\\n,6:B,7:a,8:n,9:a,10:n,11:a. f.seek(5) moves to newline (\\n). Then read(3) reads next 3 chars: 'B','a','n'? Wait after newline position 5 is \\n, position 6 is B,7 a,8 n -> read(3) gives 'Ban'. But option a is 'Ban'. However check: newline is one char. So indices: 0 A,1 p,2 p,3 l,4 e,5 \\n,6 B,7 a,8 n,9 a,10 n,11 a. Seek(5) -> \\n. Read(3) reads \\n, B, a? That would be '\\nBa' which is not an option. Actually read(3) reads three characters starting at offset 5: char at 5 = '\\n', char 6='B', char7='a' gives '\\nBa'. But that's not in options. So maybe the file has no newline? Let's assume standard: 'Apple\\nBanana\\nCherry' - after Apple there is newline. Then seek(5) goes to '\\n'. Then read(3) gives '\\nBa'. None match. To fix, assume seek(6) would give 'Ban'. But question says seek(5). I'll adjust to avoid confusion. Let me replace Q28 with a different file handling question.`,
-    options: { a: "Ban", b: "ana", c: "nan", d: "ppl" },
-    correctAnswer: "a",
-    explanation: "This question had inconsistency. I'll provide a corrected version.",
     marked: false,
     userAnswer: ""
   },
